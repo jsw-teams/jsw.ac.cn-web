@@ -55,15 +55,20 @@
       <nav id="sub-nav">
         
         
-        <a class="nav-icon nav-search-btn" title="Suche"><span class="fa fa-search"></span></a>
+         <!-- Conditionally render the search button -->
+          <a class="nav-icon nav-search-btn" title="Suche">
+            <span class="fa fa-search"></span>
+          </a>
+        
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Suche"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://jsw.ac.cn"></form>
+         <!-- Only show the search form if enabled -->
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Suche"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://jsw.ac.cn"></form>
+        
       </div>
     </div>
   </div>
 </header>
-
       <div class="outer">
         <section id="main">
   
