@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>手把手教你安装和运行 Hexo 博客框架 | 技术网</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Hexo 是一个快速、简洁且强大的静态博客框架，非常适合个人博客搭建。本文将带你一步步完成 Hexo 的安装和运行，新手也能轻松上手！">
+<meta property="og:type" content="article">
+<meta property="og:title" content="手把手教你安装和运行 Hexo 博客框架">
+<meta property="og:url" content="http://jsw.ac.cn/hexo/index.html">
+<meta property="og:site_name" content="技术网">
+<meta property="og:description" content="Hexo 是一个快速、简洁且强大的静态博客框架，非常适合个人博客搭建。本文将带你一步步完成 Hexo 的安装和运行，新手也能轻松上手！">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-06-17T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-06-18T15:01:25.090Z">
+<meta property="article:author" content="jsw.ac.cn">
+<meta name="twitter:card" content="summary">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">技术网</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-hexo" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/hexo/" class="article-date">
+  <time class="dt-published" datetime="2025-06-17T16:00:00.000Z" itemprop="datePublished">2025-06-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      手把手教你安装和运行 Hexo 博客框架
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>Hexo 是一个快速、简洁且强大的静态博客框架，非常适合个人博客搭建。本文将带你一步步完成 Hexo 的安装和运行，新手也能轻松上手！</p>
+<span id="more"></span>
+
+<h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a><strong>环境准备</strong></h2><p>在开始之前，请确保你的电脑已安装以下工具：</p>
+<ol>
+<li><strong>Node.js 和 npm</strong><br>下载地址：<a target="_blank" rel="noopener" href="https://nodejs.org/">Node.js 官方网站</a><br><strong>推荐版本：LTS</strong></li>
+</ol>
+<h2 id="安装-Hexo"><a href="#安装-Hexo" class="headerlink" title="安装 Hexo"></a><strong>安装 Hexo</strong></h2><ol>
+<li><p>打开终端，安装 Hexo 的命令行工具：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>创建博客项目</strong><br>选择一个空文件夹作为你的博客目录，例如 <code>hexo-blog</code>，然后执行以下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> hexo-blog</span><br><span class="line"><span class="built_in">cd</span> hexo-blog</span><br><span class="line">hexo init</span><br></pre></td></tr></table></figure>
+
+<p>安装完成后，目录结构如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">hexo-blog/</span><br><span class="line">├── _config.yml    # 站点配置文件</span><br><span class="line">├── package.json   # 项目信息</span><br><span class="line">├── scaffolds/     # 模板文件</span><br><span class="line">├── source/        # 博客内容</span><br><span class="line">└── themes/        # 主题文件</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装依赖：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="运行-Hexo"><a href="#运行-Hexo" class="headerlink" title="运行 Hexo"></a><strong>运行 Hexo</strong></h2><ol>
+<li><p>启动本地服务器：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo server</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>打开浏览器，访问 <a target="_blank" rel="noopener" href="http://localhost:4000/">http://localhost:4000</a>，你将看到 Hexo 的默认页面。</p>
+</li>
+</ol>
+<h2 id="撰写博客文章"><a href="#撰写博客文章" class="headerlink" title="撰写博客文章"></a><strong>撰写博客文章</strong></h2><ol>
+<li><p><strong>新建文章</strong><br>使用命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new <span class="string">&quot;文章标题&quot;</span></span><br></pre></td></tr></table></figure>
+<p>文章文件会保存在 <code>source/_posts/</code> 文件夹下，文件格式为 <code>.md</code>。</p>
+</li>
+<li><p><strong>编辑文章</strong><br>打开新建的 Markdown 文件，在其中撰写你的内容。例如：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: 我的第一篇博客</span><br><span class="line">date: 2025-06-18 10:00:00</span><br><span class="line"><span class="section">tags: [Hexo, 博客]</span></span><br><span class="line"><span class="section">---</span></span><br><span class="line">这是我的第一篇 Hexo 博客文章！欢迎阅读！</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>生成静态页面</strong><br>在终端运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo generate</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>再次启动服务器</strong><br>如果服务器已经关闭，请重新运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo server</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="常用命令汇总"><a href="#常用命令汇总" class="headerlink" title="常用命令汇总"></a><strong>常用命令汇总</strong></h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>hexo new &lt;标题&gt;</code></td>
+<td>新建文章</td>
+</tr>
+<tr>
+<td><code>hexo generate</code></td>
+<td>生成静态文件</td>
+</tr>
+<tr>
+<td><code>hexo server</code></td>
+<td>本地预览</td>
+</tr>
+<tr>
+<td><code>hexo deploy</code></td>
+<td>部署</td>
+</tr>
+<tr>
+<td><code>hexo clean</code></td>
+<td>清理缓存与旧的静态文件</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="部署网站"><a href="#部署网站" class="headerlink" title="部署网站"></a><strong>部署网站</strong></h2><ol>
+<li>（推荐）SSH登入后上传到nginx指向路径即可</li>
+<li>（不太推荐）使用hexo-deployer-sftp插件上传，因为太久没维护了，不安全，上传推送可能不支持。<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/one-command-deployment#SFTP">使用方法</a></li>
+</ol>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a><strong>结语</strong></h2><p>恭喜你完成了 Hexo 博客的安装和运行！通过 Hexo，你可以轻松记录生活和技术点滴，还可以通过丰富的主题和插件打造个性化博客。快去试试吧！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/acme/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">acme.sh 安装及使用指南</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/06/">六月 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/05/">五月 2025</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/hexo/">手把手教你安装和运行 Hexo 博客框架</a>
+          </li>
+        
+          <li>
+            <a href="/acme/">acme.sh 安装及使用指南</a>
+          </li>
+        
+          <li>
+            <a href="/install-nginx/">Nginx 源码编译并启用 HTTP/3</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2025 jsw.ac.cn<br>
+      <!-- ICP备案信息 -->
+      
+        <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener" style="color:#888;">
+          蜀ICP备2025143400号
+        </a>
+      
+      <!-- 公安备案信息 -->
+      
+        &nbsp;|&nbsp;
+        <a href="https://beian.mps.gov.cn/#/query/webSearch?code=51172402000176" target="_blank" rel="noopener" style="color:#888;">
+          
+            <img src="/img/ghs.png" style="vertical-align:middle; width: 18px; height: 18px; margin-right: 2px;">
+          
+          川公网安备51172402000176号
+        </a>
+      
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
