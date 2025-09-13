@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://jsw.ac.cn/acceleration/</loc>
+    
+    <lastmod>2025-09-10</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://jsw.ac.cn/hexo/</loc>
     
     <lastmod>2025-06-18</lastmod>
@@ -20,7 +29,7 @@
   </url>
   
   <url>
-    <loc>http://jsw.ac.cn/install-nginx/</loc>
+    <loc>http://jsw.ac.cn/nginx/</loc>
     
     <lastmod>2025-05-28</lastmod>
     
@@ -31,7 +40,7 @@
 
   <url>
     <loc>http://jsw.ac.cn/</loc>
-    <lastmod>2025-06-18</lastmod>
+    <lastmod>2025-09-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
