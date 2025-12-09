@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <title>404 • jsw.ac.cn</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark light" />
+  <meta name="referrer" content="no-referrer" />
+  <meta name="robots" content="noindex, nofollow, noarchive" />
+  <!-- 5 秒后自动跳转到首页（纯静态，无脚本） -->
+  <meta http-equiv="refresh" content="5;url=/" />
+  <!-- 强 CSP：仅允许本页样式与图片（含 data:），禁止一切脚本/连接/嵌入/表单等 -->
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'none';
+    style-src 'self' 'unsafe-inline';
+    img-src 'self' data:;
+    font-src 'self' data:;
+    connect-src 'none';
+    script-src 'none';
+    object-src 'none';
+    base-uri 'none';
+    form-action 'none';
+    frame-ancestors 'none';
+  ">
+  <link rel="icon" href="data:," />
+  <style>
+    :root{
+      --bg:#0b0f14; --fg:#e6edf3; --muted:#a0a6ad;
+      --accent:#4ea1ff; --card:#10151d; --border:#1b2230;
+    }
+    @media (prefers-color-scheme: light){
+      :root{
+        --bg:#f7f9fc; --fg:#0b1220; --muted:#5c6b7a;
+        --accent:#0b6cff; --card:#fff; --border:#e6eaf0;
+      }
+    }
+    *{ box-sizing:border-box }
+    html,body{ height:100% }
+    body{
+      margin:0; background:var(--bg); color:var(--fg);
+      font:16px/1.6 ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+           Roboto, "Noto Sans", "PingFang SC", "Hiragino Sans GB", Arial, sans-serif;
+      -webkit-text-size-adjust:100%;
+    }
+    .wrap{ min-height:100%; display:grid; place-items:center; padding:4rem 1.25rem }
+    .card{
+      width:min(720px,100%); background:var(--card); border:1px solid var(--border);
+      border-radius:16px; padding:2rem; box-shadow:0 6px 24px rgba(0,0,0,.20);
+    }
+    .brand{ display:flex; align-items:center; gap:.625rem; margin:0 0 .75rem }
+    .brand svg{ width:28px; height:28px; flex:none }
+    h1{ margin:.25rem 0 .5rem; font-size:clamp(22px, 2.8vw + 14px, 40px) }
+    p{ margin:.5rem 0; color:var(--muted) }
+    .kicker{
+      display:inline-flex; align-items:center; gap:.5rem;
+      font-weight:600; letter-spacing:.08em; text-transform:uppercase;
+      font-size:.75rem; color:var(--accent)
+    }
+    .row{ display:flex; flex-wrap:wrap; gap:.75rem; margin-top:1.25rem }
+    a.btn{
+      text-decoration:none; color:var(--fg); font-weight:600;
+      border:1px solid var(--border); border-radius:12px;
+      padding:.75rem 1rem; display:inline-block;
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(0,0,0,.04));
+    }
+    a.btn:hover{ border-color:var(--accent) }
+    hr{ border:0; border-top:1px solid var(--border); margin:1rem 0 }
+    /* 纯 CSS 进度条：5s 填充，用于提示将自动跳转 */
+    .progress{ height:8px; background:transparent; border:1px solid var(--border); border-radius:999px; overflow:hidden }
+    .bar{ height:100%; width:0 }
+    .bar{ animation: fill 5s linear forwards }
+    @keyframes fill { to { width:100%; background:var(--accent) } }
+    .sr-only{
+      position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden;
+      clip:rect(0,0,0,0); white-space:nowrap; border:0;
+    }
+  </style>
+</head>
+<body>
+  <a class="sr-only" href="#main">跳到主要内容</a>
+  <main id="main" class="wrap" role="main">
+    <section class="card" aria-labelledby="title">
+      <div class="brand" role="img" aria-label="JSW 标识">
+        <!-- 内联 SVG，避免外链依赖 -->
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M12 2l8.66 5v10L12 22 3.34 17V7L12 2z" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M8 12h8M12 8v8" stroke="currentColor" stroke-width="1.5" opacity=".6"/>
+        </svg>
+        <strong>jsw.ac.cn</strong>
+      </div>
+
+      <div class="kicker">Error 404</div>
+      <h1 id="title">找不到页面</h1>
+      <p>您访问的地址不存在、已被移动，或暂时不可用。</p>
+      <p aria-live="polite">将在 <strong>5 秒</strong>后自动返回首页，或您也可以手动点击：</p>
+
+      <div class="row" role="navigation" aria-label="建议操作">
+        <a class="btn" href="/" rel="nofollow">返回首页</a>
+      </div>
+
+      <hr />
+      <div class="progress" aria-hidden="true"><div class="bar"></div></div>
+    </section>
+  </main>
+</body>
+</html>
