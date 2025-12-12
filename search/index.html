@@ -41,7 +41,7 @@
 
 
 
-    <link rel="canonical" href="http://jsw.ac.cn/search/index.html">
+    <link rel="canonical" href="http://www.jsw.ac.cn/search/index.html">
 
 
     <!-- OpenGraph -->
@@ -49,7 +49,7 @@
     <meta name="description" content="记录和分享日常学习过程中的技术笔记、服务器运维技巧内容，用于技术分享和学习总结">
 <meta property="og:type" content="website">
 <meta property="og:title" content="技术网">
-<meta property="og:url" content="http://jsw.ac.cn/search/index.html">
+<meta property="og:url" content="http://www.jsw.ac.cn/search/index.html">
 <meta property="og:site_name" content="技术网">
 <meta property="og:description" content="记录和分享日常学习过程中的技术笔记、服务器运维技巧内容，用于技术分享和学习总结">
 <meta property="og:locale" content="zh_CN">
@@ -81,7 +81,7 @@
     <!-- custom head -->
 
     
-        <script>(function(){if(window.location.hostname.indexOf("www.")===0){var newUrl=window.location.href.replace("://www.","://");window.location.replace(newUrl);}}());</script> 
+        <script>(function(){if(window.location.hostname.indexOf("www.")===-1&&window.location.hostname.split(".").length>=2){var newUrl=window.location.href.replace("://","://www.");window.location.replace(newUrl);}}());</script> 
     
 
 <meta name="generator" content="Hexo 7.3.0"></head>
@@ -155,7 +155,7 @@
     <div id="search">
         <form class="search-form" autocomplete="off">
             <div class="search-input">
-                <input maxlength="80" type="search" class="search-input" id="search-input" name="s" placeholder="Please enter a keyword..." required>
+                <input maxlength="80" type="search" class="search-input" id="search-input" name="s" placeholder="请输入关键字..." required>
             </div>
         </form>
     </div>
@@ -170,7 +170,7 @@
 
             <footer class="footer">
      
-    <a href="#" class="button" id="b2t" aria-label="Back to Top" title="Back to Top">
+    <a href="#" class="button" id="b2t" aria-label="回到顶部" title="回到顶部">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="32" height="32">
             <path d="M233.376 722.752L278.624 768 512 534.624 745.376 768l45.248-45.248L512 444.128zM192 352h640V288H192z" fill="currentColor"></path>
         </svg>
