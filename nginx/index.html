@@ -53,12 +53,24 @@
     
     
     
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/prismjs.css" media="none" onload="this.media='all'">
+        
+    
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.21.0/plugins/line-numbers/prism-line-numbers.min.css" media="none" onload="this.media='all'">
+    
+
 
     
 
      
 
     <!-- custom head -->
+
+    
+        <script>(function(){if(window.location.hostname.indexOf("www.")===0){var newUrl=window.location.href.replace("://www.","://");window.location.replace(newUrl);}}());</script> 
+    
 
 <meta name="generator" content="Hexo 7.3.0"></head>
 
@@ -135,59 +147,120 @@
 <p>本系列的工作基于 Ubuntu 22.04.3 LTS版本。你可以选择在物理机上安装，使用虚拟机，或者直接使用云服务器。</p>
 <h2 id="Nginx-编译步骤"><a href="#Nginx-编译步骤" class="headerlink" title="Nginx 编译步骤"></a>Nginx 编译步骤</h2><ol>
 <li><p><strong>建立新用户</strong><br>首先，创建一个专门用于 Nginx 的用户：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> useradd -M -r -s /bin/false -c <span class="string">&#x27;Web server&#x27;</span> www-date</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight bash"><span class="built_in">sudo</span> useradd -M -r -s /bin/false -c <span class="string">&#x27;Web server&#x27;</span> www-date</code></pre>
 </li>
 <li><p><strong>创建目录并赋予权限</strong><br>建立日志、缓存、配置文件等目录：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> /var/log/nginx /var/cache/nginx</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight bash"><span class="built_in">mkdir</span> /var/log/nginx /var/cache/nginx</code></pre>
 </li>
 <li><p><strong>更新系统并安装编译器</strong><br>更新系统并安装必要的编译工具：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt update</span><br><span class="line"><span class="built_in">sudo</span> apt install build-essential</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight bash"><span class="built_in">sudo</span> apt update
+<span class="built_in">sudo</span> apt install build-essential</code></pre>
 </li>
 <li><p><strong>安装开发库</strong><br>安装必要的开发库，包括 <code>pcre2</code>、<code>zlib</code> 和 <code>openssl</code>。其中，<code>pcre2</code> 和 <code>zlib</code> 可通过包管理器安装，<code>openssl</code> 使用最新版源码：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install libpcre2-dev zlib1g-dev</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight bash"><span class="built_in">sudo</span> apt install libpcre2-dev zlib1g-dev</code></pre>
 </li>
 <li><p><strong>设置工作环境</strong><br>在 <code>/usr/local</code> 目录下创建工作目录：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> /usr/local/src &amp;&amp; <span class="built_in">cd</span> /usr/local/src</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight bash"><span class="built_in">mkdir</span> /usr/local/src &amp;&amp; <span class="built_in">cd</span> /usr/local/src</code></pre>
 </li>
 <li><p><strong>下载 OpenSSL 源码</strong><br>下载 <a target="_blank" rel="noopener" href="https://openssl-library.org/source/">OpenSSL</a> 并解压上传服务器对应目录解压：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar zxf openssl-3.5.0.tar.gz</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight bash">tar zxf openssl-3.5.0.tar.gz</code></pre>
 </li>
 <li><p><strong>下载 Nginx 源码</strong><br>前往<a target="_blank" rel="noopener" href="https://nginx.org/en/download.html">nginx</a>下载并对应合适版本的Nginx 源码（下面以1.28.0为例子）并解压：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget https://nginx.org/download/nginx-1.28.0.tar.gz</span><br><span class="line">tar zxf nginx-1.28.0.tar.gz</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight bash">wget https://nginx.org/download/nginx-1.28.0.tar.gz
+tar zxf nginx-1.28.0.tar.gz</code></pre>
 </li>
 <li><p><strong>配置 Nginx 编译选项</strong><br> 进入 Nginx 源码目录，配置编译选项并启用 HTTP&#x2F;3 模块：</p>
 </li>
 </ol>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> nginx-1.28.0</span><br><span class="line">./configure --with-openssl=/usr/local/src/openssl-3.5.0 \</span><br><span class="line">            --prefix=/etc/nginx \</span><br><span class="line">            --sbin-path=/usr/sbin/nginx \</span><br><span class="line">            --modules-path=/usr/lib/nginx/modules \</span><br><span class="line">            --conf-path=/etc/nginx/nginx.conf \</span><br><span class="line">            --error-log-path=/var/log/nginx/error.log \</span><br><span class="line">            --http-log-path=/var/log/nginx/access.log \</span><br><span class="line">            --pid-path=/var/run/nginx.pid \</span><br><span class="line">            --lock-path=/var/run/nginx.lock \</span><br><span class="line">            --http-client-body-temp-path=/var/cache/nginx/client_temp \</span><br><span class="line">            --http-proxy-temp-path=/var/cache/nginx/proxy_temp \</span><br><span class="line">            --http-fastcgi-temp-path=/var/cache/nginx/fastcgi_temp \</span><br><span class="line">            --http-uwsgi-temp-path=/var/cache/nginx/uwsgi_temp \</span><br><span class="line">            --http-scgi-temp-path=/var/cache/nginx/scgi_temp \</span><br><span class="line">            --user=www-date --group=www-date \</span><br><span class="line">            --with-compat --with-file-aio --with-threads \</span><br><span class="line">            --with-http_addition_module --with-http_auth_request_module \</span><br><span class="line">            --with-http_flv_module \</span><br><span class="line">            --with-http_gunzip_module --with-http_gzip_static_module \</span><br><span class="line">            --with-http_mp4_module --with-http_random_index_module \</span><br><span class="line">            --with-http_realip_module --with-http_secure_link_module \</span><br><span class="line">            --with-http_slice_module --with-http_ssl_module \</span><br><span class="line">            --with-http_stub_status_module --with-http_sub_module \</span><br><span class="line">            --with-http_v2_module --with-http_v3_module \</span><br><span class="line">            --with-mail --with-mail_ssl_module --with-stream \</span><br><span class="line">            --with-stream_realip_module --with-stream_ssl_module \</span><br><span class="line">            --with-stream_ssl_preread_module \</span><br><span class="line">            --with-http_dav_module</span><br></pre></td></tr></table></figure>
+  <pre><code class="highlight bash"><span class="built_in">cd</span> nginx-1.28.0
+./configure --with-openssl=/usr/local/src/openssl-3.5.0 \
+            --prefix=/etc/nginx \
+            --sbin-path=/usr/sbin/nginx \
+            --modules-path=/usr/lib/nginx/modules \
+            --conf-path=/etc/nginx/nginx.conf \
+            --error-log-path=/var/log/nginx/error.log \
+            --http-log-path=/var/log/nginx/access.log \
+            --pid-path=/var/run/nginx.pid \
+            --lock-path=/var/run/nginx.lock \
+            --http-client-body-temp-path=/var/cache/nginx/client_temp \
+            --http-proxy-temp-path=/var/cache/nginx/proxy_temp \
+            --http-fastcgi-temp-path=/var/cache/nginx/fastcgi_temp \
+            --http-uwsgi-temp-path=/var/cache/nginx/uwsgi_temp \
+            --http-scgi-temp-path=/var/cache/nginx/scgi_temp \
+            --user=www-date --group=www-date \
+            --with-compat --with-file-aio --with-threads \
+            --with-http_addition_module --with-http_auth_request_module \
+            --with-http_flv_module \
+            --with-http_gunzip_module --with-http_gzip_static_module \
+            --with-http_mp4_module --with-http_random_index_module \
+            --with-http_realip_module --with-http_secure_link_module \
+            --with-http_slice_module --with-http_ssl_module \
+            --with-http_stub_status_module --with-http_sub_module \
+            --with-http_v2_module --with-http_v3_module \
+            --with-mail --with-mail_ssl_module --with-stream \
+            --with-stream_realip_module --with-stream_ssl_module \
+            --with-stream_ssl_preread_module \
+            --with-http_dav_module</code></pre>
 
 <ol start="9">
 <li><p><strong>编译并安装</strong><br>根据 CPU 核心数进行多线程编译：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make -j2</span><br><span class="line"><span class="built_in">sudo</span> make install</span><br></pre></td></tr></table></figure></li>
+<pre><code class="highlight bash">make -j2
+<span class="built_in">sudo</span> make install</code></pre></li>
 <li><p><strong>创建 systemd 服务文件</strong><br>为 Nginx 添加服务配置，便于系统管理：</p>
 </li>
 </ol>
-   <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> &gt; /etc/systemd/system/nginx.service &lt;&lt; <span class="string">EOF</span></span><br><span class="line"><span class="string">[Unit]</span></span><br><span class="line"><span class="string">Description=nginx - high performance web server</span></span><br><span class="line"><span class="string">Documentation=https://nginx.org/en/docs/</span></span><br><span class="line"><span class="string">After=network-online.target remote-fs.target nss-lookup.target</span></span><br><span class="line"><span class="string">Wants=network-online.target</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">[Service]</span></span><br><span class="line"><span class="string">Type=forking</span></span><br><span class="line"><span class="string">PIDFile=/run/nginx.pid</span></span><br><span class="line"><span class="string">ExecStartPre=/usr/sbin/nginx -t -q -g &#x27;daemon on; master_process on;&#x27;</span></span><br><span class="line"><span class="string">ExecStart=/usr/sbin/nginx -g &#x27;daemon on; master_process on;&#x27;</span></span><br><span class="line"><span class="string">ExecReload=/usr/sbin/nginx -g &#x27;daemon on; master_process on;&#x27; -s reload</span></span><br><span class="line"><span class="string">ExecStop=-/sbin/start-stop-daemon --quiet --stop --retry QUIT/5 --pidfile /run/nginx.pid</span></span><br><span class="line"><span class="string">TimeoutStopSec=5</span></span><br><span class="line"><span class="string">KillMode=mixed</span></span><br><span class="line"><span class="string">PrivateTmp=true</span></span><br><span class="line"><span class="string">LimitNOFILE=65535</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">[Install]</span></span><br><span class="line"><span class="string">WantedBy=multi-user.target</span></span><br><span class="line"><span class="string">EOF</span></span><br></pre></td></tr></table></figure>
+   <pre><code class="highlight bash"><span class="built_in">cat</span> &gt; /etc/systemd/system/nginx.service &lt;&lt; <span class="string">EOF</span>
+<span class="string">[Unit]</span>
+<span class="string">Description=nginx - high performance web server</span>
+<span class="string">Documentation=https://nginx.org/en/docs/</span>
+<span class="string">After=network-online.target remote-fs.target nss-lookup.target</span>
+<span class="string">Wants=network-online.target</span>
+<span class="string"></span>
+<span class="string">[Service]</span>
+<span class="string">Type=forking</span>
+<span class="string">PIDFile=/run/nginx.pid</span>
+<span class="string">ExecStartPre=/usr/sbin/nginx -t -q -g &#x27;daemon on; master_process on;&#x27;</span>
+<span class="string">ExecStart=/usr/sbin/nginx -g &#x27;daemon on; master_process on;&#x27;</span>
+<span class="string">ExecReload=/usr/sbin/nginx -g &#x27;daemon on; master_process on;&#x27; -s reload</span>
+<span class="string">ExecStop=-/sbin/start-stop-daemon --quiet --stop --retry QUIT/5 --pidfile /run/nginx.pid</span>
+<span class="string">TimeoutStopSec=5</span>
+<span class="string">KillMode=mixed</span>
+<span class="string">PrivateTmp=true</span>
+<span class="string">LimitNOFILE=65535</span>
+<span class="string"></span>
+<span class="string">[Install]</span>
+<span class="string">WantedBy=multi-user.target</span>
+<span class="string">EOF</span></code></pre>
 
 <ol start="11">
 <li><strong>检查版本</strong><br>安装完成后，检查 Nginx 版本：</li>
 </ol>
-   <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nginx -V</span><br></pre></td></tr></table></figure>
+   <pre><code class="highlight bash">nginx -V</code></pre>
 
 <p>   如果输出版本信息（如 <code>nginx/1.28.0</code>）即表示安装成功。</p>
 <ol start="12">
 <li><strong>启动 Nginx 服务</strong><br>  启动并设置开机启动：</li>
 </ol>
-   <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl daemon-reload</span><br><span class="line"><span class="built_in">sudo</span> systemctl <span class="built_in">enable</span> nginx.service --now</span><br></pre></td></tr></table></figure>
+   <pre><code class="highlight bash"><span class="built_in">sudo</span> systemctl daemon-reload
+<span class="built_in">sudo</span> systemctl <span class="built_in">enable</span> nginx.service --now</code></pre>
 
 <p>   其他管理命令包括：</p>
-   <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl <span class="built_in">disable</span> nginx.service   <span class="comment"># 关闭开机启动</span></span><br><span class="line"><span class="built_in">sudo</span> systemctl stop nginx.service      <span class="comment"># 停止服务</span></span><br><span class="line"><span class="built_in">sudo</span> systemctl status nginx.service    <span class="comment"># 查看服务状态</span></span><br></pre></td></tr></table></figure>
+   <pre><code class="highlight bash"><span class="built_in">sudo</span> systemctl <span class="built_in">disable</span> nginx.service   <span class="comment"># 关闭开机启动</span>
+<span class="built_in">sudo</span> systemctl stop nginx.service      <span class="comment"># 停止服务</span>
+<span class="built_in">sudo</span> systemctl status nginx.service    <span class="comment"># 查看服务状态</span></code></pre>
 
 <h2 id="虚拟主机配置"><a href="#虚拟主机配置" class="headerlink" title="虚拟主机配置"></a>虚拟主机配置</h2><ol>
 <li><p><strong>创建虚拟主机配置目录</strong><br>创建配置文件存放目录：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> /etc/nginx/conf.d</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight bash"><span class="built_in">mkdir</span> /etc/nginx/conf.d</code></pre>
 </li>
 <li><p><strong>修改主配置文件</strong><br>在 <code>/etc/nginx/nginx.conf</code> 中的 <code>http</code> 模块部分添加：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">http &#123;</span><br><span class="line">    server &#123;</span><br><span class="line">        <span class="comment"># 默认虚拟主机配置</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    include /etc/nginx/conf.d/*.conf;  <span class="comment"># 包含所有虚拟主机配置</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<pre><code class="highlight bash">http &#123;
+    server &#123;
+        <span class="comment"># 默认虚拟主机配置</span>
+    &#125;
+
+    include /etc/nginx/conf.d/*.conf;  <span class="comment"># 包含所有虚拟主机配置</span>
+&#125;</code></pre></li>
 </ol>
 <p>通过这种方式，你可以为每个网站创建独立的虚拟主机配置文件，详细配置会在后续文章中讲解。</p>
 <hr>
@@ -195,7 +268,7 @@
 
     </div>
      
-    <div class="post-footer__meta"><p>updated at 2025-05-28</p></div> 
+    <div class="post-footer__meta"><p>更新于 2025-05-28</p></div> 
     <div class="post-entry__tags"></div> 
 </article>
 
@@ -209,7 +282,7 @@
                     </div>
                     <div>
                         <div class="nav__label">
-                            Previous Post
+                            上一篇
                         </div>
                         <div class="nav__title">
                             acme.sh 安装及使用指南

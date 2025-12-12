@@ -53,12 +53,24 @@
     
     
     
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/prismjs.css" media="none" onload="this.media='all'">
+        
+    
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.21.0/plugins/line-numbers/prism-line-numbers.min.css" media="none" onload="this.media='all'">
+    
+
 
     
 
      
 
     <!-- custom head -->
+
+    
+        <script>(function(){if(window.location.hostname.indexOf("www.")===0){var newUrl=window.location.href.replace("://www.","://");window.location.replace(newUrl);}}());</script> 
+    
 
 <meta name="generator" content="Hexo 7.3.0"></head>
 
@@ -129,20 +141,22 @@
     <div class="post__content">
         <p>acme.sh 是一个用于申请和管理 CA 证书的轻量级 ACME 客户端，支持自动续订。</p>
 <span id="more"></span>
-<h2 id="1-acme-sh-安装"><a href="#1-acme-sh-安装" class="headerlink" title="1. acme.sh 安装"></a>1. acme.sh 安装</h2><h3 id="1-1-安装-socat"><a href="#1-1-安装-socat" class="headerlink" title="**1.1 安装 socat"></a>**1.1 安装 socat</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apt install socat -y  <span class="comment"># Ubuntu/Debian</span></span><br><span class="line">yum install socat -y  <span class="comment"># CentOS</span></span><br></pre></td></tr></table></figure>
+<h2 id="1-acme-sh-安装"><a href="#1-acme-sh-安装" class="headerlink" title="1. acme.sh 安装"></a>1. acme.sh 安装</h2><h3 id="1-1-安装-socat"><a href="#1-1-安装-socat" class="headerlink" title="**1.1 安装 socat"></a>**1.1 安装 socat</h3><pre><code class="highlight bash">apt install socat -y  <span class="comment"># Ubuntu/Debian</span>
+yum install socat -y  <span class="comment"># CentOS</span></code></pre>
 <h3 id="1-2-安装-acme-sh"><a href="#1-2-安装-acme-sh" class="headerlink" title="1.2 安装 acme.sh"></a><strong>1.2 安装 acme.sh</strong></h3><p>使用以下命令安装 acme.sh：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl https://get.acme.sh | sh</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight bash">curl https://get.acme.sh | sh</code></pre>
 
 <p>安装完成后，可能需要重新加载 shell 以生效：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight bash"><span class="built_in">source</span> ~/.bashrc</code></pre>
 
 <h2 id="2-申请泛域名证书（使用-阿里云DNS-验证）"><a href="#2-申请泛域名证书（使用-阿里云DNS-验证）" class="headerlink" title="2. 申请泛域名证书（使用 阿里云DNS 验证）"></a>2. 申请泛域名证书（使用 阿里云DNS 验证）</h2><h3 id="2-1-配置-阿里云DNS-API"><a href="#2-1-配置-阿里云DNS-API" class="headerlink" title="2.1 配置 阿里云DNS API"></a><strong>2.1 配置 阿里云DNS API</strong></h3><p><a target="_blank" rel="noopener" href="https://ram.console.aliyun.com/users/create">登录阿里云账户管理</a>，创建一个具有DNS管理权限的RAM用户</p>
 <p>在申请证书前，需要提供 阿里云DNS 的 API Key 和 Email：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> Ali_Key=<span class="string">&quot;sddi*********daf&quot;</span></span><br><span class="line"><span class="built_in">export</span> Ali_Secret=<span class="string">&quot;jls******************lsa&quot;</span></span><br></pre></td></tr></table></figure>
+<pre><code class="highlight bash"><span class="built_in">export</span> Ali_Key=<span class="string">&quot;sddi*********daf&quot;</span>
+<span class="built_in">export</span> Ali_Secret=<span class="string">&quot;jls******************lsa&quot;</span></code></pre>
 
 <h3 id="2-2-申请泛域名证书"><a href="#2-2-申请泛域名证书" class="headerlink" title="2.2 申请泛域名证书"></a><strong>2.2 申请泛域名证书</strong></h3><p>注意<code>yourdomain.com</code>填写的是你的域名</p>
 <p>使用 阿里云 DNS 验证方式申请：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">acme.sh --issue --dns dns_ali -d yourdomain.com -d <span class="string">&#x27;*.yourdomain.com&#x27;</span></span><br></pre></td></tr></table></figure>
+<pre><code class="highlight bash">acme.sh --issue --dns dns_ali -d yourdomain.com -d <span class="string">&#x27;*.yourdomain.com&#x27;</span></code></pre>
 
 <p><strong>参数说明</strong>：</p>
 <ul>
@@ -150,26 +164,30 @@
 <li><code>-d yourdomain.com -d &#39;*.yourdomain.com&#39;</code>：申请主域名和泛域名证书。</li>
 </ul>
 <h2 id="3-证书安装及自动续订"><a href="#3-证书安装及自动续订" class="headerlink" title="3. 证书安装及自动续订"></a>3. 证书安装及自动续订</h2><h3 id="3-1-安装证书到指定目录"><a href="#3-1-安装证书到指定目录" class="headerlink" title="3.1 安装证书到指定目录"></a><strong>3.1 安装证书到指定目录</strong></h3><p>将证书安装到 <code>/etc/nginx/cert/</code> 目录，并自动续订：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">acme.sh --install-cert -d yourdomain.com \</span><br><span class="line">    --key-file /etc/nginx/cert/private.key \</span><br><span class="line">    --fullchain-file /etc/nginx/cert/cert.crt \</span><br><span class="line">    --reloadcmd <span class="string">&quot;systemctl reload nginx&quot;</span></span><br></pre></td></tr></table></figure>
+<pre><code class="highlight bash">acme.sh --install-cert -d yourdomain.com \
+    --key-file /etc/nginx/cert/private.key \
+    --fullchain-file /etc/nginx/cert/cert.crt \
+    --reloadcmd <span class="string">&quot;systemctl reload nginx&quot;</span></code></pre>
 
 <h3 id="3-2-确保证书自动续订"><a href="#3-2-确保证书自动续订" class="headerlink" title="3.2 确保证书自动续订"></a><strong>3.2 确保证书自动续订</strong></h3><p>acme.sh 会自动续订证书，无需手动干预。可以使用以下命令检查续订任务：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">crontab -l | grep acme.sh</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight bash">crontab -l | grep acme.sh</code></pre>
 
 <p>如果需要手动触发续订：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">acme.sh --renew -d yourdomain.com</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight bash">acme.sh --renew -d yourdomain.com</code></pre>
 
-<h2 id="4-其他常用命令"><a href="#4-其他常用命令" class="headerlink" title="4. 其他常用命令"></a>4. 其他常用命令</h2><h3 id="4-1-查看证书列表"><a href="#4-1-查看证书列表" class="headerlink" title="4.1 查看证书列表"></a><strong>4.1 查看证书列表</strong></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">acme.sh --list</span><br></pre></td></tr></table></figure>
+<h2 id="4-其他常用命令"><a href="#4-其他常用命令" class="headerlink" title="4. 其他常用命令"></a>4. 其他常用命令</h2><h3 id="4-1-查看证书列表"><a href="#4-1-查看证书列表" class="headerlink" title="4.1 查看证书列表"></a><strong>4.1 查看证书列表</strong></h3><pre><code class="highlight bash">acme.sh --list</code></pre>
 
-<h3 id="4-2-强制更新-acme-sh"><a href="#4-2-强制更新-acme-sh" class="headerlink" title="4.2 强制更新 acme.sh"></a><strong>4.2 强制更新 acme.sh</strong></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">acme.sh --upgrade</span><br></pre></td></tr></table></figure>
+<h3 id="4-2-强制更新-acme-sh"><a href="#4-2-强制更新-acme-sh" class="headerlink" title="4.2 强制更新 acme.sh"></a><strong>4.2 强制更新 acme.sh</strong></h3><pre><code class="highlight bash">acme.sh --upgrade</code></pre>
 
 <h3 id="4-3-卸载-acme-sh"><a href="#4-3-卸载-acme-sh" class="headerlink" title="4.3 卸载 acme.sh"></a><strong>4.3 卸载 acme.sh</strong></h3><p>如果不再使用，可以卸载：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">acme.sh --uninstall</span><br><span class="line"><span class="built_in">rm</span> -rf ~/.acme.sh</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight bash">acme.sh --uninstall
+<span class="built_in">rm</span> -rf ~/.acme.sh</code></pre>
 
 <h2 id="5-最后"><a href="#5-最后" class="headerlink" title="5. 最后"></a>5. 最后</h2><p>使用 acme.sh，可以轻松申请和管理 CA 证书，结合 阿里云 DNS 验证，支持泛域名证书，并且自动续订，适用于大多数网站的 HTTPS 配置需求。</p>
 
     </div>
      
-    <div class="post-footer__meta"><p>updated at 2025-05-28</p></div> 
+    <div class="post-footer__meta"><p>更新于 2025-05-28</p></div> 
     <div class="post-entry__tags"></div> 
 </article>
 
@@ -183,7 +201,7 @@
                     </div>
                     <div>
                         <div class="nav__label">
-                            Previous Post
+                            上一篇
                         </div>
                         <div class="nav__title">
                             手把手教你安装和运行 Hexo 博客框架
@@ -197,7 +215,7 @@
                 <a href="/nginx/" class="nav__link">
                     <div>
                         <div class="nav__label">
-                            Next Post
+                            下一篇
                         </div>
                         <div class="nav__title">
                             Nginx 源码编译并启用 HTTP/3

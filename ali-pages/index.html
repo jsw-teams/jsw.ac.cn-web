@@ -59,12 +59,24 @@
     
     
     
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/prismjs.css" media="none" onload="this.media='all'">
+        
+    
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.21.0/plugins/line-numbers/prism-line-numbers.min.css" media="none" onload="this.media='all'">
+    
+
 
     
 
      
 
     <!-- custom head -->
+
+    
+        <script>(function(){if(window.location.hostname.indexOf("www.")===0){var newUrl=window.location.href.replace("://www.","://");window.location.replace(newUrl);}}());</script> 
+    
 
 <meta name="generator" content="Hexo 7.3.0"></head>
 
@@ -136,7 +148,11 @@
         <p>最近阿里云开放了pages服务，所以本网站搭个车将网站迁移到阿里云pages上面。本文介绍如何通过hexo d上传到GitHub，然后让阿里云pages拉取github项目完成部署。</p>
 <span id="more"></span>
 <p>在原先你的hexo目录中<code>_config.yml</code>的deploy部分填入：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">git@github.com:你的GitHub账号/项目名称.git</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">main</span></span><br><span class="line">  <span class="attr">message:</span> <span class="string">&quot;Site updated: <span class="template-variable">&#123;&#123; now(&#x27;YYYY-MM-DD HH:mm:ss&#x27;) &#125;&#125;</span>&quot;</span></span><br></pre></td></tr></table></figure>
+<pre><code class="highlight yaml"><span class="attr">deploy:</span>
+  <span class="attr">type:</span> <span class="string">git</span>
+  <span class="attr">repo:</span> <span class="string">git@github.com:你的GitHub账号/项目名称.git</span>
+  <span class="attr">branch:</span> <span class="string">main</span>
+  <span class="attr">message:</span> <span class="string">&quot;Site updated: <span class="template-variable">&#123;&#123; now(&#x27;YYYY-MM-DD HH:mm:ss&#x27;) &#125;&#125;</span>&quot;</span></code></pre>
 <ul>
 <li>本地 <code>hexo d</code> 时，会自动把 <code>public</code> 的内容推到 <code>main</code>。</li>
 <li>仓库的 <code>main</code> 分支里就是“纯静态站点”。</li>
@@ -161,7 +177,7 @@
 
     </div>
      
-    <div class="post-footer__meta"><p>updated at 2025-12-09</p></div> 
+    <div class="post-footer__meta"><p>更新于 2025-12-09</p></div> 
     <div class="post-entry__tags"></div> 
 </article>
 
@@ -175,7 +191,7 @@
                 <a href="/acceleration/" class="nav__link">
                     <div>
                         <div class="nav__label">
-                            Next Post
+                            下一篇
                         </div>
                         <div class="nav__title">
                             将 Hexo 站点部署到阿里云 OSS 并绑定 ESA 加速
