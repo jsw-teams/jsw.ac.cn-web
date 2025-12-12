@@ -16,9 +16,19 @@
     <!--icon-->
 
     
+        <link rel="shortcut icon" href="/img/favicon/favicon.ico">
     
     
+        <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
     
+    
+        <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
+    
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/web-app-manifest-192x192.png">
+    
+    
+        <link rel="mask-icon" href="/img/favicon/apple-touch-icon.png">
     
 
 
@@ -52,17 +62,23 @@
 
     
     
-    
-    
-        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/prismjs.css" media="none" onload="this.media='all'">
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/highlight.css" media="none" >
+        
+            <link rel="stylesheet" id="hl-dark-theme" href="/css/highlight/highlight.dark.css" media="none">
         
     
-    
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.21.0/plugins/line-numbers/prism-line-numbers.min.css" media="none" onload="this.media='all'">
-    
-
 
     
+    
+
+    
+    
+<link rel="stylesheet" href="/css/style/dark.css">
+
+    
+<script src="/js/darkmode.js"></script>
+
+
 
      
 
@@ -94,9 +110,17 @@
         
         
         
+    <a href="/search/" id="btn-search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="32"><path d="M192 448c0-141.152 114.848-256 256-256s256 114.848 256 256-114.848 256-256 256-256-114.848-256-256z m710.624 409.376l-206.88-206.88A318.784 318.784 0 0 0 768 448c0-176.736-143.264-320-320-320S128 271.264 128 448s143.264 320 320 320a318.784 318.784 0 0 0 202.496-72.256l206.88 206.88 45.248-45.248z"></path></svg>
+    </a>
+
 
         
         
+    <a href="javaScript:void(0);" id="btn-toggle-dark">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    </a>
+
 
         
             <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
@@ -148,49 +172,37 @@
 </ol>
 <h2 id="安装-Hexo"><a href="#安装-Hexo" class="headerlink" title="安装 Hexo"></a><strong>安装 Hexo</strong></h2><ol>
 <li><p>打开终端，安装 Hexo 的命令行工具：</p>
-<pre><code class="highlight bash">npm install -g hexo-cli</code></pre>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
 </li>
 <li><p><strong>创建博客项目</strong><br>选择一个空文件夹作为你的博客目录，例如 <code>hexo-blog</code>，然后执行以下命令：</p>
-<pre><code class="highlight bash"><span class="built_in">mkdir</span> hexo-blog
-<span class="built_in">cd</span> hexo-blog
-hexo init</code></pre>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> hexo-blog</span><br><span class="line"><span class="built_in">cd</span> hexo-blog</span><br><span class="line">hexo init</span><br></pre></td></tr></table></figure>
 
 <p>安装完成后，目录结构如下：</p>
-<pre><code class="highlight plaintext">hexo-blog/
-├── _config.yml    # 站点配置文件
-├── package.json   # 项目信息
-├── scaffolds/     # 模板文件
-├── source/        # 博客内容
-└── themes/        # 主题文件</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo-blog/</span><br><span class="line">├── _config.yml    # 站点配置文件</span><br><span class="line">├── package.json   # 项目信息</span><br><span class="line">├── scaffolds/     # 模板文件</span><br><span class="line">├── source/        # 博客内容</span><br><span class="line">└── themes/        # 主题文件</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>安装依赖：</p>
-<pre><code class="highlight bash">npm install</code></pre></li>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install</span><br></pre></td></tr></table></figure></li>
 </ol>
 <h2 id="运行-Hexo"><a href="#运行-Hexo" class="headerlink" title="运行 Hexo"></a><strong>运行 Hexo</strong></h2><ol>
 <li><p>启动本地服务器：</p>
-<pre><code class="highlight bash">hexo server</code></pre>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo server</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>打开浏览器，访问 <a target="_blank" rel="noopener" href="http://localhost:4000/">http://localhost:4000</a>，你将看到 Hexo 的默认页面。</p>
 </li>
 </ol>
 <h2 id="撰写博客文章"><a href="#撰写博客文章" class="headerlink" title="撰写博客文章"></a><strong>撰写博客文章</strong></h2><ol>
 <li><p><strong>新建文章</strong><br>使用命令：</p>
-<pre><code class="highlight bash">hexo new <span class="string">&quot;文章标题&quot;</span></code></pre>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new <span class="string">&quot;文章标题&quot;</span></span><br></pre></td></tr></table></figure>
 <p>文章文件会保存在 <code>source/_posts/</code> 文件夹下，文件格式为 <code>.md</code>。</p>
 </li>
 <li><p><strong>编辑文章</strong><br>打开新建的 Markdown 文件，在其中撰写你的内容。例如：</p>
-<pre><code class="highlight markdown">---
-title: 我的第一篇博客
-date: 2025-06-18 10:00:00
-<span class="section">tags: [Hexo, 博客]</span>
-<span class="section">---</span>
-这是我的第一篇 Hexo 博客文章！欢迎阅读！</code></pre>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: 我的第一篇博客</span><br><span class="line">date: 2025-06-18 10:00:00</span><br><span class="line"><span class="section">tags: [Hexo, 博客]</span></span><br><span class="line"><span class="section">---</span></span><br><span class="line">这是我的第一篇 Hexo 博客文章！欢迎阅读！</span><br></pre></td></tr></table></figure>
 </li>
 <li><p><strong>生成静态页面</strong><br>在终端运行：</p>
-<pre><code class="highlight bash">hexo generate</code></pre>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo generate</span><br></pre></td></tr></table></figure>
 </li>
 <li><p><strong>再次启动服务器</strong><br>如果服务器已经关闭，请重新运行：</p>
-<pre><code class="highlight bash">hexo server</code></pre></li>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo server</span><br></pre></td></tr></table></figure></li>
 </ol>
 <h2 id="常用命令汇总"><a href="#常用命令汇总" class="headerlink" title="常用命令汇总"></a><strong>常用命令汇总</strong></h2><table>
 <thead>
@@ -229,7 +241,7 @@ date: 2025-06-18 10:00:00
 
     </div>
      
-    <div class="post-footer__meta"><p>更新于 2025-06-18</p></div> 
+    <div class="post-footer__meta"><p>updated at 2025-06-18</p></div> 
     <div class="post-entry__tags"></div> 
 </article>
 
@@ -243,7 +255,7 @@ date: 2025-06-18 10:00:00
                     </div>
                     <div>
                         <div class="nav__label">
-                            上一篇
+                            Previous Post
                         </div>
                         <div class="nav__title">
                             将 Hexo 站点部署到阿里云 OSS 并绑定 ESA 加速
@@ -257,7 +269,7 @@ date: 2025-06-18 10:00:00
                 <a href="/acme/" class="nav__link">
                     <div>
                         <div class="nav__label">
-                            下一篇
+                            Next Post
                         </div>
                         <div class="nav__title">
                             acme.sh 安装及使用指南
@@ -278,7 +290,13 @@ date: 2025-06-18 10:00:00
 </main>
 
             <footer class="footer">
-    
+     
+    <a href="#" class="button" id="b2t" aria-label="Back to Top" title="Back to Top">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="32" height="32">
+            <path d="M233.376 722.752L278.624 768 512 534.624 745.376 768l45.248-45.248L512 444.128zM192 352h640V288H192z" fill="currentColor"></path>
+        </svg>
+    </a>
+
     
 
 
@@ -318,7 +336,15 @@ date: 2025-06-18 10:00:00
     
 </footer>
         </div>
-         
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
 
  
 
@@ -340,6 +366,41 @@ date: 2025-06-18 10:00:00
     
  
 
+
+    
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.4.1/dist/jquery.fancybox.min.css">
+
+    
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.4.1/dist/jquery.fancybox.min.js"></script>
+
+    <script>
+        let lazyloadT = Boolean('true'),
+            auto_fancybox = Boolean('true')
+        if (auto_fancybox) {
+            $(".post__content").find('img').each(function () {
+                var element = document.createElement("a");
+                $(element).attr("data-fancybox", "gallery");
+                $(element).attr("href", $(this).attr("src"));
+                if (lazyloadT) {
+                    $(element).attr("href", $(this).attr("data-srcset"));
+                }
+                $(this).wrap(element);
+            });
+        } else {
+            $(".post__content").find("fancybox").find('img').each(function () {
+                var element = document.createElement("a");
+                $(element).attr("data-fancybox", "gallery");
+                $(element).attr("href", $(this).attr("src"));
+                if (lazyloadT) {
+                    $(element).attr("href", $(this).attr("data-srcset"));
+                }
+                $(this).wrap(element);
+            });
+        }
+    </script>
  
 
  

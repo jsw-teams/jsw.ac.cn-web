@@ -16,9 +16,19 @@
     <!--icon-->
 
     
+        <link rel="shortcut icon" href="/img/favicon/favicon.ico">
     
     
+        <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
     
+    
+        <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
+    
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/web-app-manifest-192x192.png">
+    
+    
+        <link rel="mask-icon" href="/img/favicon/apple-touch-icon.png">
     
 
 
@@ -40,14 +50,14 @@
 <meta property="og:site_name" content="技术网">
 <meta property="og:description" content="使用 Hexo 搭建博客后，我们通常会得到一个 public&#x2F; 文件夹，其中就是最终的静态站点文件。本文介绍如何将这些文件上传到阿里云 OSS，并开启静态网站托管，再通过 ESA（Edge Side Acceleration）进行全球加速。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://jsw.ac.cn/img/OSS-1.png">
-<meta property="og:image" content="http://jsw.ac.cn/img/ESA-1.png">
-<meta property="og:image" content="http://jsw.ac.cn/img/ESA-2.png">
+<meta property="og:image" content="http://jsw.ac.cn/img/post/OSS-1.png">
+<meta property="og:image" content="http://jsw.ac.cn/img/post/ESA-1.png">
+<meta property="og:image" content="http://jsw.ac.cn/img/post/ESA-2.png">
 <meta property="article:published_time" content="2025-09-10T12:03:34.000Z">
-<meta property="article:modified_time" content="2025-12-09T11:31:14.537Z">
+<meta property="article:modified_time" content="2025-12-12T13:57:47.271Z">
 <meta property="article:author" content="技术网">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://jsw.ac.cn/img/OSS-1.png">
+<meta name="twitter:image" content="http://jsw.ac.cn/img/post/OSS-1.png">
 
 
     
@@ -56,17 +66,23 @@
 
     
     
-    
-    
-        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/prismjs.css" media="none" onload="this.media='all'">
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/highlight.css" media="none" >
+        
+            <link rel="stylesheet" id="hl-dark-theme" href="/css/highlight/highlight.dark.css" media="none">
         
     
-    
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.21.0/plugins/line-numbers/prism-line-numbers.min.css" media="none" onload="this.media='all'">
-    
-
 
     
+    
+
+    
+    
+<link rel="stylesheet" href="/css/style/dark.css">
+
+    
+<script src="/js/darkmode.js"></script>
+
+
 
      
 
@@ -98,9 +114,17 @@
         
         
         
+    <a href="/search/" id="btn-search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="32"><path d="M192 448c0-141.152 114.848-256 256-256s256 114.848 256 256-114.848 256-256 256-256-114.848-256-256z m710.624 409.376l-206.88-206.88A318.784 318.784 0 0 0 768 448c0-176.736-143.264-320-320-320S128 271.264 128 448s143.264 320 320 320a318.784 318.784 0 0 0 202.496-72.256l206.88 206.88 45.248-45.248z"></path></svg>
+    </a>
+
 
         
         
+    <a href="javaScript:void(0);" id="btn-toggle-dark">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    </a>
+
 
         
             <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
@@ -147,13 +171,13 @@
 <span id="more"></span>
 
 <h2 id="一、生成站点文件"><a href="#一、生成站点文件" class="headerlink" title="一、生成站点文件"></a>一、生成站点文件</h2><p>进入 Hexo 项目根目录，执行命令：</p>
-<pre><code class="highlight plaintext">hexo g</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo g</span><br></pre></td></tr></table></figure>
 
 <p>生成的静态文件会存放在 <code>public/</code> 目录下。</p>
 <hr>
 <h2 id="二、配置并使用-ossutil"><a href="#二、配置并使用-ossutil" class="headerlink" title="二、配置并使用 ossutil"></a>二、配置并使用 <code>ossutil</code></h2><h3 id="1-安装-ossutil"><a href="#1-安装-ossutil" class="headerlink" title="1. 安装 ossutil"></a>1. 安装 <code>ossutil</code></h3><p>前往<a target="_blank" rel="noopener" href="https://help.aliyun.com/zh/oss/developer-reference/install-ossutil">阿里云 OSS 官方下载页面</a>，下载对应系统的 <code>ossutil</code> 工具。<br> Windows 用户下载 <code>.exe</code> 文件后放到 PATH 路径下，方便调用。</p>
 <h3 id="2-初始化配置"><a href="#2-初始化配置" class="headerlink" title="2. 初始化配置"></a>2. 初始化配置</h3><p>执行：</p>
-<pre><code class="highlight plaintext">ossutil config</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ossutil config</span><br></pre></td></tr></table></figure>
 
 <p>依次输入：</p>
 <ul>
@@ -163,7 +187,7 @@
 <li><strong>Endpoint</strong>：可留空，默认使用公网域名，例如 <code>oss-cn-hangzhou.aliyuncs.com</code></li>
 </ul>
 <h3 id="3-上传-Hexo-静态文件"><a href="#3-上传-Hexo-静态文件" class="headerlink" title="3. 上传 Hexo 静态文件"></a>3. 上传 Hexo 静态文件</h3><p>推荐使用同步方式上传：</p>
-<pre><code class="highlight plaintext">ossutil sync 需要上传目录位置 oss://你的Bucket名/ --delete</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ossutil sync 需要上传目录位置 oss://你的Bucket名/ --delete</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li><code>-f</code>：强制覆盖</li>
@@ -176,7 +200,7 @@
 <li>打开 OSS 控制台 → 选择对应 Bucket → 数据管理 → 静态页面</li>
 <li>配置：<ul>
 <li><strong>索引页面</strong>：<code>index.html</code></li>
-<li><strong>错误页面</strong>：<code>404.html</code><br><img src="/img/OSS-1.png" alt="OSS静态页面设置"></li>
+<li><strong>错误页面</strong>：<code>404.html</code><br><img src="/img/post/OSS-1.png" class="lazy" data-srcset="/img/post/OSS-1.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="OSS静态页面设置"></li>
 </ul>
 </li>
 </ol>
@@ -185,13 +209,13 @@
 <ol>
 <li>在 ESA 控制台新建加速实例</li>
 <li>绑定自定义域名</li>
-<li>在源站地址选择 <strong>OSS Bucket 域名</strong><br><img src="/img/ESA-1.png" alt="ESA绑定自定义域名"></li>
-<li>配置 HTTPS（可在NS托管下让其生成免费的SSL证书）<br><img src="/img/ESA-2.png" alt="让ESA生成免费HTTPS证书"><br>之后就会通过 ESA 节点加速，提升国内外访问体验。</li>
+<li>在源站地址选择 <strong>OSS Bucket 域名</strong><br><img src="/img/post/ESA-1.png" class="lazy" data-srcset="/img/post/ESA-1.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="ESA绑定自定义域名"></li>
+<li>配置 HTTPS（可在NS托管下让其生成免费的SSL证书）<br><img src="/img/post/ESA-2.png" class="lazy" data-srcset="/img/post/ESA-2.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="让ESA生成免费HTTPS证书"><br>之后就会通过 ESA 节点加速，提升国内外访问体验。</li>
 </ol>
 
     </div>
      
-    <div class="post-footer__meta"><p>更新于 2025-12-09</p></div> 
+    <div class="post-footer__meta"><p>updated at 2025-12-12</p></div> 
     <div class="post-entry__tags"></div> 
 </article>
 
@@ -205,7 +229,7 @@
                     </div>
                     <div>
                         <div class="nav__label">
-                            上一篇
+                            Previous Post
                         </div>
                         <div class="nav__title">
                             如何利用hexo d将其部署到阿里云pages上
@@ -219,7 +243,7 @@
                 <a href="/hexo/" class="nav__link">
                     <div>
                         <div class="nav__label">
-                            下一篇
+                            Next Post
                         </div>
                         <div class="nav__title">
                             手把手教你安装和运行 Hexo 博客框架
@@ -240,7 +264,13 @@
 </main>
 
             <footer class="footer">
-    
+     
+    <a href="#" class="button" id="b2t" aria-label="Back to Top" title="Back to Top">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="32" height="32">
+            <path d="M233.376 722.752L278.624 768 512 534.624 745.376 768l45.248-45.248L512 444.128zM192 352h640V288H192z" fill="currentColor"></path>
+        </svg>
+    </a>
+
     
 
 
@@ -280,7 +310,15 @@
     
 </footer>
         </div>
-         
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
 
  
 
@@ -302,6 +340,41 @@
     
  
 
+
+    
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.4.1/dist/jquery.fancybox.min.css">
+
+    
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.4.1/dist/jquery.fancybox.min.js"></script>
+
+    <script>
+        let lazyloadT = Boolean('true'),
+            auto_fancybox = Boolean('true')
+        if (auto_fancybox) {
+            $(".post__content").find('img').each(function () {
+                var element = document.createElement("a");
+                $(element).attr("data-fancybox", "gallery");
+                $(element).attr("href", $(this).attr("src"));
+                if (lazyloadT) {
+                    $(element).attr("href", $(this).attr("data-srcset"));
+                }
+                $(this).wrap(element);
+            });
+        } else {
+            $(".post__content").find("fancybox").find('img').each(function () {
+                var element = document.createElement("a");
+                $(element).attr("data-fancybox", "gallery");
+                $(element).attr("href", $(this).attr("src"));
+                if (lazyloadT) {
+                    $(element).attr("href", $(this).attr("data-srcset"));
+                }
+                $(this).wrap(element);
+            });
+        }
+    </script>
  
 
  
