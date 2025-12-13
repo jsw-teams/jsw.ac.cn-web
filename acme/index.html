@@ -96,7 +96,9 @@
     <!-- custom head -->
 
     
-        <script>(function(){if(window.location.hostname.indexOf("www.")===-1&&window.location.hostname.split(".").length>=2){var newUrl=window.location.href.replace("://","://www.");window.location.replace(newUrl);}}());</script> 
+        <script>(function(){var h=window.location.hostname;if(h.indexOf("localhost")===-1&&h.indexOf("127.0.0.1")===-1&&h.indexOf("www.")===0){var newUrl=window.location.href.replace("://www.","://");window.location.replace(newUrl);}}());</script> 
+    
+        <script>(function(){var c={enable:false,annualDates:["05-12","09-18","12-13"],specificDates:[],annualDateRanges:[],specificDateRanges:[]};function check(){if(c.enable)return true;var now=new Date();var y=now.getFullYear();var m=String(now.getMonth()+1).padStart(2,"0");var d=String(now.getDate()).padStart(2,"0");var today=y+"-"+m+"-"+d;var todayMD=m+"-"+d;if(c.annualDates.indexOf(todayMD)!==-1)return true;if(c.specificDates.indexOf(today)!==-1)return true;for(var i=0;i<c.annualDateRanges.length;i++){var r=c.annualDateRanges[i];if(r.start&&r.end){var s=r.start;var e=r.end;if(s<=e){if(todayMD>=s&&todayMD<=e)return true}else{if(todayMD>=s||todayMD<=e)return true}}}for(var j=0;j<c.specificDateRanges.length;j++){var sr=c.specificDateRanges[j];if(sr.start&&sr.end&&today>=sr.start&&today<=sr.end)return true}return false}if(check()){var style=document.createElement("style");style.innerHTML="html{filter:grayscale(100%);-webkit-filter:grayscale(100%);-moz-filter:grayscale(100%);-ms-filter:grayscale(100%);-o-filter:grayscale(100%);}";document.head.appendChild(style)}})();</script> 
     
 
 <meta name="generator" content="Hexo 7.3.0"></head>
