@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://www.jsw.ac.cn/ali-pages/</loc>
+    <loc>https://jsw.ac.cn/ali-pages/</loc>
     
     <lastmod>2025-12-12</lastmod>
     
@@ -11,7 +11,7 @@
   </url>
   
   <url>
-    <loc>https://www.jsw.ac.cn/acceleration/</loc>
+    <loc>https://jsw.ac.cn/acceleration/</loc>
     
     <lastmod>2025-12-12</lastmod>
     
@@ -20,7 +20,7 @@
   </url>
   
   <url>
-    <loc>https://www.jsw.ac.cn/search/index.html</loc>
+    <loc>https://jsw.ac.cn/search/index.html</loc>
     
     <lastmod>2025-12-12</lastmod>
     
@@ -29,7 +29,7 @@
   </url>
   
   <url>
-    <loc>https://www.jsw.ac.cn/hexo/</loc>
+    <loc>https://jsw.ac.cn/hexo/</loc>
     
     <lastmod>2025-06-18</lastmod>
     
@@ -38,7 +38,7 @@
   </url>
   
   <url>
-    <loc>https://www.jsw.ac.cn/acme/</loc>
+    <loc>https://jsw.ac.cn/acme/</loc>
     
     <lastmod>2025-05-28</lastmod>
     
@@ -47,7 +47,7 @@
   </url>
   
   <url>
-    <loc>https://www.jsw.ac.cn/nginx/</loc>
+    <loc>https://jsw.ac.cn/nginx/</loc>
     
     <lastmod>2025-05-28</lastmod>
     
@@ -57,7 +57,7 @@
   
 
   <url>
-    <loc>https://www.jsw.ac.cn/</loc>
+    <loc>https://jsw.ac.cn/</loc>
     <lastmod>2025-12-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
