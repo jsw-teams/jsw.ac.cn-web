@@ -1417,59 +1417,91 @@ details .fold-content>:last-child {
     display: block;
   }
 }
-.post-content a,
-.post-entry a,
-.content-card a,
-.markdown a {
+.post-entry,
+.content-card,
+.post-content,
+.markdown {
+  color: #111827;
+}
+.post-entry p,
+.content-card p,
+.post-content p,
+.markdown p {
+  color: #374151;
+}
+.post-entry h1,
+.post-entry h2,
+.post-entry h3,
+.post-entry h4,
+.content-card h1,
+.content-card h2,
+.content-card h3,
+.content-card h4,
+.post-title {
+  color: #111827;
+}
+.post-meta,
+.post-meta__date,
+.post-meta__info,
+.post-meta__tags,
+.post-date {
+  color: #4b5563;
+}
+.post-meta__date.button,
+a.post-meta__date.button {
+  color: #111827;
+  background: rgba(17,24,39,0.08);
+  box-shadow: inset 0 0 0 1px rgba(17,24,39,0.12);
+  border-radius: 0.4rem;
+  padding: 0.15rem 0.45rem;
+  font-weight: 600;
+}
+.post-meta__date.button:hover,
+.post-meta__date.button:focus-visible,
+a.post-meta__date.button:hover,
+a.post-meta__date.button:focus-visible {
+  background: rgba(17,24,39,0.12);
+  box-shadow: inset 0 0 0 1px rgba(17,24,39,0.18);
+}
+.post-meta__date a,
+a.post-meta__date,
+.post-date a,
+a.post-date {
+  color: inherit;
+}
+.post-content a:not(.headerlink):not(.button),
+.post-entry a:not(.headerlink):not(.button),
+.content-card a:not(.headerlink):not(.button),
+.markdown a:not(.headerlink):not(.button) {
   text-decoration: none;
   font-weight: 600;
   border-radius: 0.25em;
   padding: 0 0.12em;
-/* non-color-only cue: subtle background + inset stroke */
   background: rgba(98,0,238,0.1);
   box-shadow: inset 0 0 0 1px rgba(98,0,238,0.18);
 }
-.post-content a:hover,
-.post-entry a:hover,
-.content-card a:hover,
-.markdown a:hover,
-.post-content a:focus-visible,
-.post-entry a:focus-visible,
-.content-card a:focus-visible,
-.markdown a:focus-visible {
+.post-content a:not(.headerlink):not(.button):hover,
+.post-entry a:not(.headerlink):not(.button):hover,
+.content-card a:not(.headerlink):not(.button):hover,
+.markdown a:not(.headerlink):not(.button):hover,
+.post-content a:not(.headerlink):not(.button):focus-visible,
+.post-entry a:not(.headerlink):not(.button):focus-visible,
+.content-card a:not(.headerlink):not(.button):focus-visible,
+.markdown a:not(.headerlink):not(.button):focus-visible {
   background: rgba(98,0,238,0.16);
   box-shadow: inset 0 0 0 1px rgba(98,0,238,0.28);
 }
-@media (prefers-color-scheme: dark) {
-  .post-content a,
-  .post-entry a,
-  .content-card a,
-  .markdown a {
-    background: rgba(187,134,252,0.14);
-    box-shadow: inset 0 0 0 1px rgba(187,134,252,0.22);
-  }
-  .post-content a:hover,
-  .post-entry a:hover,
-  .content-card a:hover,
-  .markdown a:hover,
-  .post-content a:focus-visible,
-  .post-entry a:focus-visible,
-  .content-card a:focus-visible,
-  .markdown a:focus-visible {
-    background: rgba(187,134,252,0.2);
-    box-shadow: inset 0 0 0 1px rgba(187,134,252,0.32);
-  }
+a.headerlink {
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+  border-radius: 0;
+  font-weight: inherit;
 }
-html.dark .post-content a,
-body.dark .post-content a,
-html[data-theme="dark"] .post-content a,
-body[data-theme="dark"] .post-content a,
-html.dark .post-entry a,
-body.dark .post-entry a,
-html[data-theme="dark"] .post-entry a,
-body[data-theme="dark"] .post-entry a {
-  background: rgba(187,134,252,0.14);
-  box-shadow: inset 0 0 0 1px rgba(187,134,252,0.22);
+a.headerlink:hover,
+a.headerlink:focus-visible {
+  background: transparent;
+  box-shadow: none;
 }
 .footer,
 .footer-copyright {
@@ -1492,6 +1524,9 @@ body[data-theme="dark"] .post-entry a {
   background: rgba(98,0,238,0.16);
   box-shadow: inset 0 0 0 1px rgba(98,0,238,0.28);
 }
+.cover__intro {
+  color: #111827;
+}
 .cover__intro p {
   color: #111827;
   background: rgba(255,255,255,0.85);
@@ -1500,15 +1535,193 @@ body[data-theme="dark"] .post-entry a {
   border-radius: 0.6rem;
 }
 @media (prefers-color-scheme: dark) {
+  .post-entry,
+  .content-card,
+  .post-content,
+  .markdown {
+    color: rgba(255,255,255,0.92);
+  }
+  .post-entry p,
+  .content-card p,
+  .post-content p,
+  .markdown p {
+    color: rgba(255,255,255,0.82);
+  }
+  .post-entry h1,
+  .post-entry h2,
+  .post-entry h3,
+  .post-entry h4,
+  .content-card h1,
+  .content-card h2,
+  .content-card h3,
+  .content-card h4,
+  .post-title {
+    color: rgba(255,255,255,0.94);
+  }
+  .post-meta,
+  .post-meta__date,
+  .post-meta__info,
+  .post-meta__tags,
+  .post-date {
+    color: rgba(255,255,255,0.78);
+  }
+  .post-meta__date.button,
+  a.post-meta__date.button {
+    color: rgba(255,255,255,0.92);
+    background: rgba(255,255,255,0.1);
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.16);
+  }
+  .post-content a:not(.headerlink):not(.button),
+  .post-entry a:not(.headerlink):not(.button),
+  .content-card a:not(.headerlink):not(.button),
+  .markdown a:not(.headerlink):not(.button) {
+    background: rgba(187,134,252,0.14);
+    box-shadow: inset 0 0 0 1px rgba(187,134,252,0.22);
+  }
+  .cover__intro {
+    color: rgba(255,255,255,0.92);
+  }
   .cover__intro p {
     color: rgba(255,255,255,0.92);
     background: rgba(0,0,0,0.55);
   }
 }
+html[data-user-color-scheme="dark"] .post-entry,
+html.dark .post-entry,
+html[data-theme="dark"] .post-entry,
+html[data-user-color-scheme="dark"] .content-card,
+html.dark .content-card,
+html[data-theme="dark"] .content-card,
+html[data-user-color-scheme="dark"] .post-content,
+html.dark .post-content,
+html[data-theme="dark"] .post-content,
+html[data-user-color-scheme="dark"] .markdown,
+html.dark .markdown,
+html[data-theme="dark"] .markdown {
+  color: rgba(255,255,255,0.92);
+}
+html[data-user-color-scheme="dark"] .post-entry p,
+html.dark .post-entry p,
+html[data-theme="dark"] .post-entry p,
+html[data-user-color-scheme="dark"] .content-card p,
+html.dark .content-card p,
+html[data-theme="dark"] .content-card p,
+html[data-user-color-scheme="dark"] .post-content p,
+html.dark .post-content p,
+html[data-theme="dark"] .post-content p,
+html[data-user-color-scheme="dark"] .markdown p,
+html.dark .markdown p,
+html[data-theme="dark"] .markdown p {
+  color: rgba(255,255,255,0.82);
+}
+html[data-user-color-scheme="dark"] .post-entry h1,
+html.dark .post-entry h1,
+html[data-theme="dark"] .post-entry h1,
+html[data-user-color-scheme="dark"] .post-entry h2,
+html.dark .post-entry h2,
+html[data-theme="dark"] .post-entry h2,
+html[data-user-color-scheme="dark"] .post-entry h3,
+html.dark .post-entry h3,
+html[data-theme="dark"] .post-entry h3,
+html[data-user-color-scheme="dark"] .post-entry h4,
+html.dark .post-entry h4,
+html[data-theme="dark"] .post-entry h4,
+html[data-user-color-scheme="dark"] .content-card h1,
+html.dark .content-card h1,
+html[data-theme="dark"] .content-card h1,
+html[data-user-color-scheme="dark"] .content-card h2,
+html.dark .content-card h2,
+html[data-theme="dark"] .content-card h2,
+html[data-user-color-scheme="dark"] .content-card h3,
+html.dark .content-card h3,
+html[data-theme="dark"] .content-card h3,
+html[data-user-color-scheme="dark"] .content-card h4,
+html.dark .content-card h4,
+html[data-theme="dark"] .content-card h4,
+html[data-user-color-scheme="dark"] .post-title,
+html.dark .post-title,
+html[data-theme="dark"] .post-title {
+  color: rgba(255,255,255,0.94);
+}
+html[data-user-color-scheme="dark"] .post-meta,
+html.dark .post-meta,
+html[data-theme="dark"] .post-meta,
+html[data-user-color-scheme="dark"] .post-meta__date,
+html.dark .post-meta__date,
+html[data-theme="dark"] .post-meta__date,
+html[data-user-color-scheme="dark"] .post-meta__info,
+html.dark .post-meta__info,
+html[data-theme="dark"] .post-meta__info,
+html[data-user-color-scheme="dark"] .post-meta__tags,
+html.dark .post-meta__tags,
+html[data-theme="dark"] .post-meta__tags,
+html[data-user-color-scheme="dark"] .post-date,
+html.dark .post-date,
+html[data-theme="dark"] .post-date {
+  color: rgba(255,255,255,0.78) !important;
+}
+html[data-user-color-scheme="dark"] .post-meta__date.button,
+html.dark .post-meta__date.button,
+html[data-theme="dark"] .post-meta__date.button,
+html[data-user-color-scheme="dark"] a.post-meta__date.button,
+html.dark a.post-meta__date.button,
+html[data-theme="dark"] a.post-meta__date.button {
+  color: rgba(255,255,255,0.92) !important;
+  background: rgba(255,255,255,0.12) !important;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.2) !important;
+}
+html[data-user-color-scheme="dark"] .post-meta__date.button:hover,
+html.dark .post-meta__date.button:hover,
+html[data-theme="dark"] .post-meta__date.button:hover,
+html[data-user-color-scheme="dark"] .post-meta__date.button:focus-visible,
+html.dark .post-meta__date.button:focus-visible,
+html[data-theme="dark"] .post-meta__date.button:focus-visible,
+html[data-user-color-scheme="dark"] a.post-meta__date.button:hover,
+html.dark a.post-meta__date.button:hover,
+html[data-theme="dark"] a.post-meta__date.button:hover,
+html[data-user-color-scheme="dark"] a.post-meta__date.button:focus-visible,
+html.dark a.post-meta__date.button:focus-visible,
+html[data-theme="dark"] a.post-meta__date.button:focus-visible {
+  background: rgba(255,255,255,0.16) !important;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.26) !important;
+}
+html[data-user-color-scheme="dark"] .post-meta__date a,
+html.dark .post-meta__date a,
+html[data-theme="dark"] .post-meta__date a,
+html[data-user-color-scheme="dark"] a.post-meta__date,
+html.dark a.post-meta__date,
+html[data-theme="dark"] a.post-meta__date,
+html[data-user-color-scheme="dark"] .post-date a,
+html.dark .post-date a,
+html[data-theme="dark"] .post-date a,
+html[data-user-color-scheme="dark"] a.post-date,
+html.dark a.post-date,
+html[data-theme="dark"] a.post-date {
+  color: inherit !important;
+}
+html[data-user-color-scheme="dark"] .post-content a:not(.headerlink):not(.button),
+html.dark .post-content a:not(.headerlink):not(.button),
+html[data-theme="dark"] .post-content a:not(.headerlink):not(.button),
+html[data-user-color-scheme="dark"] .post-entry a:not(.headerlink):not(.button),
+html.dark .post-entry a:not(.headerlink):not(.button),
+html[data-theme="dark"] .post-entry a:not(.headerlink):not(.button),
+html[data-user-color-scheme="dark"] .content-card a:not(.headerlink):not(.button),
+html.dark .content-card a:not(.headerlink):not(.button),
+html[data-theme="dark"] .content-card a:not(.headerlink):not(.button),
+html[data-user-color-scheme="dark"] .markdown a:not(.headerlink):not(.button),
+html.dark .markdown a:not(.headerlink):not(.button),
+html[data-theme="dark"] .markdown a:not(.headerlink):not(.button) {
+  background: rgba(187,134,252,0.14);
+  box-shadow: inset 0 0 0 1px rgba(187,134,252,0.22);
+}
+html[data-user-color-scheme="dark"] .cover__intro,
+html.dark .cover__intro,
+html[data-theme="dark"] .cover__intro {
+  color: rgba(255,255,255,0.92);
+}
+html[data-user-color-scheme="dark"] .cover__intro p,
 html.dark .cover__intro p,
-body.dark .cover__intro p,
-html[data-theme="dark"] .cover__intro p,
-body[data-theme="dark"] .cover__intro p {
+html[data-theme="dark"] .cover__intro p {
   color: rgba(255,255,255,0.92);
   background: rgba(0,0,0,0.55);
 }
