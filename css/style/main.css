@@ -1469,10 +1469,10 @@ a.post-meta__date,
 a.post-date {
   color: inherit;
 }
-.post-content a:not(.headerlink):not(.button),
-.post-entry a:not(.headerlink):not(.button),
-.content-card a:not(.headerlink):not(.button),
-.markdown a:not(.headerlink):not(.button) {
+.post-content a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox),
+.post-entry a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox),
+.content-card a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox),
+.markdown a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox) {
   text-decoration: none;
   font-weight: 600;
   border-radius: 0.25em;
@@ -1480,14 +1480,14 @@ a.post-date {
   background: rgba(98,0,238,0.1);
   box-shadow: inset 0 0 0 1px rgba(98,0,238,0.18);
 }
-.post-content a:not(.headerlink):not(.button):hover,
-.post-entry a:not(.headerlink):not(.button):hover,
-.content-card a:not(.headerlink):not(.button):hover,
-.markdown a:not(.headerlink):not(.button):hover,
-.post-content a:not(.headerlink):not(.button):focus-visible,
-.post-entry a:not(.headerlink):not(.button):focus-visible,
-.content-card a:not(.headerlink):not(.button):focus-visible,
-.markdown a:not(.headerlink):not(.button):focus-visible {
+.post-content a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox):hover,
+.post-entry a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox):hover,
+.content-card a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox):hover,
+.markdown a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox):hover,
+.post-content a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox):focus-visible,
+.post-entry a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox):focus-visible,
+.content-card a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox):focus-visible,
+.markdown a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox):focus-visible {
   background: rgba(98,0,238,0.16);
   box-shadow: inset 0 0 0 1px rgba(98,0,238,0.28);
 }
@@ -1571,12 +1571,23 @@ a.headerlink:focus-visible {
     background: rgba(255,255,255,0.1);
     box-shadow: inset 0 0 0 1px rgba(255,255,255,0.16);
   }
-  .post-content a:not(.headerlink):not(.button),
-  .post-entry a:not(.headerlink):not(.button),
-  .content-card a:not(.headerlink):not(.button),
-  .markdown a:not(.headerlink):not(.button) {
+  .post-content a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox),
+  .post-entry a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox),
+  .content-card a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox),
+  .markdown a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox) {
     background: rgba(187,134,252,0.14);
     box-shadow: inset 0 0 0 1px rgba(187,134,252,0.22);
+  }
+  .post-content a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox):hover,
+  .post-entry a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox):hover,
+  .content-card a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox):hover,
+  .markdown a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox):hover,
+  .post-content a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox):focus-visible,
+  .post-entry a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox):focus-visible,
+  .content-card a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox):focus-visible,
+  .markdown a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox):focus-visible {
+    background: rgba(187,134,252,0.2);
+    box-shadow: inset 0 0 0 1px rgba(187,134,252,0.32);
   }
   .cover__intro {
     color: rgba(255,255,255,0.92);
@@ -1699,20 +1710,47 @@ html.dark a.post-date,
 html[data-theme="dark"] a.post-date {
   color: inherit !important;
 }
-html[data-user-color-scheme="dark"] .post-content a:not(.headerlink):not(.button),
-html.dark .post-content a:not(.headerlink):not(.button),
-html[data-theme="dark"] .post-content a:not(.headerlink):not(.button),
-html[data-user-color-scheme="dark"] .post-entry a:not(.headerlink):not(.button),
-html.dark .post-entry a:not(.headerlink):not(.button),
-html[data-theme="dark"] .post-entry a:not(.headerlink):not(.button),
-html[data-user-color-scheme="dark"] .content-card a:not(.headerlink):not(.button),
-html.dark .content-card a:not(.headerlink):not(.button),
-html[data-theme="dark"] .content-card a:not(.headerlink):not(.button),
-html[data-user-color-scheme="dark"] .markdown a:not(.headerlink):not(.button),
-html.dark .markdown a:not(.headerlink):not(.button),
-html[data-theme="dark"] .markdown a:not(.headerlink):not(.button) {
+html[data-user-color-scheme="dark"] .post-content a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox),
+html.dark .post-content a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox),
+html[data-theme="dark"] .post-content a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox),
+html[data-user-color-scheme="dark"] .post-entry a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox),
+html.dark .post-entry a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox),
+html[data-theme="dark"] .post-entry a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox),
+html[data-user-color-scheme="dark"] .content-card a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox),
+html.dark .content-card a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox),
+html[data-theme="dark"] .content-card a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox),
+html[data-user-color-scheme="dark"] .markdown a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox),
+html.dark .markdown a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox),
+html[data-theme="dark"] .markdown a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox) {
   background: rgba(187,134,252,0.14);
   box-shadow: inset 0 0 0 1px rgba(187,134,252,0.22);
+}
+html[data-user-color-scheme="dark"] .post-content a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox):hover,
+html.dark .post-content a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox):hover,
+html[data-theme="dark"] .post-content a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox):hover,
+html[data-user-color-scheme="dark"] .post-entry a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox):hover,
+html.dark .post-entry a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox):hover,
+html[data-theme="dark"] .post-entry a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox):hover,
+html[data-user-color-scheme="dark"] .content-card a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox):hover,
+html.dark .content-card a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox):hover,
+html[data-theme="dark"] .content-card a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox):hover,
+html[data-user-color-scheme="dark"] .markdown a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox):hover,
+html.dark .markdown a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox):hover,
+html[data-theme="dark"] .markdown a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox):hover,
+html[data-user-color-scheme="dark"] .post-content a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox):focus-visible,
+html.dark .post-content a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox):focus-visible,
+html[data-theme="dark"] .post-content a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox):focus-visible,
+html[data-user-color-scheme="dark"] .post-entry a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox):focus-visible,
+html.dark .post-entry a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox):focus-visible,
+html[data-theme="dark"] .post-entry a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox):focus-visible,
+html[data-user-color-scheme="dark"] .content-card a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox):focus-visible,
+html.dark .content-card a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox):focus-visible,
+html[data-theme="dark"] .content-card a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox):focus-visible,
+html[data-user-color-scheme="dark"] .markdown a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox):focus-visible,
+html.dark .markdown a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox):focus-visible,
+html[data-theme="dark"] .markdown a:not(.headerlink):not(.button):not([data-fancybox]):not(.fancybox):focus-visible {
+  background: rgba(187,134,252,0.2);
+  box-shadow: inset 0 0 0 1px rgba(187,134,252,0.32);
 }
 html[data-user-color-scheme="dark"] .cover__intro,
 html.dark .cover__intro,
@@ -1724,4 +1762,49 @@ html.dark .cover__intro p,
 html[data-theme="dark"] .cover__intro p {
   color: rgba(255,255,255,0.92);
   background: rgba(0,0,0,0.55);
+}
+.post-content a[data-fancybox],
+.post-entry a[data-fancybox],
+.content-card a[data-fancybox],
+.markdown a[data-fancybox],
+.post-content a.fancybox,
+.post-entry a.fancybox,
+.content-card a.fancybox,
+.markdown a.fancybox,
+.post-content a:has(img),
+.post-entry a:has(img),
+.content-card a:has(img),
+.markdown a:has(img) {
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  font-weight: inherit !important;
+}
+.post-content a[data-fancybox]:hover,
+.post-entry a[data-fancybox]:hover,
+.content-card a[data-fancybox]:hover,
+.markdown a[data-fancybox]:hover,
+.post-content a.fancybox:hover,
+.post-entry a.fancybox:hover,
+.content-card a.fancybox:hover,
+.markdown a.fancybox:hover,
+.post-content a:has(img):hover,
+.post-entry a:has(img):hover,
+.content-card a:has(img):hover,
+.markdown a:has(img):hover,
+.post-content a[data-fancybox]:focus-visible,
+.post-entry a[data-fancybox]:focus-visible,
+.content-card a[data-fancybox]:focus-visible,
+.markdown a[data-fancybox]:focus-visible,
+.post-content a.fancybox:focus-visible,
+.post-entry a.fancybox:focus-visible,
+.content-card a.fancybox:focus-visible,
+.markdown a.fancybox:focus-visible,
+.post-content a:has(img):focus-visible,
+.post-entry a:has(img):focus-visible,
+.content-card a:has(img):focus-visible,
+.markdown a:has(img):focus-visible {
+  background: transparent !important;
+  box-shadow: none !important;
 }
