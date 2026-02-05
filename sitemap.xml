@@ -2,9 +2,9 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://www.jsw.ac.cn/build-ipchecker-sea/</loc>
+    <loc>https://www.jsw.ac.cn/404.html</loc>
     
-    <lastmod>2026-01-15</lastmod>
+    <lastmod>2026-02-05</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -64,10 +64,19 @@
     <priority>0.6</priority>
   </url>
   
+  <url>
+    <loc>https://www.jsw.ac.cn/acme-alidns/</loc>
+    
+    <lastmod>2025-05-28</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
 
   <url>
     <loc>https://www.jsw.ac.cn/</loc>
-    <lastmod>2026-01-15</lastmod>
+    <lastmod>2026-02-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
