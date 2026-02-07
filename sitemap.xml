@@ -2,7 +2,79 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://www.jsw.ac.cn/404.html</loc>
+    <loc>https://jsw.ac.cn/apply-aliemail/</loc>
+    
+    <lastmod>2026-02-07</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jsw.ac.cn/acme-alidns/</loc>
+    
+    <lastmod>2026-02-07</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jsw.ac.cn/ali-pages/</loc>
+    
+    <lastmod>2026-02-07</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jsw.ac.cn/acceleration/</loc>
+    
+    <lastmod>2026-02-07</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jsw.ac.cn/hexo/</loc>
+    
+    <lastmod>2026-02-07</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jsw.ac.cn/categories/index.html</loc>
+    
+    <lastmod>2026-02-07</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jsw.ac.cn/tools/index.html</loc>
+    
+    <lastmod>2026-02-07</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jsw.ac.cn/about/index.html</loc>
+    
+    <lastmod>2026-02-07</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jsw.ac.cn/404.html</loc>
     
     <lastmod>2026-02-05</lastmod>
     
@@ -11,7 +83,7 @@
   </url>
   
   <url>
-    <loc>https://www.jsw.ac.cn/archives/index.html</loc>
+    <loc>https://jsw.ac.cn/archives/index.html</loc>
     
     <lastmod>2025-12-19</lastmod>
     
@@ -20,7 +92,7 @@
   </url>
   
   <url>
-    <loc>https://www.jsw.ac.cn/search/index.html</loc>
+    <loc>https://jsw.ac.cn/search/index.html</loc>
     
     <lastmod>2025-12-17</lastmod>
     
@@ -28,55 +100,10 @@
     <priority>0.6</priority>
   </url>
   
-  <url>
-    <loc>https://www.jsw.ac.cn/apply-aliemail/</loc>
-    
-    <lastmod>2025-12-15</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.jsw.ac.cn/ali-pages/</loc>
-    
-    <lastmod>2025-12-12</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.jsw.ac.cn/acceleration/</loc>
-    
-    <lastmod>2025-12-12</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.jsw.ac.cn/hexo/</loc>
-    
-    <lastmod>2025-06-18</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.jsw.ac.cn/acme-alidns/</loc>
-    
-    <lastmod>2025-05-28</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
 
   <url>
-    <loc>https://www.jsw.ac.cn/</loc>
-    <lastmod>2026-02-05</lastmod>
+    <loc>https://jsw.ac.cn/</loc>
+    <lastmod>2026-02-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
