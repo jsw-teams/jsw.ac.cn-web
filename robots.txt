@@ -1,4 +1,5 @@
 User-agent: *
 Disallow: /cdn-cgi/
+Disallow: /uploads/cferrorpage/
 
 Sitemap: https://jsw.ac.cn/sitemap.xml

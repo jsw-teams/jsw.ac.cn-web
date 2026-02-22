@@ -2,6 +2,87 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://jsw.ac.cn/404.html</loc>
+    
+    <lastmod>2026-02-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jsw.ac.cn/uploads/cferrorpage/challenge.html</loc>
+    
+    <lastmod>2026-02-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jsw.ac.cn/uploads/cferrorpage/ratelimit_block.html</loc>
+    
+    <lastmod>2026-02-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jsw.ac.cn/uploads/cferrorpage/under_attack.html</loc>
+    
+    <lastmod>2026-02-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jsw.ac.cn/uploads/cferrorpage/waf_block.html</loc>
+    
+    <lastmod>2026-02-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jsw.ac.cn/uploads/cferrorpage/522.html</loc>
+    
+    <lastmod>2026-02-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jsw.ac.cn/uploads/cferrorpage/ip_block.html</loc>
+    
+    <lastmod>2026-02-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jsw.ac.cn/uploads/cferrorpage/1000_errors.html</loc>
+    
+    <lastmod>2026-02-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jsw.ac.cn/uploads/cferrorpage/500_errors.html</loc>
+    
+    <lastmod>2026-02-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://jsw.ac.cn/privacy-policy/index.html</loc>
     
     <lastmod>2026-02-07</lastmod>
@@ -83,15 +164,6 @@
   </url>
   
   <url>
-    <loc>https://jsw.ac.cn/404.html</loc>
-    
-    <lastmod>2026-02-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://jsw.ac.cn/archives/index.html</loc>
     
     <lastmod>2025-12-19</lastmod>
@@ -112,7 +184,7 @@
 
   <url>
     <loc>https://jsw.ac.cn/</loc>
-    <lastmod>2026-02-21</lastmod>
+    <lastmod>2026-02-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
