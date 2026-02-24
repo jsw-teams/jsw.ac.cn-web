@@ -129,8 +129,6 @@
     
         <script>(function(){var c={enable:false,annualDates:["05-12","09-18","12-13"],specificDates:[],annualDateRanges:[],specificDateRanges:[]};function check(){if(c.enable)return true;var now=new Date();var y=now.getFullYear();var m=String(now.getMonth()+1).padStart(2,"0");var d=String(now.getDate()).padStart(2,"0");var today=y+"-"+m+"-"+d;var todayMD=m+"-"+d;if(c.annualDates.indexOf(todayMD)!==-1)return true;if(c.specificDates.indexOf(today)!==-1)return true;for(var i=0;i<c.annualDateRanges.length;i++){var r=c.annualDateRanges[i];if(r.start&&r.end){var s=r.start;var e=r.end;if(s<=e){if(todayMD>=s&&todayMD<=e)return true}else{if(todayMD>=s||todayMD<=e)return true}}}for(var j=0;j<c.specificDateRanges.length;j++){var sr=c.specificDateRanges[j];if(sr.start&&sr.end&&today>=sr.start&&today<=sr.end)return true}return false}if(check()){var style=document.createElement("style");style.innerHTML="html{filter:grayscale(100%);-webkit-filter:grayscale(100%);-moz-filter:grayscale(100%);-ms-filter:grayscale(100%);-o-filter:grayscale(100%);}";document.head.appendChild(style)}})();</script> 
     
-        <script charset="UTF-8">(function(){var CFG={notice_banner_type:"simple",consent_type:"express",palette:"light",language:"en",page_load_consent_levels:["strictly-necessary"],notice_banner_reject_button_hide:false,preferences_center_close_button_hide:false,page_refresh_confirmation_buttons:false,website_privacy_policy_url:"https://jsw.ac.cn/privacy-policy"};var GAP=12;function num(v){var n=parseFloat((v||"").toString());return isFinite(n)?n:0}function ensureBtn(){var b2t=document.getElementById("b2t");if(!b2t)return null;var btn=document.getElementById("open_preferences_center");if(btn)return btn;btn=document.createElement("a");btn.href="#";btn.id="open_preferences_center";btn.className=b2t.className||"button";btn.setAttribute("aria-label","Cookie preferences");btn.setAttribute("title","Cookie preferences");btn.setAttribute("rel","nofollow");btn.style.padding="0";btn.style.border="0";btn.style.cursor="pointer";btn.style.lineHeight="0";var ns="http://www.w3.org/2000/svg",svg=document.createElementNS(ns,"svg");svg.setAttribute("viewBox","0 0 24 24");svg.setAttribute("width","32");svg.setAttribute("height","32");svg.style.display="block";svg.style.margin="8px";var path=document.createElementNS(ns,"path");path.setAttribute("fill","currentColor");path.setAttribute("fill-rule","nonzero");path.setAttribute("d","M12,2 C12.7139344,2 13.4186669,2.07493649 14.1058513,2.22228153 C14.6865234,2.34678839 14.8990219,3.06470877 14.4796691,3.48521478 C14.0147885,3.95137375 13.75,4.57867916 13.75,5.25 C13.75,6.42043414 14.5611837,7.42718287 15.6858365,7.68625206 C16.0559035,7.77149876 16.3038519,8.11989963 16.2631619,8.49747198 C16.2544079,8.57870262 16.25,8.66307444 16.25,8.75 C16.25,10.1307119 17.3692881,11.25 18.75,11.25 C19.4766017,11.25 20.151276,10.9392994 20.6235262,10.4053218 C21.0526462,9.92011177 21.8536336,10.1704416 21.9300905,10.8136579 C21.9765784,11.2047517 22,11.6008646 22,12 C22,17.5228475 17.5228475,22 12,22 C6.4771525,22 2,17.5228475 2,12 C2,6.4771525 6.4771525,2 12,2 Z M12,3.5 C7.30557963,3.5 3.5,7.30557963 3.5,12 C3.5,16.6944204 7.30557963,20.5 12,20.5 C16.4367197,20.5 20.0795061,17.1007677 20.4660785,12.7645841 L20.4850437,12.5084524 L20.492,12.351 L20.2985099,12.4390561 C19.9679152,12.5778546 19.6173377,12.672508 19.2549465,12.7182945 L18.9810657,12.743398 L18.75,12.75 C16.7439233,12.75 15.0827631,11.2732368 14.7943277,9.34751855 L14.7694285,9.14674696 L14.755,8.96 L14.6100904,8.89964226 C13.3259006,8.32272189 12.4198681,7.0959893 12.2714595,5.6656449 L12.2549278,5.44962193 L12.25,5.25 C12.25,4.80312661 12.3237894,4.36763736 12.4635899,3.95776709 L12.5553294,3.71503308 L12.64,3.525 L12.363736,3.50762946 L12,3.5 Z M15,16 C15.5522847,16 16,16.4477153 16,17 C16,17.5522847 15.5522847,18 15,18 C14.4477153,18 14,17.5522847 14,17 C14,16.4477153 14.4477153,16 15,16 Z M8,15 C8.55228475,15 9,15.4477153 9,16 C9,16.5522847 8.55228475,17 8,17 C7.44771525,17 7,16.5522847 7,16 C7,15.4477153 7.44771525,15 8,15 Z M12,11 C12.5522847,11 13,11.4477153 13,12 C13,12.5522847 12.5522847,13 12,13 C11.4477153,13 11,12.5522847 11,12 C11,11.4477153 11.4477153,11 12,11 Z M7,8 C7.55228475,8 8,8.44771525 8,9 C8,9.55228475 7.55228475,10 7,10 C6.44771525,10 6,9.55228475 6,9 C6,8.44771525 6.44771525,8 7,8 Z");svg.appendChild(path);btn.appendChild(svg);(b2t.parentNode||document.body).insertBefore(btn,b2t);return btn}function place(){var b2t=document.getElementById("b2t"),btn=document.getElementById("open_preferences_center");if(!b2t||!btn)return;var cs=getComputedStyle(b2t);btn.style.position="fixed";btn.style.zIndex=cs.zIndex||"1001";btn.style.width=cs.width;btn.style.height=cs.height;btn.style.right=cs.right;btn.style.left="auto";btn.style.borderRadius=cs.borderRadius;btn.style.backgroundColor=cs.backgroundColor;btn.style.color=cs.color;btn.style.boxShadow=cs.boxShadow;btn.style.webkitBoxShadow=cs.webkitBoxShadow;btn.style.opacity=cs.opacity;btn.style.visibility=cs.visibility;btn.style.display=(cs.display==="none"||cs.visibility==="hidden"||cs.opacity==="0")?"none":"block";var bottom=(cs.bottom&&cs.bottom!=="auto")?num(cs.bottom):16;var h=b2t.getBoundingClientRect().height||num(cs.height)||48;btn.style.bottom=(bottom+h+GAP)+"px"}function loadLib(cb){if(window.cookieconsent&&typeof window.cookieconsent.run==="function"){cb&&cb();return}if(document.getElementById("tf_cookieconsent_js")){cb&&cb();return}var s=document.createElement("script");s.id="tf_cookieconsent_js";s.src="https://www.termsfeed.com/public/cookie-consent/4.2.0/cookie-consent.js";s.charset="UTF-8";s.async=true;s.onload=function(){cb&&cb()};s.onerror=function(){console.warn("[cookieconsent] load failed")};document.head.appendChild(s)}function isTF(el){return !!(el&&el.closest&&el.closest(`[class*="termsfeed"],[id*="termsfeed"],[class*="cc"],[id*="cc"],[class*="cookie"],[id*="cookie"]`))}function fixIds(root){root=root||document;var els=root.querySelectorAll("input,select,textarea");for(var i=0;i<els.length;i++){var el=els[i];if(!isTF(el))continue;if(!el.id){window.__tfcc_seq=(window.__tfcc_seq||0)+1;el.id="tfcc_"+window.__tfcc_seq}if(!el.name)el.name=el.id}}function watchIds(){if(window.__tfcc_mo||!window.MutationObserver)return;window.__tfcc_mo=new MutationObserver(function(ms){for(var i=0;i<ms.length;i++){for(var j=0;j<ms[i].addedNodes.length;j++){var n=ms[i].addedNodes[j];if(n&&n.nodeType===1)fixIds(n)}}});if(document.body)window.__tfcc_mo.observe(document.body,{childList:true,subtree:true})}function runOnce(){if(window.__tfcc_ran)return;loadLib(function(){if(window.__tfcc_ran)return;if(window.cookieconsent&&typeof window.cookieconsent.run==="function"){window.__tfcc_ran=true;try{window.cookieconsent.run(CFG)}catch(e){window.__tfcc_ran=false;console.warn("[cookieconsent] run error",e)}fixIds();watchIds()}})}function openPC(){runOnce();var i=0;(function t(){i++;if(window.cookieconsent&&typeof window.cookieconsent.openPreferencesCenter==="function"){window.cookieconsent.openPreferencesCenter()}else if(i<30){setTimeout(t,120)}})()}function boot(){var btn=ensureBtn();place();window.addEventListener("resize",place,{passive:true});window.addEventListener("scroll",place,{passive:true});var b2t=document.getElementById("b2t");if(b2t&&window.MutationObserver&&!window.__tfcc_b2tmo){window.__tfcc_b2tmo=new MutationObserver(place);window.__tfcc_b2tmo.observe(b2t,{attributes:true,attributeFilter:["style","class"]})}if(btn&&!btn.__tfcc_bound){btn.__tfcc_bound=true;btn.addEventListener("click",function(e){e.preventDefault&&e.preventDefault();e.stopImmediatePropagation&&e.stopImmediatePropagation();openPC()},true)}runOnce()}if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",boot)}else{boot()}})();</script> 
-    
 
 <meta name="generator" content="Hexo 7.3.0"></head>
     <body>
@@ -240,7 +238,7 @@
         </svg>
     </a>
     <div class="toc-menus" id="toc-menus">
-        <div class="toc-title">文章目录</div>
+        <div class="toc-title">Article Directory</div>
         
     </div>
 
@@ -249,7 +247,7 @@
     <div class="post__header">
     <div class="post__expire" id="post-expired-notify">
         <p>
-            本文最后更新于 &lt;span id=&#34;expire-date&#34;&gt;&lt;/span&gt; 天前，文中部分描述可能已经过时。
+            This article was last updated on &lt;span id=&#34;expire-date&#34;&gt;&lt;/span&gt; days ago, the information described in the article may be outdated.
         </p>
     </div>
     <script>
@@ -275,18 +273,18 @@
     
     <div class="post__license">
         <p>
-            <strong>本文作者：</strong>技术网
+            <strong>Author: </strong>技术网
         </p>
         <p>
             <strong>
-                本文链接：
+                Permalink: 
             </strong>
             <a href="https://jsw.ac.cn/apply-aliemail/">https://jsw.ac.cn/apply-aliemail/</a>
         </p>
         
     </div>
  
-    <div class="post-footer__meta"><p>更新于 2026-02-07</p></div> 
+    <div class="post-footer__meta"><p>updated at 2026-02-07</p></div> 
     <div class="post-entry__tags"><a href="/tags/%E9%82%AE%E7%AE%B1-%E9%98%BF%E9%87%8C%E4%BA%91/" class="post-tags__link button"># 邮箱,阿里云</a></div> 
 </article>
 
@@ -300,7 +298,7 @@
                 <a href="/ali-pages/" class="nav__link">
                     <div>
                         <div class="nav__label">
-                            下一篇
+                            Next Post
                         </div>
                         <div class="nav__title">
                             如何将hexo部署到阿里云pages上
@@ -322,7 +320,7 @@
 
             <footer class="footer">
    
-    <a href="#" class="button" id="b2t" aria-label="回到顶部" title="回到顶部">
+    <a href="#" class="button" id="b2t" aria-label="Back to Top" title="Back to Top">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="32" height="32">
             <path d="M233.376 722.752L278.624 768 512 534.624 745.376 768l45.248-45.248L512 444.128zM192 352h640V288H192z" fill="currentColor"></path>
         </svg>
