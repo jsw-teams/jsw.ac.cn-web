@@ -44,7 +44,7 @@
     <!-- meta -->
 
 
-<title>Archive | 技术网</title>
+<title>如何使用本站的镜像站加速JS,CSS文件加载 | 技术网</title>
 
 
 <meta name="description" content="记录和分享日常学习过程中的技术笔记、服务器运维技巧内容，用于技术分享和学习总结">
@@ -52,7 +52,7 @@
 
 
 
-<link rel="canonical" href="https://www.jsw.ac.cn/archives/index.html">
+<link rel="canonical" href="https://www.jsw.ac.cn/style-mirror-acceleration/">
 
 
 
@@ -62,20 +62,23 @@
 
 
   <!-- OpenGraph -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="技术网">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="如何使用本站的镜像站加速JS,CSS文件加载">
   <meta property="og:description" content="记录和分享日常学习过程中的技术笔记、服务器运维技巧内容，用于技术分享和学习总结">
-  <meta property="og:url" content="https://www.jsw.ac.cn/archives/index.html">
+  <meta property="og:url" content="https://www.jsw.ac.cn/style-mirror-acceleration/">
   <meta property="og:site_name" content="技术网">
   <meta property="og:image" content="https://www.jsw.ac.cn/img/default-share.png">
-  <meta property="og:image:alt" content="技术网">
+  <meta property="og:image:alt" content="如何使用本站的镜像站加速JS,CSS文件加载">
 
+  
+    <meta property="article:published_time" content="2026-03-11T06:05:01.000Z">
+    <meta property="article:modified_time" content="2026-03-11T06:16:12.226Z">
   
 
   <!-- Twitter Card -->
   
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="技术网">
+    <meta name="twitter:title" content="如何使用本站的镜像站加速JS,CSS文件加载">
     <meta name="twitter:description" content="记录和分享日常学习过程中的技术笔记、服务器运维技巧内容，用于技术分享和学习总结">
     <meta name="twitter:image" content="https://www.jsw.ac.cn/img/default-share.png">
     <meta name="twitter:creator" content="@yourtwitter">
@@ -83,7 +86,7 @@
   
 
   <!-- microdata（兼容性保留） -->
-  <meta itemprop="name" content="技术网">
+  <meta itemprop="name" content="如何使用本站的镜像站加速JS,CSS文件加载">
   <meta itemprop="description" content="记录和分享日常学习过程中的技术笔记、服务器运维技巧内容，用于技术分享和学习总结">
   <meta itemprop="image" content="https://www.jsw.ac.cn/img/default-share.png">
 
@@ -98,6 +101,13 @@
  
 
     
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/highlight.css" media="none" >
+        
+            <link rel="stylesheet" id="hl-dark-theme" href="/css/highlight/highlight.dark.css" media="none">
+        
+    
+
     
     
 
@@ -190,186 +200,118 @@
 </header>
 
 
-    <div class="cover">
-        <div class="cover__logo">
-            
-                <h1>技术网</h1>
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        如何使用本站的镜像站加速JS,CSS文件加载
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2026/03/" class="post-meta__date button">2026-03-11</a>
+        
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+    <aside class="post-side">
+        <div class="post-side__toc">
             
         </div>
-        
-        
-            <div class="cover__intro">
-                <p>欢迎访问我的运维笔记</p>
- 
-            </div>
+    </aside>
+    <a class="btn-toc button" id="btn-toc" tabindex="0">
+        <svg viewBox="0 0 1024 1024" width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+            <path d="M128 256h64V192H128zM320 256h576V192H320zM128 544h64v-64H128zM320 544h576v-64H320zM128 832h64v-64H128zM320 832h576v-64H320z" fill="currentColor"></path>
+        </svg>
+    </a>
+    <div class="toc-menus" id="toc-menus">
+        <div class="toc-title">Article Directory</div>
         
     </div>
 
-            
-<main class='main'>
+
+<article class="post post__with-toc content-card">
+    <div class="post__header">
+    <div class="post__expire" id="post-expired-notify">
+        <p>
+            This article was last updated on &lt;span id=&#34;expire-date&#34;&gt;&lt;/span&gt; days ago, the information described in the article may be outdated.
+        </p>
+    </div>
+    <script>
+        (() => {
+            var update = Date.parse("2026-03-11"),
+                date = new Date(),
+                now = date.getTime(),
+                expire = now - update,
+                expire_days = Math.floor(expire/(24*3600*1000));
+            if (expire_days >= 120) {
+                document.querySelectorAll('#expire-date')[0].innerHTML = expire_days;
+                document.querySelectorAll('#post-expired-notify')[0].style.display = 'block';
+            }
+        })();
+    </script>
+</div>
+    <div class="post__content">
+        <p>1.请访问<a target="_blank" rel="noopener" href="https://mirror.jsw.ac.cn/">镜像站</a><br>2.可以使用搜索查询，比如我想要jQuery，那么就在搜索框输入<br><img src="https://img.alicdn.com/imgextra/i1/O1CN0101mFRl1Z6SkoC0QLp_!!2216683083145-2-fleamarket.png" class="lazy" data-srcset="https://img.alicdn.com/imgextra/i1/O1CN0101mFRl1Z6SkoC0QLp_!!2216683083145-2-fleamarket.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="搜索想要查询的内容"><br>3.然后选择版本，复制链接到你需要用的地方</p>
+<p>同时本站以正式使用了该镜像站的JS,CSS文件，以便快速加载</p>
+<p><img src="https://img.alicdn.com/imgextra/i1/O1CN01ZIKWaj1Z6Skp00dnl_!!2216683083145-2-fleamarket.png" class="lazy" data-srcset="https://img.alicdn.com/imgextra/i1/O1CN01ZIKWaj1Z6Skp00dnl_!!2216683083145-2-fleamarket.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="使用后的加载请求"></p>
+
+    </div>
     
-        <div class="archives">
-            
-                    <div class="archives-item">
-                        <div class="archives-left">
-                            <div class="archives-icon icon-lg"></div>
-                        </div>
-                        <div class="archives-content">
-                            <h3 class="archives-year">2026</h3>
-                        </div>
-                    </div>
-                
-                <div class="archives-item">
-                    <div class="archives-left">
-                        <div class="archives-icon">
+    <div class="post__license">
+        <p>
+            <strong>Author: </strong>技术网
+        </p>
+        <p>
+            <strong>
+                Permalink: 
+            </strong>
+            <a href="https://www.jsw.ac.cn/style-mirror-acceleration/">https://www.jsw.ac.cn/style-mirror-acceleration/</a>
+        </p>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>updated at 2026-03-11</p></div> 
+    <div class="post-entry__tags"></div> 
+</article>
 
-                        </div>
-                    </div>
-                    <span class="archives-content">
-                        03-11
-                        &nbsp;
-                        <a href="/style-mirror-acceleration/">
-                            <span class="archives-title">
-                                
-                                    如何使用本站的镜像站加速JS,CSS文件加载
-                                
-                            </span>
-                        </a>
-                        <br><br>
-                    </span>
-                </div>
-            
-                <div class="archives-item">
-                    <div class="archives-left">
-                        <div class="archives-icon">
 
-                        </div>
-                    </div>
-                    <span class="archives-content">
-                        03-07
-                        &nbsp;
-                        <a href="/pic/">
-                            <span class="archives-title">
-                                
-                                    如何将图片上传到阿里图床
-                                
-                            </span>
-                        </a>
-                        <br><br>
-                    </span>
-                </div>
-            
-                    <div class="archives-item">
-                        <div class="archives-left">
-                            <div class="archives-icon icon-lg"></div>
-                        </div>
-                        <div class="archives-content">
-                            <h3 class="archives-year">2025</h3>
-                        </div>
-                    </div>
-                
-                <div class="archives-item">
-                    <div class="archives-left">
-                        <div class="archives-icon">
-
-                        </div>
-                    </div>
-                    <span class="archives-content">
-                        12-15
-                        &nbsp;
-                        <a href="/apply-aliemail/">
-                            <span class="archives-title">
-                                
-                                    如何申请免费的阿里云域名邮箱
-                                
-                            </span>
-                        </a>
-                        <br><br>
-                    </span>
-                </div>
-            
-                <div class="archives-item">
-                    <div class="archives-left">
-                        <div class="archives-icon">
-
-                        </div>
-                    </div>
-                    <span class="archives-content">
-                        12-09
-                        &nbsp;
-                        <a href="/ali-pages/">
-                            <span class="archives-title">
-                                
-                                    如何将hexo部署到阿里云pages上
-                                
-                            </span>
-                        </a>
-                        <br><br>
-                    </span>
-                </div>
-            
-                <div class="archives-item">
-                    <div class="archives-left">
-                        <div class="archives-icon">
-
-                        </div>
-                    </div>
-                    <span class="archives-content">
-                        09-10
-                        &nbsp;
-                        <a href="/acceleration/">
-                            <span class="archives-title">
-                                
-                                    将 Hexo 站点部署到阿里云 OSS 并绑定 ESA 加速
-                                
-                            </span>
-                        </a>
-                        <br><br>
-                    </span>
-                </div>
-            
-                <div class="archives-item">
-                    <div class="archives-left">
-                        <div class="archives-icon">
-
-                        </div>
-                    </div>
-                    <span class="archives-content">
-                        06-18
-                        &nbsp;
-                        <a href="/hexo/">
-                            <span class="archives-title">
-                                
-                                    手把手教你安装和运行 Hexo 博客框架
-                                
-                            </span>
-                        </a>
-                        <br><br>
-                    </span>
-                </div>
-            
-                <div class="archives-item">
-                    <div class="archives-left">
-                        <div class="archives-icon">
-
-                        </div>
-                    </div>
-                    <span class="archives-content">
-                        05-26
-                        &nbsp;
-                        <a href="/acme-alidns/">
-                            <span class="archives-title">
-                                
-                                    acme.sh 安装及使用指南
-                                
-                            </span>
-                        </a>
-                        <br><br>
-                    </span>
-                </div>
+    <div class="nav">
+        <div class="nav__prev">
             
         </div>
-    
+        <div class="nav__next">
+            
+                <a href="/pic/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            Next Post
+                        </div>
+                        <div class="nav__title">
+                            如何将图片上传到阿里图床
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+
+
 </main>
 
             <footer class="footer">
