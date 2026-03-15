@@ -44,17 +44,15 @@
     <!-- meta -->
 
 
-<title>如何将hexo部署到阿里云pages上 | 技术网</title>
+<title>如何使用本站的镜像站加速JS,CSS文件加载 | 技术网</title>
 
 
-<meta name="description" content="最近阿里云开放了pages服务，所以本网站搭个车将网站迁移到阿里云pages上面。本文介绍如何通过hexo d上传到GitHub，然后让阿里云pages拉取github项目完成部署。">
+<meta name="description" content="记录和分享日常学习过程中的技术笔记、服务器运维技巧内容，用于技术分享和学习总结">
 
 
 
-<meta name="keywords" content="阿里云ESA">
 
-
-<link rel="canonical" href="https://www.jsw.ac.cn/ali-pages/">
+<link rel="canonical" href="https://www.jsw.ac.cn/post/style-mirror-acceleration/">
 
 
 
@@ -65,31 +63,31 @@
 
   <!-- OpenGraph -->
   <meta property="og:type" content="article">
-  <meta property="og:title" content="如何将hexo部署到阿里云pages上">
-  <meta property="og:description" content="最近阿里云开放了pages服务，所以本网站搭个车将网站迁移到阿里云pages上面。本文介绍如何通过hexo d上传到GitHub，然后让阿里云pages拉取github项目完成部署。">
-  <meta property="og:url" content="https://www.jsw.ac.cn/ali-pages/">
+  <meta property="og:title" content="如何使用本站的镜像站加速JS,CSS文件加载">
+  <meta property="og:description" content="记录和分享日常学习过程中的技术笔记、服务器运维技巧内容，用于技术分享和学习总结">
+  <meta property="og:url" content="https://www.jsw.ac.cn/post/style-mirror-acceleration/">
   <meta property="og:site_name" content="技术网">
   <meta property="og:image" content="https://www.jsw.ac.cn/img/default-share.png">
-  <meta property="og:image:alt" content="如何将hexo部署到阿里云pages上">
+  <meta property="og:image:alt" content="如何使用本站的镜像站加速JS,CSS文件加载">
 
   
-    <meta property="article:published_time" content="2025-12-09T11:23:42.000Z">
-    <meta property="article:modified_time" content="2026-03-15T06:29:16.181Z">
+    <meta property="article:published_time" content="2026-03-11T06:05:01.000Z">
+    <meta property="article:modified_time" content="2026-03-11T06:16:12.226Z">
   
 
   <!-- Twitter Card -->
   
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="如何将hexo部署到阿里云pages上">
-    <meta name="twitter:description" content="最近阿里云开放了pages服务，所以本网站搭个车将网站迁移到阿里云pages上面。本文介绍如何通过hexo d上传到GitHub，然后让阿里云pages拉取github项目完成部署。">
+    <meta name="twitter:title" content="如何使用本站的镜像站加速JS,CSS文件加载">
+    <meta name="twitter:description" content="记录和分享日常学习过程中的技术笔记、服务器运维技巧内容，用于技术分享和学习总结">
     <meta name="twitter:image" content="https://www.jsw.ac.cn/img/default-share.png">
     <meta name="twitter:creator" content="@yourtwitter">
     <meta name="twitter:site" content="@yoursite">
   
 
   <!-- microdata（兼容性保留） -->
-  <meta itemprop="name" content="如何将hexo部署到阿里云pages上">
-  <meta itemprop="description" content="最近阿里云开放了pages服务，所以本网站搭个车将网站迁移到阿里云pages上面。本文介绍如何通过hexo d上传到GitHub，然后让阿里云pages拉取github项目完成部署。">
+  <meta itemprop="name" content="如何使用本站的镜像站加速JS,CSS文件加载">
+  <meta itemprop="description" content="记录和分享日常学习过程中的技术笔记、服务器运维技巧内容，用于技术分享和学习总结">
   <meta itemprop="image" content="https://www.jsw.ac.cn/img/default-share.png">
 
   <!-- Facebook -->
@@ -207,13 +205,11 @@
 
 <div class="post-title">
     <h1 class="post-title__text">
-        如何将hexo部署到阿里云pages上
+        如何使用本站的镜像站加速JS,CSS文件加载
     </h1>
     <div class="post-title__meta">
-        <a href="/archives/2025/12/" class="post-meta__date button">2025-12-09</a>
+        <a href="/archives/2026/03/" class="post-meta__date button">2026-03-11</a>
         
-    <span class="separate-dot"></span><a href="/categories/%E9%98%BF%E9%87%8C%E4%BA%91/" class="button">阿里云</a>
-
  
         
     
@@ -238,7 +234,7 @@
         </svg>
     </a>
     <div class="toc-menus" id="toc-menus">
-        <div class="toc-title">Article Directory</div>
+        <div class="toc-title">文章目錄</div>
         
     </div>
 
@@ -247,12 +243,12 @@
     <div class="post__header">
     <div class="post__expire" id="post-expired-notify">
         <p>
-            This article was last updated on &lt;span id=&#34;expire-date&#34;&gt;&lt;/span&gt; days ago, the information described in the article may be outdated.
+            本文最後更新於 &lt;span id=&#34;expire-date&#34;&gt;&lt;/span&gt; 天前，文中部分描述可能已經過時。
         </p>
     </div>
     <script>
         (() => {
-            var update = Date.parse("2026-03-15"),
+            var update = Date.parse("2026-03-11"),
                 date = new Date(),
                 now = date.getTime(),
                 expire = now - update,
@@ -265,79 +261,43 @@
     </script>
 </div>
     <div class="post__content">
-        <p>最近阿里云开放了pages服务，所以本网站搭个车将网站迁移到阿里云pages上面。本文介绍如何通过hexo d上传到GitHub，然后让阿里云pages拉取github项目完成部署。</p>
-<span id="more"></span>
-<p><img src="https://img.alicdn.com/imgextra/i4/O1CN01w6RRv21Z6Skr6Y40E_!!2216683083145-2-fleamarket.png" class="lazy" data-srcset="https://img.alicdn.com/imgextra/i4/O1CN01w6RRv21Z6Skr6Y40E_!!2216683083145-2-fleamarket.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="阿里云推广图片"><br>在原先你的hexo目录中<code>_config.yml</code>的deploy部分填入：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">git@github.com:你的GitHub账号/项目名称.git</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">main</span></span><br><span class="line">  <span class="attr">message:</span> <span class="string">&quot;Site updated: <span class="template-variable">&#123;&#123; now(&#x27;YYYY-MM-DD HH:mm:ss&#x27;) &#125;&#125;</span>&quot;</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>本地 <code>hexo d</code> 时，会自动把 <code>public</code> 的内容推到 <code>main</code>。</li>
-<li>仓库的 <code>main</code> 分支里就是“纯静态站点”。</li>
-</ul>
-<p>在阿里云 ESA：</p>
-<ul>
-<li><p>导入这个 <code>blog</code> 仓库，</p>
-</li>
-<li><p>分支选 <code>main</code>，</p>
-</li>
-<li><p>同样配置：</p>
-<ul>
-<li>安装命令：<code>echo skip</code></li>
-<li>构建命令：<code>echo skip</code></li>
-<li>静态目录：<code>./</code></li>
-</ul>
-</li>
-</ul>
-<p><img src="/img/post/pages-1.png" class="lazy" data-srcset="/img/post/pages-1.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="pages部署设置"></p>
-<p>完成部署后可以绑定自定义域名，同时建议将NS交给ESA托管<br><img src="/img/post/pages-2.png" class="lazy" data-srcset="/img/post/pages-2.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="pages绑定自定义域名"></p>
-<p>等待DNS记录传播生效，同时留意pages目前只提供ipv4访问，少部分纯ipv6环境不完全支持，所以itdog提供ipv6 https测试部分地区出现解析失败无法访问是正常现象<br><img src="/img/post/itdog-pages-v4.png" class="lazy" data-srcset="/img/post/itdog-pages-v4.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="ipv4测试"><br><img src="/img/post/itdog-pages-v6.png" class="lazy" data-srcset="/img/post/itdog-pages-v6.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="ipv6测试"><br><img src="/img/post/oversea-dnsquery-v6.png" class="lazy" data-srcset="/img/post/oversea-dnsquery-v6.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="海外DNS查询AAAA记录"></p>
+        <p>1.请访问<a target="_blank" rel="noopener" href="https://mirror.jsw.ac.cn/">镜像站</a><br>2.可以使用搜索查询，比如我想要jQuery，那么就在搜索框输入<br><img src="https://img.alicdn.com/imgextra/i1/O1CN0101mFRl1Z6SkoC0QLp_!!2216683083145-2-fleamarket.png" class="lazy" data-srcset="https://img.alicdn.com/imgextra/i1/O1CN0101mFRl1Z6SkoC0QLp_!!2216683083145-2-fleamarket.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="搜索想要查询的内容"><br>3.然后选择版本，复制链接到你需要用的地方</p>
+<p>同时本站以正式使用了该镜像站的JS,CSS文件，以便快速加载</p>
+<p><img src="https://img.alicdn.com/imgextra/i1/O1CN01ZIKWaj1Z6Skp00dnl_!!2216683083145-2-fleamarket.png" class="lazy" data-srcset="https://img.alicdn.com/imgextra/i1/O1CN01ZIKWaj1Z6Skp00dnl_!!2216683083145-2-fleamarket.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="使用后的加载请求"></p>
 
     </div>
     
     <div class="post__license">
         <p>
-            <strong>Author: </strong>技术网
+            <strong>本文作者：</strong>技术网
         </p>
         <p>
             <strong>
-                Permalink: 
+                本文鏈接：
             </strong>
-            <a href="https://www.jsw.ac.cn/ali-pages/">https://www.jsw.ac.cn/ali-pages/</a>
+            <a href="https://www.jsw.ac.cn/post/style-mirror-acceleration/">https://www.jsw.ac.cn/post/style-mirror-acceleration/</a>
         </p>
         
     </div>
  
-    <div class="post-footer__meta"><p>updated at 2026-03-15</p></div> 
-    <div class="post-entry__tags"><a href="/tags/%E9%98%BF%E9%87%8C%E4%BA%91ESA/" class="post-tags__link button"># 阿里云ESA</a></div> 
+    <div class="post-footer__meta"><p>更新於 2026-03-11</p></div> 
+    <div class="post-entry__tags"></div> 
 </article>
 
 
     <div class="nav">
         <div class="nav__prev">
             
-                <a href="/apply-aliemail/" class="nav__link">
-                    <div>
-                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
-                    </div>
-                    <div>
-                        <div class="nav__label">
-                            Previous Post
-                        </div>
-                        <div class="nav__title">
-                            如何申请免费的阿里云域名邮箱
-                        </div>
-                    </div>
-                </a>
-            
         </div>
         <div class="nav__next">
             
-                <a href="/acceleration/" class="nav__link">
+                <a href="/post/pic/" class="nav__link">
                     <div>
                         <div class="nav__label">
-                            Next Post
+                            下一篇
                         </div>
                         <div class="nav__title">
-                            将 Hexo 站点部署到阿里云 OSS 并绑定 ESA 加速
+                            如何将图片上传到阿里图床
                         </div>
                     </div>
                     <div>
@@ -356,7 +316,7 @@
 
             <footer class="footer">
    
-    <a href="#" class="button" id="b2t" aria-label="Back to Top" title="Back to Top">
+    <a href="#" class="button" id="b2t" aria-label="回到頂部" title="回到頂部">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="32" height="32">
             <path d="M233.376 722.752L278.624 768 512 534.624 745.376 768l45.248-45.248L512 444.128zM192 352h640V288H192z" fill="currentColor"></path>
         </svg>

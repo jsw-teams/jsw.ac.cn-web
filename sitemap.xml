@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://www.jsw.ac.cn/pic/</loc>
+    <loc>https://www.jsw.ac.cn/post/pic/</loc>
     
     <lastmod>2026-03-15</lastmod>
     
@@ -11,7 +11,7 @@
   </url>
   
   <url>
-    <loc>https://www.jsw.ac.cn/apply-aliemail/</loc>
+    <loc>https://www.jsw.ac.cn/post/apply-aliemail/</loc>
     
     <lastmod>2026-03-15</lastmod>
     
@@ -20,7 +20,7 @@
   </url>
   
   <url>
-    <loc>https://www.jsw.ac.cn/ali-pages/</loc>
+    <loc>https://www.jsw.ac.cn/post/ali-pages/</loc>
     
     <lastmod>2026-03-15</lastmod>
     
@@ -29,7 +29,7 @@
   </url>
   
   <url>
-    <loc>https://www.jsw.ac.cn/tools/</loc>
+    <loc>https://www.jsw.ac.cn/tools/index.html</loc>
     
     <lastmod>2026-03-11</lastmod>
     
@@ -38,7 +38,7 @@
   </url>
   
   <url>
-    <loc>https://www.jsw.ac.cn/style-mirror-acceleration/</loc>
+    <loc>https://www.jsw.ac.cn/post/style-mirror-acceleration/</loc>
     
     <lastmod>2026-03-11</lastmod>
     
@@ -47,7 +47,7 @@
   </url>
   
   <url>
-    <loc>https://www.jsw.ac.cn/privacy-policy/</loc>
+    <loc>https://www.jsw.ac.cn/privacy-policy/index.html</loc>
     
     <lastmod>2026-02-07</lastmod>
     
@@ -56,7 +56,7 @@
   </url>
   
   <url>
-    <loc>https://www.jsw.ac.cn/acme-alidns/</loc>
+    <loc>https://www.jsw.ac.cn/post/acme-alidns/</loc>
     
     <lastmod>2026-02-07</lastmod>
     
@@ -65,7 +65,7 @@
   </url>
   
   <url>
-    <loc>https://www.jsw.ac.cn/acceleration/</loc>
+    <loc>https://www.jsw.ac.cn/post/acceleration/</loc>
     
     <lastmod>2026-02-07</lastmod>
     
@@ -74,7 +74,7 @@
   </url>
   
   <url>
-    <loc>https://www.jsw.ac.cn/hexo/</loc>
+    <loc>https://www.jsw.ac.cn/post/hexo/</loc>
     
     <lastmod>2026-02-07</lastmod>
     
@@ -83,7 +83,7 @@
   </url>
   
   <url>
-    <loc>https://www.jsw.ac.cn/categories/</loc>
+    <loc>https://www.jsw.ac.cn/categories/index.html</loc>
     
     <lastmod>2026-02-07</lastmod>
     
@@ -92,7 +92,7 @@
   </url>
   
   <url>
-    <loc>https://www.jsw.ac.cn/about/</loc>
+    <loc>https://www.jsw.ac.cn/about/index.html</loc>
     
     <lastmod>2026-02-07</lastmod>
     
@@ -101,7 +101,7 @@
   </url>
   
   <url>
-    <loc>https://www.jsw.ac.cn/archives/</loc>
+    <loc>https://www.jsw.ac.cn/archives/index.html</loc>
     
     <lastmod>2025-12-19</lastmod>
     
@@ -110,7 +110,7 @@
   </url>
   
   <url>
-    <loc>https://www.jsw.ac.cn/search/</loc>
+    <loc>https://www.jsw.ac.cn/search/index.html</loc>
     
     <lastmod>2025-12-17</lastmod>
     
