@@ -104,6 +104,7 @@ function splitFrontmatter(raw) {
 function inline(text) {
   return esc(text)
     .replace(/`([^`]+)`/g, "<code>$1</code>")
+    .replace(/&lt;(https?:\/\/[^&\s]+)&gt;/g, '<a href="$1">$1</a>')
     .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
     .replace(/\*([^*]+)\*/g, "<em>$1</em>")
     .replace(/!\[([^\]]*)\]\(([^)\s]+)(?:\s+&quot;[^&]*&quot;)?\)/g, '<img src="$2" alt="$1" loading="lazy" decoding="async">')
@@ -138,6 +139,7 @@ function markdown(markdownText) {
   let orderedList = [];
   let orderedStart = 1;
   let code = [];
+  let codeIndent = 0;
   let inCode = false;
 
   const flushParagraph = () => {
@@ -163,20 +165,22 @@ function markdown(markdownText) {
 
   for (let index = 0; index < lines.length; index += 1) {
     const line = lines[index];
-    if (line.startsWith("```")) {
+    if (line.trimStart().startsWith("```")) {
       if (inCode) {
         flushCode();
         inCode = false;
+        codeIndent = 0;
       } else {
         flushParagraph();
         flushList();
         flushOrderedList();
         inCode = true;
+        codeIndent = line.match(/^(\s*)```/)?.[1].length || 0;
       }
       continue;
     }
     if (inCode) {
-      code.push(line);
+      code.push(line.startsWith(" ".repeat(codeIndent)) ? line.slice(codeIndent) : line);
       continue;
     }
     if (!line.trim()) {

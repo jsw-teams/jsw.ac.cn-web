@@ -42,34 +42,45 @@
 <p>下载地址：<a href="https://nodejs.org/">Node.js 官方网站</a> <strong>推荐版本：LTS</strong></p>
 <ol><li><strong>Node.js 和 npm</strong> </li></ol>
 <h2 id="**%E5%AE%89%E8%A3%85%20Hexo**"><strong>安装 Hexo</strong></h2>
-<p>``<code>bash npm install -g hexo-cli </code>``</p>
 <ol><li>打开终端，安装 Hexo 的命令行工具：</li></ol>
+<pre><code>npm install -g hexo-cli</code></pre>
 <p>选择一个空文件夹作为你的博客目录，例如 <code>hexo-blog</code>，然后执行以下命令：</p>
 <ol start="2"><li><strong>创建博客项目</strong> </li></ol>
-<p>``<code>bash mkdir hexo-blog cd hexo-blog hexo init </code>``</p>
-<p>安装完成后，目录结构如下： ``<code> hexo-blog/ ├── _config.yml    # 站点配置文件 ├── package.json   # 项目信息 ├── scaffolds/     # 模板文件 ├── source/        # 博客内容 └── themes/        # 主题文件 </code>``</p>
-<p>``<code>bash npm install </code>``</p>
+<pre><code>mkdir hexo-blog
+cd hexo-blog
+hexo init</code></pre>
+<p>安装完成后，目录结构如下：</p>
+<pre><code>hexo-blog/
+├── _config.yml    # 站点配置文件
+├── package.json   # 项目信息
+├── scaffolds/     # 模板文件
+├── source/        # 博客内容
+└── themes/        # 主题文件</code></pre>
 <ol start="3"><li>安装依赖：</li></ol>
+<pre><code>npm install</code></pre>
 <h2 id="**%E8%BF%90%E8%A1%8C%20Hexo**"><strong>运行 Hexo</strong></h2>
-<p>``<code>bash hexo server </code>``</p>
 <ol><li>启动本地服务器：</li></ol>
+<pre><code>hexo server</code></pre>
 <ol start="2"><li>打开浏览器，访问 <a href="http://localhost:4000">http://localhost:4000</a>，你将看到 Hexo 的默认页面。</li></ol>
 <h2 id="**%E6%92%B0%E5%86%99%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0**"><strong>撰写博客文章</strong></h2>
 <p>使用命令：</p>
 <ol><li><strong>新建文章</strong> </li></ol>
-<p>``<code>bash hexo new &quot;文章标题&quot; </code>`<code> 文章文件会保存在 </code>source/_posts/<code> 文件夹下，文件格式为 </code>.md`。</p>
-<p>打开新建的 Markdown 文件，在其中撰写你的内容。例如： ```markdown</p>
+<pre><code>hexo new &quot;文章标题&quot;</code></pre>
+<p>文章文件会保存在 <code>source/_posts/</code> 文件夹下，文件格式为 <code>.md</code>。</p>
+<p>打开新建的 Markdown 文件，在其中撰写你的内容。例如：</p>
 <ol start="2"><li><strong>编辑文章</strong> </li></ol>
-<hr>
-<p>title: 我的第一篇博客 date: 2025-06-18 10:00:00 tags: [Hexo, 博客]</p>
-<hr>
-<p>这是我的第一篇 Hexo 博客文章！欢迎阅读！ ```</p>
+<pre><code>---
+title: 我的第一篇博客
+date: 2025-06-18 10:00:00
+tags: [Hexo, 博客]
+---
+这是我的第一篇 Hexo 博客文章！欢迎阅读！</code></pre>
 <p>在终端运行：</p>
 <ol start="3"><li><strong>生成静态页面</strong> </li></ol>
-<p>``<code>bash hexo generate </code>``</p>
+<pre><code>hexo generate</code></pre>
 <p>如果服务器已经关闭，请重新运行：</p>
 <ol start="4"><li><strong>再次启动服务器</strong> </li></ol>
-<p>``<code>bash hexo server </code>``</p>
+<pre><code>hexo server</code></pre>
 <h2 id="**%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%B1%87%E6%80%BB**"><strong>常用命令汇总</strong></h2>
 <div class="table-wrap"><table><thead><tr><th>命令</th><th>作用</th></tr></thead><tbody><tr><td><code>hexo new &lt;标题&gt;</code></td><td>新建文章</td></tr><tr><td><code>hexo generate</code></td><td>生成静态文件</td></tr><tr><td><code>hexo server</code></td><td>本地预览</td></tr><tr><td><code>hexo deploy</code></td><td>部署</td></tr><tr><td><code>hexo clean</code></td><td>清理缓存与旧的静态文件</td></tr></tbody></table></div>
 <hr>

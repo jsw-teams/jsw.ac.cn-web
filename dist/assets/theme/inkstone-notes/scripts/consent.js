@@ -8,6 +8,15 @@ const optionalCategoryKeys = Object.keys(categories).filter((key) => !categories
 const loadedScripts = new Set();
 let lastFocusedElement = null;
 let memoryConsent = null;
+let keyboardIntent = false;
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Tab" || event.key.startsWith("Arrow")) keyboardIntent = true;
+}, true);
+
+document.addEventListener("pointerdown", () => {
+  keyboardIntent = false;
+}, true);
 
 function storageGet() {
   try {
@@ -110,6 +119,7 @@ function createConsentPanel(state = defaultState(false)) {
   panel.setAttribute("role", "dialog");
   panel.setAttribute("aria-modal", "true");
   panel.setAttribute("aria-labelledby", "consent-title");
+  panel.setAttribute("tabindex", "-1");
   panel.innerHTML = `
     <h2 id="consent-title">隐私与 Cookie 偏好</h2>
     <p>本站会加载必要脚本来提供页面、安全和偏好保存。统计、营销或共享类脚本默认关闭，只有在你明确同意后才会加载。</p>
@@ -156,7 +166,7 @@ function createConsentPanel(state = defaultState(false)) {
   return panel;
 }
 
-function openConsentPanel(state, blocking = false) {
+function openConsentPanel(state, blocking = false, shouldFocus = keyboardIntent) {
   lastFocusedElement = document.activeElement;
   const panel = createConsentPanel(state);
   const backdrop = document.querySelector(".consent-backdrop");
@@ -165,7 +175,9 @@ function openConsentPanel(state, blocking = false) {
   document.body.classList.add("consent-modal-open");
   document.body.dataset.consentBlocking = blocking ? "true" : "false";
   setPageInert(true);
-  panel.querySelector("[data-consent-reject]")?.focus();
+  if (shouldFocus) {
+    panel.querySelector("[data-consent-reject]")?.focus();
+  }
   return panel;
 }
 
@@ -200,6 +212,6 @@ if (saved) {
 }
 
 document.querySelector("[data-consent-open]")?.addEventListener("click", () => {
-  openConsentPanel(readConsent() || defaultState(false), false);
+  openConsentPanel(readConsent() || defaultState(false), false, keyboardIntent);
 });
 })();
