@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>手把手教你安装和运行 Hexo 博客框架 | 技术网</title>
+  <meta name="description" content="Hexo 是一个快速、简洁且强大的静态博客框架，非常适合个人博客搭建。本文将带你一步步完成 Hexo 的安装和运行，新手也能轻松上手！">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="手把手教你安装和运行 Hexo 博客框架 | 技术网">
+  <meta property="og:description" content="Hexo 是一个快速、简洁且强大的静态博客框架，非常适合个人博客搭建。本文将带你一步步完成 Hexo 的安装和运行，新手也能轻松上手！">
+  <link rel="canonical" href="https://www.jsw.ac.cn/post/hexo/">
+  <link rel="stylesheet" href="/assets/theme/inkstone-notes/style.css">
+  <link rel="stylesheet" href="/assets/theme/inkstone-notes/styles/consent.css">
+  <link rel="stylesheet" href="/assets/theme/inkstone-notes/styles/post.css">
+  <link rel="stylesheet" href="/assets/theme/inkstone-notes/styles/lightbox.css">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="alternate" type="application/rss+xml" href="/feed.xml" title="技术网">
+</head>
+<body data-page-type="post">
+  <a class="skip-link" href="#main">跳到正文</a>
+  <header class="site-header">
+    <a class="brand" href="/"><span class="brand-mark" aria-hidden="true">记</span><span>技术网</span></a>
+    <nav class="site-nav" aria-label="主导航">
+      <a href="/">首页</a><a href="/archives/">归档</a><a href="/categories/">分类</a><a href="/tags/">标签</a><a href="/tools/">工具</a><a href="/about/">关于</a>
+      <a href="/search/">搜索</a>
+    </nav>
+  </header>
+  <main id="main" class="page-main article-main">
+  <article class="article-shell">
+    <header class="article-header">
+      <h1 class="article-title">手把手教你安装和运行 Hexo 博客框架</h1>
+      <p class="lead">Hexo 是一个快速、简洁且强大的静态博客框架，非常适合个人博客搭建。本文将带你一步步完成 Hexo 的安装和运行，新手也能轻松上手！</p>
+      <p class="article-meta">2026-06-27 · <a href="/categories/%E9%9D%99%E6%80%81%E6%A1%86%E6%9E%B6/">静态框架</a></p>
+      <div class="tag-row"><a href="/tags/hexo/">Hexo</a></div>
+    </header>
+    <div class="prose"><p>Hexo 是一个快速、简洁且强大的静态博客框架，非常适合个人博客搭建。本文将带你一步步完成 Hexo 的安装和运行，新手也能轻松上手！</p>
+<h2 id="**%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87**"><strong>环境准备</strong></h2>
+<p>在开始之前，请确保你的电脑已安装以下工具：</p>
+<p>下载地址：<a href="https://nodejs.org/">Node.js 官方网站</a> <strong>推荐版本：LTS</strong></p>
+<ol><li><strong>Node.js 和 npm</strong> </li></ol>
+<h2 id="**%E5%AE%89%E8%A3%85%20Hexo**"><strong>安装 Hexo</strong></h2>
+<p>``<code>bash npm install -g hexo-cli </code>``</p>
+<ol><li>打开终端，安装 Hexo 的命令行工具：</li></ol>
+<p>选择一个空文件夹作为你的博客目录，例如 <code>hexo-blog</code>，然后执行以下命令：</p>
+<ol start="2"><li><strong>创建博客项目</strong> </li></ol>
+<p>``<code>bash mkdir hexo-blog cd hexo-blog hexo init </code>``</p>
+<p>安装完成后，目录结构如下： ``<code> hexo-blog/ ├── _config.yml    # 站点配置文件 ├── package.json   # 项目信息 ├── scaffolds/     # 模板文件 ├── source/        # 博客内容 └── themes/        # 主题文件 </code>``</p>
+<p>``<code>bash npm install </code>``</p>
+<ol start="3"><li>安装依赖：</li></ol>
+<h2 id="**%E8%BF%90%E8%A1%8C%20Hexo**"><strong>运行 Hexo</strong></h2>
+<p>``<code>bash hexo server </code>``</p>
+<ol><li>启动本地服务器：</li></ol>
+<ol start="2"><li>打开浏览器，访问 <a href="http://localhost:4000">http://localhost:4000</a>，你将看到 Hexo 的默认页面。</li></ol>
+<h2 id="**%E6%92%B0%E5%86%99%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0**"><strong>撰写博客文章</strong></h2>
+<p>使用命令：</p>
+<ol><li><strong>新建文章</strong> </li></ol>
+<p>``<code>bash hexo new &quot;文章标题&quot; </code>`<code> 文章文件会保存在 </code>source/_posts/<code> 文件夹下，文件格式为 </code>.md`。</p>
+<p>打开新建的 Markdown 文件，在其中撰写你的内容。例如： ```markdown</p>
+<ol start="2"><li><strong>编辑文章</strong> </li></ol>
+<hr>
+<p>title: 我的第一篇博客 date: 2025-06-18 10:00:00 tags: [Hexo, 博客]</p>
+<hr>
+<p>这是我的第一篇 Hexo 博客文章！欢迎阅读！ ```</p>
+<p>在终端运行：</p>
+<ol start="3"><li><strong>生成静态页面</strong> </li></ol>
+<p>``<code>bash hexo generate </code>``</p>
+<p>如果服务器已经关闭，请重新运行：</p>
+<ol start="4"><li><strong>再次启动服务器</strong> </li></ol>
+<p>``<code>bash hexo server </code>``</p>
+<h2 id="**%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%B1%87%E6%80%BB**"><strong>常用命令汇总</strong></h2>
+<div class="table-wrap"><table><thead><tr><th>命令</th><th>作用</th></tr></thead><tbody><tr><td><code>hexo new &lt;标题&gt;</code></td><td>新建文章</td></tr><tr><td><code>hexo generate</code></td><td>生成静态文件</td></tr><tr><td><code>hexo server</code></td><td>本地预览</td></tr><tr><td><code>hexo deploy</code></td><td>部署</td></tr><tr><td><code>hexo clean</code></td><td>清理缓存与旧的静态文件</td></tr></tbody></table></div>
+<hr>
+<h2 id="**%E9%83%A8%E7%BD%B2%E7%BD%91%E7%AB%99**"><strong>部署网站</strong></h2>
+<ol><li>（推荐）SSH登入后上传到nginx指向路径即可</li><li>（不太推荐）使用hexo-deployer-sftp插件上传，因为太久没维护了，不安全，上传推送可能不支持。<a href="https://hexo.io/zh-cn/docs/one-command-deployment#SFTP">使用方法</a></li></ol>
+<h2 id="**%E7%BB%93%E8%AF%AD**"><strong>结语</strong></h2>
+<p>恭喜你完成了 Hexo 博客的安装和运行！通过 Hexo，你可以轻松记录生活和技术点滴，还可以通过丰富的主题和插件打造个性化博客。快去试试吧！</p></div>
+  </article>
+</main>
+
+  <footer class="site-footer">
+    <span>© 2026 技术网</span>
+    <span><a href="/feed.xml">订阅</a> · <a href="/sitemap.xml">站点地图</a> · <a href="/privacy-policy/">隐私政策</a> · <button class="footer-consent-button" type="button" data-consent-open>隐私偏好</button></span>
+  </footer>
+  <script id="theme-consent-config" type="application/json">{"storageKey":"jsw-consent-v2","revision":2,"categories":{"necessary":{"required":true,"label":"必要","description":"保持网站、安全、隐私偏好和基础页面功能可用。"},"preferences":{"required":false,"label":"偏好","description":"保存站内体验偏好，例如图片预览和本地交互增强。"},"analytics":{"required":false,"label":"统计","description":"帮助了解页面访问情况，用于改进内容和性能。"},"marketing":{"required":false,"label":"营销/共享","description":"可能用于广告、跨站跟踪、出售或共享个人信息；本站默认关闭。"}},"scripts":[{"id":"cloudflare-web-analytics","category":"analytics","src":"https://static.cloudflareinsights.com/beacon.min.js","defer":true,"attrs":{"data-cf-beacon":"{\"token\":\"2569d2337653410ab4f21d2e8bfd1ed0\"}"}}]}</script>
+  <script src="/assets/theme/inkstone-notes/scripts/consent.js" defer></script>
+  <script src="/assets/theme/inkstone-notes/scripts/lightbox.js" defer></script>
+</body>
+</html>

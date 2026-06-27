@@ -1,0 +1,20 @@
+.archive-list {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  margin-top: 1.5rem;
+  max-width: var(--content);
+  padding: 0.4rem 1rem;
+}
+.archive-list ul { list-style: none; margin: 0; padding: 0; }
+.archive-list li {
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  gap: 1rem;
+  padding: 0.65rem 0;
+}
+.archive-list li:last-child { border-bottom: 0; }
+.archive-list time { color: var(--muted); min-width: 7rem; }
+@media (max-width: 760px) {
+  .archive-list li { flex-direction: column; gap: 0.1rem; }
+}

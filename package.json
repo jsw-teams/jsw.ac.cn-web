@@ -1,0 +1,14 @@
+{
+  "name": "jsw-ac-cn-web",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "migrate:hexo": "node scripts/migrate-hexo.mjs",
+    "build": "node scripts/build.mjs",
+    "serve": "node scripts/serve.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

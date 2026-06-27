@@ -1,0 +1,10 @@
+.page-shell { max-width: var(--content); }
+.page-shell .prose {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  margin-top: 1.5rem;
+  padding: clamp(1rem, 3vw, 1.6rem);
+}
+.page-shell .prose > *:first-child { margin-top: 0; }
+.page-shell .prose h2, .page-shell .prose h3 { line-height: 1.35; margin-top: 2rem; }

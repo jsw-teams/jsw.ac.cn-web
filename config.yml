@@ -1,0 +1,47 @@
+siteUrl: https://www.jsw.ac.cn
+defaultLocale: zh-CN
+activeLocales:
+  - zh-CN
+siteName:
+  zh-CN: 技术网
+description:
+  zh-CN: 记录和分享日常学习过程中的技术笔记、服务器运维技巧内容，用于技术分享和学习总结。
+author:
+  zh-CN: 技术网
+theme:
+  name: inkstone-notes
+postsPerPage: 10
+
+nav:
+  links:
+    - key: home
+      href: /
+      label: 首页
+    - key: archive
+      href: /archives/
+      label: 归档
+    - key: categories
+      href: /categories/
+      label: 分类
+    - key: tags
+      href: /tags/
+      label: 标签
+    - key: tools
+      href: /tools/
+      label: 工具
+    - key: about
+      href: /about/
+      label: 关于
+
+robots:
+  contentSignal: search=yes, ai-input=yes
+  rules:
+    - userAgent: "*"
+      allow:
+        - /
+
+llms:
+  title: 技术网 / jsw.ac.cn
+  description: 技术网公开技术笔记，涵盖部署、服务器运维、网络服务和日常学习记录。
+feed:
+  title: 技术网

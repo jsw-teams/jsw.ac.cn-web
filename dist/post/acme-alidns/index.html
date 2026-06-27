@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>acme.sh 安装及使用指南 | 技术网</title>
+  <meta name="description" content="acme.sh 是一个用于申请和管理 CA 证书的轻量级 ACME 客户端，支持自动续订。">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="acme.sh 安装及使用指南 | 技术网">
+  <meta property="og:description" content="acme.sh 是一个用于申请和管理 CA 证书的轻量级 ACME 客户端，支持自动续订。">
+  <link rel="canonical" href="https://www.jsw.ac.cn/post/acme-alidns/">
+  <link rel="stylesheet" href="/assets/theme/inkstone-notes/style.css">
+  <link rel="stylesheet" href="/assets/theme/inkstone-notes/styles/consent.css">
+  <link rel="stylesheet" href="/assets/theme/inkstone-notes/styles/post.css">
+  <link rel="stylesheet" href="/assets/theme/inkstone-notes/styles/lightbox.css">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="alternate" type="application/rss+xml" href="/feed.xml" title="技术网">
+</head>
+<body data-page-type="post">
+  <a class="skip-link" href="#main">跳到正文</a>
+  <header class="site-header">
+    <a class="brand" href="/"><span class="brand-mark" aria-hidden="true">记</span><span>技术网</span></a>
+    <nav class="site-nav" aria-label="主导航">
+      <a href="/">首页</a><a href="/archives/">归档</a><a href="/categories/">分类</a><a href="/tags/">标签</a><a href="/tools/">工具</a><a href="/about/">关于</a>
+      <a href="/search/">搜索</a>
+    </nav>
+  </header>
+  <main id="main" class="page-main article-main">
+  <article class="article-shell">
+    <header class="article-header">
+      <h1 class="article-title">acme.sh 安装及使用指南</h1>
+      <p class="lead">acme.sh 是一个用于申请和管理 CA 证书的轻量级 ACME 客户端，支持自动续订。</p>
+      <p class="article-meta">2025-05-26 · <a href="/categories/SSL%20%E8%AF%81%E4%B9%A6/">SSL 证书</a></p>
+      <div class="tag-row"><a href="/tags/acmesh/">acme.sh</a><a href="/tags/%E4%BA%91%E8%A7%A3%E6%9E%90/">云解析</a><a href="/tags/%E9%98%BF%E9%87%8C%E4%BA%91/">阿里云</a></div>
+    </header>
+    <div class="prose"><p>acme.sh 是一个用于申请和管理 CA 证书的轻量级 ACME 客户端，支持自动续订。</p>
+<h2 id="1.%20acme.sh%20%E5%AE%89%E8%A3%85">1. acme.sh 安装</h2>
+<h3 id="**1.1%20%E5%AE%89%E8%A3%85%20socat">**1.1 安装 socat</h3>
+<pre><code>apt install socat -y  # Ubuntu/Debian
+yum install socat -y  # CentOS</code></pre>
+<h3 id="**1.2%20%E5%AE%89%E8%A3%85%20acme.sh**"><strong>1.2 安装 acme.sh</strong></h3>
+<p>使用以下命令安装 acme.sh：</p>
+<pre><code>curl https://get.acme.sh | sh</code></pre>
+<p>安装完成后，可能需要重新加载 shell 以生效：</p>
+<pre><code>source ~/.bashrc</code></pre>
+<h2 id="2.%20%E7%94%B3%E8%AF%B7%E6%B3%9B%E5%9F%9F%E5%90%8D%E8%AF%81%E4%B9%A6%EF%BC%88%E4%BD%BF%E7%94%A8%20%E9%98%BF%E9%87%8C%E4%BA%91DNS%20%E9%AA%8C%E8%AF%81%EF%BC%89">2. 申请泛域名证书（使用 阿里云DNS 验证）</h2>
+<h3 id="**2.1%20%E9%85%8D%E7%BD%AE%20%E9%98%BF%E9%87%8C%E4%BA%91DNS%20API**"><strong>2.1 配置 阿里云DNS API</strong></h3>
+<p><a href="https://ram.console.aliyun.com/users/create">登录阿里云账户管理</a>，创建一个具有DNS管理权限的RAM用户</p>
+<p>在申请证书前，需要提供 阿里云DNS 的 API Key 和 Email：</p>
+<pre><code>export Ali_Key=&quot;sddi*********daf&quot;
+export Ali_Secret=&quot;jls******************lsa&quot;</code></pre>
+<h3 id="**2.2%20%E7%94%B3%E8%AF%B7%E6%B3%9B%E5%9F%9F%E5%90%8D%E8%AF%81%E4%B9%A6**"><strong>2.2 申请泛域名证书</strong></h3>
+<p>注意<code>yourdomain.com</code>填写的是你的域名</p>
+<p>使用 阿里云 DNS 验证方式申请：</p>
+<pre><code>acme.sh --issue --dns dns_ali -d yourdomain.com -d &#39;*.yourdomain.com&#39;</code></pre>
+<p><strong>参数说明</strong>：</p>
+<ul><li><code>--dns dns_ali</code>：使用 Cloudflare DNS 进行域名验证。</li><li><code>-d yourdomain.com -d &#39;*.yourdomain.com&#39;</code>：申请主域名和泛域名证书。</li></ul>
+<h2 id="3.%20%E8%AF%81%E4%B9%A6%E5%AE%89%E8%A3%85%E5%8F%8A%E8%87%AA%E5%8A%A8%E7%BB%AD%E8%AE%A2">3. 证书安装及自动续订</h2>
+<h3 id="**3.1%20%E5%AE%89%E8%A3%85%E8%AF%81%E4%B9%A6%E5%88%B0%E6%8C%87%E5%AE%9A%E7%9B%AE%E5%BD%95**"><strong>3.1 安装证书到指定目录</strong></h3>
+<p>将证书安装到 <code>/etc/nginx/cert/</code> 目录，并自动续订：</p>
+<pre><code>acme.sh --install-cert -d yourdomain.com \
+    --key-file /etc/nginx/cert/private.key \
+    --fullchain-file /etc/nginx/cert/cert.crt \
+    --reloadcmd &quot;systemctl reload nginx&quot;</code></pre>
+<h3 id="**3.2%20%E7%A1%AE%E4%BF%9D%E8%AF%81%E4%B9%A6%E8%87%AA%E5%8A%A8%E7%BB%AD%E8%AE%A2**"><strong>3.2 确保证书自动续订</strong></h3>
+<p>acme.sh 会自动续订证书，无需手动干预。可以使用以下命令检查续订任务：</p>
+<pre><code>crontab -l | grep acme.sh</code></pre>
+<p>如果需要手动触发续订：</p>
+<pre><code>acme.sh --renew -d yourdomain.com</code></pre>
+<h2 id="4.%20%E5%85%B6%E4%BB%96%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4">4. 其他常用命令</h2>
+<h3 id="**4.1%20%E6%9F%A5%E7%9C%8B%E8%AF%81%E4%B9%A6%E5%88%97%E8%A1%A8**"><strong>4.1 查看证书列表</strong></h3>
+<pre><code>acme.sh --list</code></pre>
+<h3 id="**4.2%20%E5%BC%BA%E5%88%B6%E6%9B%B4%E6%96%B0%20acme.sh**"><strong>4.2 强制更新 acme.sh</strong></h3>
+<pre><code>acme.sh --upgrade</code></pre>
+<h3 id="**4.3%20%E5%8D%B8%E8%BD%BD%20acme.sh**"><strong>4.3 卸载 acme.sh</strong></h3>
+<p>如果不再使用，可以卸载：</p>
+<pre><code>acme.sh --uninstall
+rm -rf ~/.acme.sh</code></pre>
+<h2 id="5.%20%E6%9C%80%E5%90%8E">5. 最后</h2>
+<p>使用 acme.sh，可以轻松申请和管理 CA 证书，结合 阿里云 DNS 验证，支持泛域名证书，并且自动续订，适用于大多数网站的 HTTPS 配置需求。</p></div>
+  </article>
+</main>
+
+  <footer class="site-footer">
+    <span>© 2026 技术网</span>
+    <span><a href="/feed.xml">订阅</a> · <a href="/sitemap.xml">站点地图</a> · <a href="/privacy-policy/">隐私政策</a> · <button class="footer-consent-button" type="button" data-consent-open>隐私偏好</button></span>
+  </footer>
+  <script id="theme-consent-config" type="application/json">{"storageKey":"jsw-consent-v2","revision":2,"categories":{"necessary":{"required":true,"label":"必要","description":"保持网站、安全、隐私偏好和基础页面功能可用。"},"preferences":{"required":false,"label":"偏好","description":"保存站内体验偏好，例如图片预览和本地交互增强。"},"analytics":{"required":false,"label":"统计","description":"帮助了解页面访问情况，用于改进内容和性能。"},"marketing":{"required":false,"label":"营销/共享","description":"可能用于广告、跨站跟踪、出售或共享个人信息；本站默认关闭。"}},"scripts":[{"id":"cloudflare-web-analytics","category":"analytics","src":"https://static.cloudflareinsights.com/beacon.min.js","defer":true,"attrs":{"data-cf-beacon":"{\"token\":\"2569d2337653410ab4f21d2e8bfd1ed0\"}"}}]}</script>
+  <script src="/assets/theme/inkstone-notes/scripts/consent.js" defer></script>
+  <script src="/assets/theme/inkstone-notes/scripts/lightbox.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+.image-lightbox {
+  align-items: center;
+  background: rgba(10, 18, 28, 0.86);
+  display: none;
+  inset: 0;
+  justify-content: center;
+  padding: 1rem;
+  position: fixed;
+  z-index: 20;
+}
+.image-lightbox.is-open { display: flex; }
+.image-lightbox img {
+  background: var(--paper);
+  border-radius: var(--radius);
+  max-height: calc(100vh - 4rem);
+  max-width: calc(100vw - 2rem);
+}
+.image-lightbox button {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--ink);
+  cursor: pointer;
+  font: inherit;
+  height: 2.5rem;
+  position: fixed;
+  right: 1rem;
+  top: 1rem;
+  width: 2.5rem;
+}

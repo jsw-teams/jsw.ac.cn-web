@@ -1,0 +1,19 @@
+<main id="main" class="page-main home-main">
+  <section class="hero" aria-labelledby="home-title">
+    <div>
+      <h1 id="home-title">{{siteName}}</h1>
+      <p class="lead">{{description}}</p>
+    </div>
+    <picture class="note-mascot">
+      <source srcset="{{mascotWebp}}" type="image/webp">
+      <img src="{{mascotPng}}" alt="颉泡泡正在记笔记" width="720" height="760" decoding="async" fetchpriority="high">
+    </picture>
+  </section>
+  <section aria-labelledby="latest-posts">
+    <div class="section-heading">
+      <h2 id="latest-posts">{{latestPosts}}</h2>
+      <a href="{{archiveUrl}}">查看归档</a>
+    </div>
+    {{{postList}}}
+  </section>
+</main>

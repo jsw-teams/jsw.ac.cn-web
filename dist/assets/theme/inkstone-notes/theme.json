@@ -1,0 +1,68 @@
+{
+  "name": "inkstone-notes",
+  "description": "A calm technical note theme for jsw.ac.cn.",
+  "style": "style.css",
+  "script": "scripts/consent.js",
+  "templates": "templates",
+  "assets": {
+    "mascot": {
+      "png": "source-assets/jie-paopao-mascot.png",
+      "webp": "source-assets/jie-paopao-mascot.webp"
+    }
+  },
+  "pageStyles": {
+    "home": ["styles/home.css"],
+    "post": ["styles/post.css"],
+    "page": ["styles/page.css"],
+    "archive": ["styles/archive.css"],
+    "terms": ["styles/terms.css"],
+    "search": ["styles/search.css"]
+  },
+  "pageScripts": {
+    "post": ["scripts/lightbox.js"],
+    "search": ["scripts/search.js"]
+  },
+  "featureStyles": {
+    "consent": ["styles/consent.css"],
+    "lightbox": ["styles/lightbox.css"]
+  },
+  "consent": {
+    "storageKey": "jsw-consent-v2",
+    "revision": 2,
+    "categories": {
+      "necessary": {
+        "required": true,
+        "label": "必要",
+        "description": "保持网站、安全、隐私偏好和基础页面功能可用。"
+      },
+      "preferences": {
+        "required": false,
+        "label": "偏好",
+        "description": "保存站内体验偏好，例如图片预览和本地交互增强。"
+      },
+      "analytics": {
+        "required": false,
+        "label": "统计",
+        "description": "帮助了解页面访问情况，用于改进内容和性能。"
+      },
+      "marketing": {
+        "required": false,
+        "label": "营销/共享",
+        "description": "可能用于广告、跨站跟踪、出售或共享个人信息；本站默认关闭。"
+      }
+    }
+  },
+  "plugins": {
+    "analytics": {
+      "cloudflareWebAnalytics": {
+        "enabled": true,
+        "consent": "analytics",
+        "src": "https://static.cloudflareinsights.com/beacon.min.js",
+        "defer": true,
+        "beacon": {
+          "token": "2569d2337653410ab4f21d2e8bfd1ed0"
+        }
+      }
+    }
+  }
+}

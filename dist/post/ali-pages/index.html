@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>如何将hexo部署到阿里云pages上 | 技术网</title>
+  <meta name="description" content="最近阿里云开放了pages服务，所以本网站搭个车将网站迁移到阿里云pages上面。本文介绍如何通过hexo d上传到GitHub，然后让阿里云pages拉取github项目完成部署。">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="如何将hexo部署到阿里云pages上 | 技术网">
+  <meta property="og:description" content="最近阿里云开放了pages服务，所以本网站搭个车将网站迁移到阿里云pages上面。本文介绍如何通过hexo d上传到GitHub，然后让阿里云pages拉取github项目完成部署。">
+  <link rel="canonical" href="https://www.jsw.ac.cn/post/ali-pages/">
+  <link rel="stylesheet" href="/assets/theme/inkstone-notes/style.css">
+  <link rel="stylesheet" href="/assets/theme/inkstone-notes/styles/consent.css">
+  <link rel="stylesheet" href="/assets/theme/inkstone-notes/styles/post.css">
+  <link rel="stylesheet" href="/assets/theme/inkstone-notes/styles/lightbox.css">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="alternate" type="application/rss+xml" href="/feed.xml" title="技术网">
+</head>
+<body data-page-type="post">
+  <a class="skip-link" href="#main">跳到正文</a>
+  <header class="site-header">
+    <a class="brand" href="/"><span class="brand-mark" aria-hidden="true">记</span><span>技术网</span></a>
+    <nav class="site-nav" aria-label="主导航">
+      <a href="/">首页</a><a href="/archives/">归档</a><a href="/categories/">分类</a><a href="/tags/">标签</a><a href="/tools/">工具</a><a href="/about/">关于</a>
+      <a href="/search/">搜索</a>
+    </nav>
+  </header>
+  <main id="main" class="page-main article-main">
+  <article class="article-shell">
+    <header class="article-header">
+      <h1 class="article-title">如何将hexo部署到阿里云pages上</h1>
+      <p class="lead">最近阿里云开放了pages服务，所以本网站搭个车将网站迁移到阿里云pages上面。本文介绍如何通过hexo d上传到GitHub，然后让阿里云pages拉取github项目完成部署。</p>
+      <p class="article-meta">2025-12-09 · <a href="/categories/%E9%98%BF%E9%87%8C%E4%BA%91/">阿里云</a></p>
+      <div class="tag-row"><a href="/tags/%E9%98%BF%E9%87%8C%E4%BA%91ESA/">阿里云ESA</a></div>
+    </header>
+    <div class="prose"><p>最近阿里云开放了pages服务，所以本网站搭个车将网站迁移到阿里云pages上面。本文介绍如何通过hexo d上传到GitHub，然后让阿里云pages拉取github项目完成部署。</p>
+<p class="image-block"><img src="https://img.alicdn.com/imgextra/i4/O1CN01w6RRv21Z6Skr6Y40E_!!2216683083145-2-fleamarket.png" alt="阿里云推广图片" loading="lazy" decoding="async"></p>
+<p>在原先你的hexo目录中<code>_config.yml</code>的deploy部分填入：</p>
+<pre><code>deploy:
+  type: git
+  repo: git@github.com:你的GitHub账号/项目名称.git
+  branch: main
+  message: &quot;Site updated: {{ now(&#39;YYYY-MM-DD HH:mm:ss&#39;) }}&quot;</code></pre>
+<ul><li>本地 <code>hexo d</code> 时，会自动把 <code>public</code> 的内容推到 <code>main</code>。</li><li>仓库的 <code>main</code> 分支里就是“纯静态站点”。</li></ul>
+<p>在阿里云 ESA：</p>
+<ul><li>导入这个 <code>blog</code> 仓库，</li><li>分支选 <code>main</code>，</li><li>同样配置：</li></ul>
+<ul><li>安装命令：<code>echo skip</code></li><li>构建命令：<code>echo skip</code></li><li>静态目录：<code>./</code></li></ul>
+<p class="image-block"><img src="/img/post/pages-1.png" alt="pages部署设置" loading="lazy" decoding="async"></p>
+<p>完成部署后可以绑定自定义域名，同时建议将NS交给ESA托管</p>
+<p class="image-block"><img src="/img/post/pages-2.png" alt="pages绑定自定义域名" loading="lazy" decoding="async"></p>
+<p>等待DNS记录传播生效，同时留意pages目前只提供ipv4访问，少部分纯ipv6环境不完全支持，所以itdog提供ipv6 https测试部分地区出现解析失败无法访问是正常现象</p>
+<p class="image-block"><img src="/img/post/itdog-pages-v4.png" alt="ipv4测试" loading="lazy" decoding="async"></p>
+<p class="image-block"><img src="/img/post/itdog-pages-v6.png" alt="ipv6测试" loading="lazy" decoding="async"></p>
+<p class="image-block"><img src="/img/post/oversea-dnsquery-v6.png" alt="海外DNS查询AAAA记录" loading="lazy" decoding="async"></p></div>
+  </article>
+</main>
+
+  <footer class="site-footer">
+    <span>© 2026 技术网</span>
+    <span><a href="/feed.xml">订阅</a> · <a href="/sitemap.xml">站点地图</a> · <a href="/privacy-policy/">隐私政策</a> · <button class="footer-consent-button" type="button" data-consent-open>隐私偏好</button></span>
+  </footer>
+  <script id="theme-consent-config" type="application/json">{"storageKey":"jsw-consent-v2","revision":2,"categories":{"necessary":{"required":true,"label":"必要","description":"保持网站、安全、隐私偏好和基础页面功能可用。"},"preferences":{"required":false,"label":"偏好","description":"保存站内体验偏好，例如图片预览和本地交互增强。"},"analytics":{"required":false,"label":"统计","description":"帮助了解页面访问情况，用于改进内容和性能。"},"marketing":{"required":false,"label":"营销/共享","description":"可能用于广告、跨站跟踪、出售或共享个人信息；本站默认关闭。"}},"scripts":[{"id":"cloudflare-web-analytics","category":"analytics","src":"https://static.cloudflareinsights.com/beacon.min.js","defer":true,"attrs":{"data-cf-beacon":"{\"token\":\"2569d2337653410ab4f21d2e8bfd1ed0\"}"}}]}</script>
+  <script src="/assets/theme/inkstone-notes/scripts/consent.js" defer></script>
+  <script src="/assets/theme/inkstone-notes/scripts/lightbox.js" defer></script>
+</body>
+</html>

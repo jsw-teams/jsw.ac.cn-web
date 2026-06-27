@@ -1,0 +1,344 @@
+{
+  "headers": [
+    {
+      "source": "/post/*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=900, s-maxage=7200, stale-while-revalidate=86400, stale-if-error=604800"
+        }
+      ]
+    },
+    {
+      "source": "/",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=300, s-maxage=1800, stale-while-revalidate=86400, stale-if-error=86400"
+        }
+      ]
+    },
+    {
+      "source": "/index.html",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=300, s-maxage=1800, stale-while-revalidate=86400, stale-if-error=86400"
+        }
+      ]
+    },
+    {
+      "source": "/archives",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=300, s-maxage=1800, stale-while-revalidate=86400, stale-if-error=86400"
+        }
+      ]
+    },
+    {
+      "source": "/archives/*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=300, s-maxage=1800, stale-while-revalidate=86400, stale-if-error=86400"
+        }
+      ]
+    },
+    {
+      "source": "/categories",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=300, s-maxage=1800, stale-while-revalidate=86400, stale-if-error=86400"
+        }
+      ]
+    },
+    {
+      "source": "/categories/*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=300, s-maxage=1800, stale-while-revalidate=86400, stale-if-error=86400"
+        }
+      ]
+    },
+    {
+      "source": "/tags",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=300, s-maxage=1800, stale-while-revalidate=86400, stale-if-error=86400"
+        }
+      ]
+    },
+    {
+      "source": "/tags/*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=300, s-maxage=1800, stale-while-revalidate=86400, stale-if-error=86400"
+        }
+      ]
+    },
+    {
+      "source": "/search",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=300, s-maxage=1800, stale-while-revalidate=86400, stale-if-error=86400"
+        }
+      ]
+    },
+    {
+      "source": "/search/*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=300, s-maxage=1800, stale-while-revalidate=86400, stale-if-error=86400"
+        }
+      ]
+    },
+    {
+      "source": "/about",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=900, s-maxage=7200, stale-while-revalidate=86400, stale-if-error=604800"
+        }
+      ]
+    },
+    {
+      "source": "/about/*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=900, s-maxage=7200, stale-while-revalidate=86400, stale-if-error=604800"
+        }
+      ]
+    },
+    {
+      "source": "/privacy-policy",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=900, s-maxage=7200, stale-while-revalidate=86400, stale-if-error=604800"
+        }
+      ]
+    },
+    {
+      "source": "/privacy-policy/*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=900, s-maxage=7200, stale-while-revalidate=86400, stale-if-error=604800"
+        }
+      ]
+    },
+    {
+      "source": "/tools",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=900, s-maxage=7200, stale-while-revalidate=86400, stale-if-error=604800"
+        }
+      ]
+    },
+    {
+      "source": "/tools/*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=900, s-maxage=7200, stale-while-revalidate=86400, stale-if-error=604800"
+        }
+      ]
+    },
+    {
+      "source": "/404.html",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=300, s-maxage=1800, stale-while-revalidate=86400, stale-if-error=86400"
+        }
+      ]
+    },
+    {
+      "source": "/search.json",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=600, s-maxage=3600, stale-while-revalidate=43200, stale-if-error=86400"
+        }
+      ]
+    },
+    {
+      "source": "/sitemap.xml",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, s-maxage=21600, stale-while-revalidate=86400, stale-if-error=259200"
+        }
+      ]
+    },
+    {
+      "source": "/robots.txt",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, s-maxage=21600, stale-while-revalidate=86400, stale-if-error=259200"
+        }
+      ]
+    },
+    {
+      "source": "/css/*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, s-maxage=2592000, stale-while-revalidate=86400, stale-if-error=259200"
+        }
+      ]
+    },
+    {
+      "source": "/js/*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, s-maxage=2592000, stale-while-revalidate=86400, stale-if-error=259200"
+        }
+      ]
+    },
+    {
+      "source": "/img/*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, s-maxage=7776000, stale-while-revalidate=604800, stale-if-error=2592000"
+        }
+      ]
+    },
+    {
+      "source": "/favicon.ico",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, s-maxage=7776000, stale-while-revalidate=604800, stale-if-error=2592000"
+        }
+      ]
+    },
+    {
+      "source": "/apple-touch-icon.png",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, s-maxage=7776000, stale-while-revalidate=604800, stale-if-error=2592000"
+        }
+      ]
+    }
+  ],
+  "caches": [
+    {
+      "source": "/post/*",
+      "cacheTtl": 7200
+    },
+    {
+      "source": "/",
+      "cacheTtl": 1800
+    },
+    {
+      "source": "/index.html",
+      "cacheTtl": 1800
+    },
+    {
+      "source": "/archives",
+      "cacheTtl": 1800
+    },
+    {
+      "source": "/archives/*",
+      "cacheTtl": 1800
+    },
+    {
+      "source": "/categories",
+      "cacheTtl": 1800
+    },
+    {
+      "source": "/categories/*",
+      "cacheTtl": 1800
+    },
+    {
+      "source": "/tags",
+      "cacheTtl": 1800
+    },
+    {
+      "source": "/tags/*",
+      "cacheTtl": 1800
+    },
+    {
+      "source": "/search",
+      "cacheTtl": 1800
+    },
+    {
+      "source": "/search/*",
+      "cacheTtl": 1800
+    },
+    {
+      "source": "/about",
+      "cacheTtl": 7200
+    },
+    {
+      "source": "/about/*",
+      "cacheTtl": 7200
+    },
+    {
+      "source": "/privacy-policy",
+      "cacheTtl": 7200
+    },
+    {
+      "source": "/privacy-policy/*",
+      "cacheTtl": 7200
+    },
+    {
+      "source": "/tools",
+      "cacheTtl": 7200
+    },
+    {
+      "source": "/tools/*",
+      "cacheTtl": 7200
+    },
+    {
+      "source": "/404.html",
+      "cacheTtl": 1800
+    },
+    {
+      "source": "/search.json",
+      "cacheTtl": 3600
+    },
+    {
+      "source": "/sitemap.xml",
+      "cacheTtl": 21600
+    },
+    {
+      "source": "/robots.txt",
+      "cacheTtl": 21600
+    },
+    {
+      "source": "/css/*",
+      "cacheTtl": 2592000
+    },
+    {
+      "source": "/js/*",
+      "cacheTtl": 2592000
+    },
+    {
+      "source": "/img/*",
+      "cacheTtl": 7776000
+    },
+    {
+      "source": "/favicon.ico",
+      "cacheTtl": 7776000
+    },
+    {
+      "source": "/apple-touch-icon.png",
+      "cacheTtl": 7776000
+    }
+  ]
+}

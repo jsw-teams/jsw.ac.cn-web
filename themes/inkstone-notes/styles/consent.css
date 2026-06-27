@@ -1,0 +1,108 @@
+.consent-modal-open {
+  overflow: hidden;
+}
+.consent-backdrop {
+  background: rgba(6, 12, 20, 0.74);
+  display: none;
+  inset: 0;
+  position: fixed;
+  z-index: 29;
+}
+.consent-backdrop.is-open { display: block; }
+.consent-panel {
+  background: var(--paper);
+  border: 3px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.38);
+  color: var(--ink);
+  display: none;
+  gap: 0.9rem;
+  left: 50%;
+  max-height: calc(100vh - 3rem);
+  max-width: min(42rem, calc(100vw - 2rem));
+  overflow: auto;
+  padding: 1rem;
+  position: fixed;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(42rem, calc(100vw - 2rem));
+  z-index: 30;
+}
+.consent-panel.is-open { display: grid; }
+.consent-panel h2 {
+  font-size: 1.15rem;
+  line-height: 1.3;
+  margin: 0;
+}
+.consent-panel p { margin: 0; }
+.consent-note { color: var(--muted); font-size: 0.94rem; }
+.consent-categories {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  display: grid;
+  overflow: hidden;
+}
+.consent-category {
+  align-items: start;
+  border-bottom: 1px solid var(--line);
+  display: grid;
+  gap: 0.7rem;
+  grid-template-columns: 1fr auto;
+  padding: 0.75rem;
+}
+.consent-category:last-child { border-bottom: 0; }
+.consent-category strong { display: block; line-height: 1.35; }
+.consent-category span { color: var(--muted); display: block; font-size: 0.9rem; margin-top: 0.2rem; }
+.consent-switch {
+  align-items: center;
+  display: inline-flex;
+  gap: 0.35rem;
+  min-height: 40px;
+  white-space: nowrap;
+}
+.consent-switch input { inline-size: 1.15rem; block-size: 1.15rem; }
+.consent-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.consent-actions button,
+.footer-consent-button {
+  background: var(--ink);
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  color: white;
+  cursor: pointer;
+  font: inherit;
+  min-height: 40px;
+  padding: 0.4rem 0.85rem;
+}
+.consent-actions button[data-consent-reject],
+.consent-actions button[data-consent-save],
+.footer-consent-button {
+  background: transparent;
+  color: var(--blue);
+}
+.consent-actions button:hover,
+.footer-consent-button:hover {
+  border-color: var(--blue);
+}
+.consent-panel button:focus-visible,
+.consent-panel input:focus-visible {
+  outline: 4px solid #ffd166;
+  outline-offset: 3px;
+}
+
+@media (max-width: 560px) {
+  .consent-panel {
+    border-radius: var(--radius) var(--radius) 0 0;
+    bottom: 0;
+    left: 0;
+    max-width: 100vw;
+    max-height: calc(100vh - 1rem);
+    top: auto;
+    transform: none;
+    width: 100vw;
+  }
+  .consent-category { grid-template-columns: 1fr; }
+}
