@@ -181,6 +181,24 @@ img { height: auto; max-width: 100%; }
   max-width: 1180px;
   padding: 1.4rem clamp(1rem, 4vw, 2.5rem) 2rem;
 }
+.footer-identity,
+.footer-records,
+.psb-record {
+  align-items: center;
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.footer-records::before {
+  content: "·";
+}
+.psb-record {
+  gap: 0.25rem;
+}
+.psb-record img {
+  block-size: 1em;
+  inline-size: 1em;
+}
 
 @media (max-width: 760px) {
   .site-header { grid-template-columns: 1fr; }

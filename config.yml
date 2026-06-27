@@ -12,6 +12,18 @@ theme:
   name: inkstone-notes
 postsPerPage: 10
 
+icp:
+  enable: true
+  number: "蜀ICP备2025143400号"
+  link: "https://beian.miit.gov.cn/"
+
+psb:
+  enable: true
+  number: "川公网安备51172402000176号"
+  # 公安备案链接里常用的 recordcode（数字串）
+  code: "51172402000176"
+  icon: /img/ghs.png
+
 nav:
   links:
     - key: home

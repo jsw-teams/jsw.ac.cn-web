@@ -41,6 +41,21 @@ function readRobots(raw) {
   };
 }
 
+function readSection(raw, key) {
+  return raw.match(new RegExp(`^${key}:\\s*\\n([\\s\\S]*?)(?=^\\S|\\Z)`, "m"))?.[1] || "";
+}
+
+function readSectionValue(raw, section, key, fallback = "") {
+  const block = readSection(raw, section);
+  const value = block.match(new RegExp(`^\\s+${key}:\\s*(.+)$`, "m"))?.[1]?.trim();
+  return value ? value.replace(/^['"]|['"]$/g, "") : fallback;
+}
+
+function readSectionBool(raw, section, key, fallback = false) {
+  const value = readSectionValue(raw, section, key, String(fallback));
+  return /^(true|yes|on|1)$/i.test(value);
+}
+
 function normalizeConfig(raw) {
   return {
     siteUrl: readScalar(raw, "siteUrl", "https://www.jsw.ac.cn"),
@@ -54,6 +69,17 @@ function normalizeConfig(raw) {
     postsPerPage: Number(readScalar(raw, "postsPerPage", "10")) || 10,
     nav: readNav(raw),
     robots: readRobots(raw),
+    icp: {
+      enable: readSectionBool(raw, "icp", "enable"),
+      number: readSectionValue(raw, "icp", "number"),
+      link: readSectionValue(raw, "icp", "link", "https://beian.miit.gov.cn/")
+    },
+    psb: {
+      enable: readSectionBool(raw, "psb", "enable"),
+      number: readSectionValue(raw, "psb", "number"),
+      code: readSectionValue(raw, "psb", "code"),
+      icon: readSectionValue(raw, "psb", "icon", "/img/ghs.png")
+    },
     feed: {
       title: raw.match(/^feed:\s*\n\s+title:\s*(.+)$/m)?.[1]?.trim() || "技术网"
     }
@@ -331,6 +357,21 @@ function themeFiles(map, key) {
   return Array.isArray(value) ? value : [value];
 }
 
+function footerRecords() {
+  const records = [];
+  if (config.icp.enable && config.icp.number) {
+    records.push(`<a href="${esc(config.icp.link)}" target="_blank" rel="noopener noreferrer">${esc(config.icp.number)}</a>`);
+  }
+  if (config.psb.enable && config.psb.number) {
+    const href = config.psb.code
+      ? `https://www.beian.gov.cn/portal/registerSystemInfo?recordcode=${encodeURIComponent(config.psb.code)}`
+      : "https://www.beian.gov.cn/";
+    const icon = config.psb.icon ? `<img src="${esc(config.psb.icon)}" alt="" loading="lazy" decoding="async">` : "";
+    records.push(`<a class="psb-record" href="${href}" target="_blank" rel="noopener noreferrer">${icon}<span>${esc(config.psb.number)}</span></a>`);
+  }
+  return records.length ? `<span class="footer-records">${records.join(" · ")}</span>` : "";
+}
+
 function layout({ title, description, current = "", body, type = "website", pageType = "", extraStyles = [], extraScripts = [] }) {
   const fullTitle = title === config.siteName ? title : `${title} | ${config.siteName}`;
   const styleFiles = [
@@ -367,7 +408,7 @@ function layout({ title, description, current = "", body, type = "website", page
   ${nav(current)}
   ${body}
   <footer class="site-footer">
-    <span>© ${new Date().getFullYear()} ${esc(config.siteName)}</span>
+    <span class="footer-identity">© ${new Date().getFullYear()} ${esc(config.siteName)}${footerRecords()}</span>
     <span><a href="/feed.xml">订阅</a> · <a href="/sitemap.xml">站点地图</a> · <a href="/privacy-policy/">隐私政策</a> · <button class="footer-consent-button" type="button" data-consent-open>隐私偏好</button></span>
   </footer>
   <script id="theme-consent-config" type="application/json">${jsonScript(buildConsentConfig())}</script>
