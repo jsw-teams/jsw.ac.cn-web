@@ -409,7 +409,7 @@ function layout({ title, description, current = "", body, type = "website", page
   ${body}
   <footer class="site-footer">
     <span class="footer-identity">© ${new Date().getFullYear()} ${esc(config.siteName)}${footerRecords()}</span>
-    <span><a href="/feed.xml">订阅</a> · <a href="/sitemap.xml">站点地图</a> · <a href="/privacy-policy/">隐私政策</a> · <button class="footer-consent-button" type="button" data-consent-open>隐私偏好</button></span>
+    <span class="footer-links"><a href="/feed.xml">订阅</a> · <a href="/sitemap.xml">站点地图</a> · <a href="/privacy-policy/">隐私政策</a> · <button class="footer-consent-button" type="button" data-consent-open>隐私偏好</button></span>
   </footer>
   <script id="theme-consent-config" type="application/json">${jsonScript(buildConsentConfig())}</script>
   ${scriptFiles.map((file) => `<script src="${asset(file)}" defer></script>`).join("\n  ")}
