@@ -9,7 +9,7 @@ description:
 author:
   zh-CN: 技术网
 theme:
-  name: inkstone-notes
+  name: inkstone-v2
 postsPerPage: 10
 
 icp:
@@ -20,7 +20,6 @@ icp:
 psb:
   enable: true
   number: "川公网安备51172402000176号"
-  # 公安备案链接里常用的 recordcode（数字串）
   code: "51172402000176"
   icon: /img/ghs.png
 
