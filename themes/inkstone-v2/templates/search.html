@@ -1,0 +1,16 @@
+<main id="main" class="site-main search-main">
+  <header class="collection-header">
+    <p class="eyebrow">SEARCH</p>
+    <h1>{{title}}</h1>
+    <p>按标题、摘要、分类、标签和正文检索公开笔记。</p>
+  </header>
+  <section class="search-panel" data-search-root>
+    <label class="search-label" for="search-input">关键词</label>
+    <div class="search-control">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+      <input id="search-input" data-search-input type="search" autocomplete="off" placeholder="例如：Cloudflare、Nginx、部署">
+    </div>
+    <p class="search-status" data-search-status>正在加载搜索索引。</p>
+    <div class="entry-list search-results" data-search-results></div>
+  </section>
+</main>
