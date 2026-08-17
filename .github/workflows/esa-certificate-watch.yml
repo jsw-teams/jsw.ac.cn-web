@@ -19,6 +19,8 @@ jobs:
     env:
       ALIBABA_CLOUD_ACCESS_KEY_ID: ${{ secrets.ALIBABA_CLOUD_ACCESS_KEY_ID }}
       ALIBABA_CLOUD_ACCESS_KEY_SECRET: ${{ secrets.ALIBABA_CLOUD_ACCESS_KEY_SECRET }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+
       ESA_REGION_ID: ${{ vars.ESA_REGION_ID || 'ap-southeast-1' }}
       ESA_ENDPOINT: ${{ vars.ESA_ENDPOINT }}
       ESA_SITE_ID: ${{ vars.ESA_SITE_ID }}
@@ -26,7 +28,10 @@ jobs:
       ESA_DOMAINS: ${{ vars.ESA_DOMAINS || 'www.jsw.ac.cn' }}
       ESA_RENEW_BEFORE_DAYS: ${{ vars.ESA_RENEW_BEFORE_DAYS || '14' }}
       ESA_CERT_TYPE: ${{ vars.ESA_CERT_TYPE || 'lets_encrypt' }}
-      ESA_DCV_TTL: ${{ vars.ESA_DCV_TTL || '60' }}
+
+      CLOUDFLARE_ZONE_ID: ${{ vars.CLOUDFLARE_ZONE_ID }}
+      CLOUDFLARE_ZONE_NAME: ${{ vars.CLOUDFLARE_ZONE_NAME || 'jsw.ac.cn' }}
+      CLOUDFLARE_DCV_TTL: ${{ vars.CLOUDFLARE_DCV_TTL || '120' }}
 
     steps:
       - name: Checkout
@@ -40,5 +45,5 @@ jobs:
       - name: Install Alibaba Cloud International ESA SDK
         run: python -m pip install --disable-pip-version-check alibabacloud_esa20240910
 
-      - name: Monitor certificate and reconcile DNS DCV
+      - name: Monitor ESA certificate and reconcile Cloudflare DNS DCV
         run: python scripts/esa_certificate_watch.py
