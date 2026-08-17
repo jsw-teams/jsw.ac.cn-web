@@ -1,90 +1,17 @@
 import fs from "node:fs/promises";
-import fss from "node:fs";
 import path from "node:path";
+import MarkdownIt from "markdown-it";
+import taskLists from "markdown-it-task-lists";
+import YAML from "yaml";
 
 const root = process.cwd();
-const config = normalizeConfig(await fs.readFile(path.join(root, "config.yml"), "utf8"));
+const config = YAML.parse(await fs.readFile(path.join(root, "config.yml"), "utf8")) || {};
+const themeName = config.theme?.name || "inkstone-v2";
 const contentDir = path.join(root, "content");
 const staticDir = path.join(root, "static");
-const themeDir = path.join(root, "themes", config.theme.name);
+const themeDir = path.join(root, "themes", themeName);
+const outputDir = path.join(root, "public");
 const theme = JSON.parse(await fs.readFile(path.join(themeDir, "theme.json"), "utf8"));
-const distDir = path.join(root, "dist");
-
-function readScalar(raw, key, fallback = "") {
-  const match = raw.match(new RegExp(`^${key}:\\s*(.+)$`, "m"));
-  return match ? match[1].trim().replace(/^['"]|['"]$/g, "") : fallback;
-}
-
-function readLocalized(raw, key, locale, fallback = "") {
-  const match = raw.match(new RegExp(`^${key}:\\s*\\n(?:\\s+[^\\n]+\\n)*?\\s+${locale}:\\s*(.+)$`, "m"));
-  return match ? match[1].trim().replace(/^['"]|['"]$/g, "") : fallback;
-}
-
-function readNav(raw) {
-  const block = raw.match(/^nav:\s*\n([\s\S]*?)(?=^\S|\Z)/m)?.[1] || "";
-  const items = [];
-  for (const item of block.split(/\n\s*-\s+key:\s+/).slice(1)) {
-    const key = item.match(/^([^\n]+)/)?.[1]?.trim() || "";
-    const href = item.match(/\n\s+href:\s*(.+)/)?.[1]?.trim() || "/";
-    const label = item.match(/\n\s+label:\s*(.+)/)?.[1]?.trim() || key;
-    items.push({ key, href, label });
-  }
-  return items;
-}
-
-function readRobots(raw) {
-  const block = raw.match(/^robots:\s*\n([\s\S]*?)(?=^\S|\Z)/m)?.[1] || "";
-  const contentSignal = block.match(/^\s+contentSignal:\s*(.+)$/m)?.[1]?.trim() || "";
-  return {
-    contentSignal,
-    rules: [{ userAgent: "*", allow: ["/"], disallow: [] }]
-  };
-}
-
-function readSection(raw, key) {
-  return raw.match(new RegExp(`^${key}:\\s*\\n([\\s\\S]*?)(?=^\\S|\\Z)`, "m"))?.[1] || "";
-}
-
-function readSectionValue(raw, section, key, fallback = "") {
-  const block = readSection(raw, section);
-  const value = block.match(new RegExp(`^\\s+${key}:\\s*(.+)$`, "m"))?.[1]?.trim();
-  return value ? value.replace(/^['"]|['"]$/g, "") : fallback;
-}
-
-function readSectionBool(raw, section, key, fallback = false) {
-  const value = readSectionValue(raw, section, key, String(fallback));
-  return /^(true|yes|on|1)$/i.test(value);
-}
-
-function normalizeConfig(raw) {
-  return {
-    siteUrl: readScalar(raw, "siteUrl", "https://www.jsw.ac.cn"),
-    siteName: readLocalized(raw, "siteName", "zh-CN", "技术网"),
-    description: readLocalized(raw, "description", "zh-CN", ""),
-    author: readLocalized(raw, "author", "zh-CN", ""),
-    language: readScalar(raw, "defaultLocale", "zh-CN"),
-    theme: {
-      name: raw.match(/^theme:\s*\n\s+name:\s*(.+)$/m)?.[1]?.trim() || "inkstone-notes"
-    },
-    postsPerPage: Number(readScalar(raw, "postsPerPage", "10")) || 10,
-    nav: readNav(raw),
-    robots: readRobots(raw),
-    icp: {
-      enable: readSectionBool(raw, "icp", "enable"),
-      number: readSectionValue(raw, "icp", "number"),
-      link: readSectionValue(raw, "icp", "link", "https://beian.miit.gov.cn/")
-    },
-    psb: {
-      enable: readSectionBool(raw, "psb", "enable"),
-      number: readSectionValue(raw, "psb", "number"),
-      code: readSectionValue(raw, "psb", "code"),
-      icon: readSectionValue(raw, "psb", "icon", "/img/ghs.png")
-    },
-    feed: {
-      title: raw.match(/^feed:\s*\n\s+title:\s*(.+)$/m)?.[1]?.trim() || "技术网"
-    }
-  };
-}
 
 function esc(value = "") {
   return String(value)
@@ -95,205 +22,104 @@ function esc(value = "") {
     .replaceAll("'", "&#39;");
 }
 
-function asset(file) {
-  return `/assets/theme/${config.theme.name}/${String(file).replace(/^\/+/, "")}`;
+function xml(value = "") {
+  return esc(value);
 }
 
 function slugify(value) {
-  const text = String(value || "").trim();
-  const normalized = text.toLowerCase().normalize("NFKD")
-    .replace(/[^\p{Letter}\p{Number}\s-]+/gu, "")
-    .replace(/\s+/g, "-")
+  const base = String(value || "")
+    .normalize("NFKC")
+    .trim()
+    .toLowerCase()
+    .replace(/[^\p{Letter}\p{Number}\s_-]+/gu, "")
+    .replace(/[\s_]+/g, "-")
     .replace(/-+/g, "-")
     .replace(/^-|-$/g, "");
-  return /^[a-z0-9][a-z0-9-]*$/i.test(normalized) ? normalized : encodeURIComponent(text);
+  return base || "section";
+}
+
+function codeLanguage(info = "") {
+  return String(info).trim().split(/\s+/)[0].replace(/[^A-Za-z0-9_+.#-]/g, "");
+}
+
+const COPY_ICON = `<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="10" height="10" rx="2"></rect><path d="M15 9V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"></path></svg>`;
+const CHECK_ICON = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 12 4 4 8-9"></path></svg>`;
+
+function codeBlock(content, info = "") {
+  const language = codeLanguage(info);
+  const label = language || "code";
+  const className = language ? ` class="language-${esc(language)}"` : "";
+  return `<figure class="code-shell" data-code-block>
+    <figcaption class="code-toolbar">
+      <span class="code-language"><span class="code-dot" aria-hidden="true"></span>${esc(label)}</span>
+      <button class="code-copy" type="button" data-code-copy aria-label="复制代码">
+        <span class="code-copy-icon code-copy-icon-default">${COPY_ICON}</span>
+        <span class="code-copy-icon code-copy-icon-success">${CHECK_ICON}</span>
+        <span data-copy-label>复制</span>
+      </button>
+    </figcaption>
+    <pre><code${className}>${md.utils.escapeHtml(content)}</code></pre>
+  </figure>\n`;
+}
+
+const md = new MarkdownIt({
+  html: true,
+  linkify: true,
+  typographer: false,
+  breaks: false
+}).use(taskLists, { enabled: true, label: true, labelAfter: true });
+
+md.renderer.rules.fence = (tokens, index) => codeBlock(tokens[index].content, tokens[index].info);
+md.renderer.rules.code_block = (tokens, index) => codeBlock(tokens[index].content);
+md.renderer.rules.heading_open = (tokens, index, options, env, self) => {
+  const inline = tokens[index + 1];
+  const base = slugify(inline?.content || "section");
+  env.headingIds ||= new Map();
+  const count = (env.headingIds.get(base) || 0) + 1;
+  env.headingIds.set(base, count);
+  tokens[index].attrSet("id", count === 1 ? base : `${base}-${count}`);
+  return self.renderToken(tokens, index, options);
+};
+const defaultImage = md.renderer.rules.image;
+md.renderer.rules.image = (tokens, index, options, env, self) => {
+  tokens[index].attrSet("loading", "lazy");
+  tokens[index].attrSet("decoding", "async");
+  return defaultImage ? defaultImage(tokens, index, options, env, self) : self.renderToken(tokens, index, options);
+};
+md.renderer.rules.table_open = () => '<div class="table-wrap"><table>\n';
+md.renderer.rules.table_close = () => '</table></div>\n';
+
+function markdown(source) {
+  return md.render(String(source || ""), { headingIds: new Map() });
+}
+
+function plainText(source = "") {
+  return String(source)
+    .replace(/```[\s\S]*?```/g, " ")
+    .replace(/!\[[^\]]*\]\([^)]+\)/g, " ")
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+    .replace(/[#>*_`~|[\]-]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 function splitFrontmatter(raw) {
   const match = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/);
   if (!match) return { data: {}, body: raw };
-  const data = {};
-  for (const line of match[1].split(/\r?\n/)) {
-    const item = line.match(/^([A-Za-z0-9_-]+):\s*(.*)$/);
-    if (!item) continue;
-    let value = item[2].trim();
-    if (value.startsWith("[") && value.endsWith("]")) {
-      value = value.slice(1, -1).split(",").map((part) => part.trim().replace(/^['"]|['"]$/g, "")).filter(Boolean);
-    } else {
-      value = value.replace(/^['"]|['"]$/g, "");
-    }
-    data[item[1]] = value;
+  return { data: YAML.parse(match[1]) || {}, body: match[2] };
+}
+
+async function exists(file) {
+  try {
+    await fs.access(file);
+    return true;
+  } catch {
+    return false;
   }
-  return { data, body: match[2] };
-}
-
-function inline(text) {
-  return esc(text)
-    .replace(/`([^`]+)`/g, "<code>$1</code>")
-    .replace(/&lt;(https?:\/\/[^&\s]+)&gt;/g, '<a href="$1">$1</a>')
-    .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
-    .replace(/\*([^*]+)\*/g, "<em>$1</em>")
-    .replace(/!\[([^\]]*)\]\(([^)\s]+)(?:\s+&quot;[^&]*&quot;)?\)/g, '<img src="$2" alt="$1" loading="lazy" decoding="async">')
-    .replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, '<a href="$2">$1</a>');
-}
-
-function isTableDivider(line) {
-  return /^\s*\|?\s*:?-{3,}:?\s*(\|\s*:?-{3,}:?\s*)+\|?\s*$/.test(line);
-}
-
-function splitTableRow(line) {
-  return line.trim().replace(/^\||\|$/g, "").split("|").map((cell) => cell.trim());
-}
-
-function isStandaloneImage(line) {
-  return /^!\[[^\]]*]\([^)]+\)\s*$/.test(line.trim());
-}
-
-function isRawHtmlLine(line) {
-  return /^<\/?(?:div|span|p|br|img|figure|figcaption|iframe|video|audio|table|thead|tbody|tr|td|th|details|summary)\b/i.test(line.trim());
-}
-
-function jsonScript(value) {
-  return JSON.stringify(value).replaceAll("</", "<\\/");
-}
-
-function markdown(markdownText) {
-  const lines = markdownText.replace(/\r\n/g, "\n").split("\n");
-  const out = [];
-  let paragraph = [];
-  let list = [];
-  let orderedList = [];
-  let orderedStart = 1;
-  let code = [];
-  let codeIndent = 0;
-  let inCode = false;
-
-  const flushParagraph = () => {
-    if (paragraph.length) out.push(`<p>${inline(paragraph.join(" "))}</p>`);
-    paragraph = [];
-  };
-  const flushList = () => {
-    if (list.length) out.push(`<ul>${list.map((item) => `<li>${inline(item)}</li>`).join("")}</ul>`);
-    list = [];
-  };
-  const flushOrderedList = () => {
-    if (orderedList.length) {
-      const start = orderedStart > 1 ? ` start="${orderedStart}"` : "";
-      out.push(`<ol${start}>${orderedList.map((item) => `<li>${inline(item)}</li>`).join("")}</ol>`);
-    }
-    orderedList = [];
-    orderedStart = 1;
-  };
-  const flushCode = () => {
-    if (code.length) out.push(`<pre><code>${esc(code.join("\n"))}</code></pre>`);
-    code = [];
-  };
-
-  for (let index = 0; index < lines.length; index += 1) {
-    const line = lines[index];
-    if (line.trimStart().startsWith("```")) {
-      if (inCode) {
-        flushCode();
-        inCode = false;
-        codeIndent = 0;
-      } else {
-        flushParagraph();
-        flushList();
-        flushOrderedList();
-        inCode = true;
-        codeIndent = line.match(/^(\s*)```/)?.[1].length || 0;
-      }
-      continue;
-    }
-    if (inCode) {
-      code.push(line.startsWith(" ".repeat(codeIndent)) ? line.slice(codeIndent) : line);
-      continue;
-    }
-    if (!line.trim()) {
-      flushParagraph();
-      flushList();
-      flushOrderedList();
-      continue;
-    }
-    if (isRawHtmlLine(line)) {
-      flushParagraph();
-      flushList();
-      flushOrderedList();
-      out.push(line.trim());
-      continue;
-    }
-    if (isStandaloneImage(line)) {
-      flushParagraph();
-      flushList();
-      flushOrderedList();
-      out.push(`<p class="image-block">${inline(line.trim())}</p>`);
-      continue;
-    }
-    if (lines[index + 1] && isTableDivider(lines[index + 1])) {
-      flushParagraph();
-      flushList();
-      flushOrderedList();
-      const headers = splitTableRow(line);
-      const rows = [];
-      let offset = index + 2;
-      while (offset < lines.length && /\|/.test(lines[offset]) && lines[offset].trim()) {
-        rows.push(splitTableRow(lines[offset]));
-        offset += 1;
-      }
-      out.push(`<div class="table-wrap"><table><thead><tr>${headers.map((cell) => `<th>${inline(cell)}</th>`).join("")}</tr></thead><tbody>${rows.map((row) => `<tr>${row.map((cell) => `<td>${inline(cell)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`);
-      index = offset - 1;
-      continue;
-    }
-    if (/^---+$/.test(line.trim())) {
-      flushParagraph();
-      flushList();
-      flushOrderedList();
-      out.push("<hr>");
-      continue;
-    }
-    const heading = line.match(/^(#{2,4})\s+(.+)$/);
-    if (heading) {
-      flushParagraph();
-      flushList();
-      flushOrderedList();
-      const level = heading[1].length;
-      out.push(`<h${level} id="${slugify(heading[2])}">${inline(heading[2])}</h${level}>`);
-      continue;
-    }
-    const quote = line.match(/^>\s+(.+)$/);
-    if (quote) {
-      flushParagraph();
-      flushList();
-      flushOrderedList();
-      out.push(`<blockquote><p>${inline(quote[1])}</p></blockquote>`);
-      continue;
-    }
-    const bullet = line.match(/^\s*[-*]\s+(.+)$/);
-    if (bullet) {
-      flushParagraph();
-      flushOrderedList();
-      list.push(bullet[1]);
-      continue;
-    }
-    const ordered = line.match(/^\s*(\d+)[.)]\s+(.+)$/);
-    if (ordered) {
-      flushParagraph();
-      flushList();
-      if (!orderedList.length) orderedStart = Number(ordered[1]) || 1;
-      orderedList.push(ordered[2]);
-      continue;
-    }
-    paragraph.push(line.trim());
-  }
-  flushParagraph();
-  flushList();
-  flushOrderedList();
-  if (inCode) flushCode();
-  return out.join("\n");
 }
 
 async function copyDir(from, to) {
-  if (!fss.existsSync(from)) return;
+  if (!(await exists(from))) return;
   await fs.mkdir(to, { recursive: true });
   for (const entry of await fs.readdir(from, { withFileTypes: true })) {
     if (entry.name === ".gitkeep") continue;
@@ -306,34 +132,36 @@ async function copyDir(from, to) {
 
 async function readEntries(kind) {
   const base = path.join(contentDir, kind);
-  if (!fss.existsSync(base)) return [];
+  if (!(await exists(base))) return [];
   const entries = [];
-  for (const slug of await fs.readdir(base)) {
-    const file = path.join(base, slug, "index.md");
-    if (!fss.existsSync(file)) continue;
-    const raw = await fs.readFile(file, "utf8");
-    const parsed = splitFrontmatter(raw);
-    if (parsed.data.draft === "true") continue;
+  for (const entry of await fs.readdir(base, { withFileTypes: true })) {
+    if (!entry.isDirectory()) continue;
+    const file = path.join(base, entry.name, "index.md");
+    if (!(await exists(file))) continue;
+    const parsed = splitFrontmatter(await fs.readFile(file, "utf8"));
+    if (parsed.data.draft === true || String(parsed.data.draft).toLowerCase() === "true") continue;
     const body = parsed.body.trim();
+    const date = String(parsed.data.date || "1970-01-01").slice(0, 10);
+    const updated = String(parsed.data.updated || parsed.data.date || "1970-01-01").slice(0, 10);
+    const tags = Array.isArray(parsed.data.tags) ? parsed.data.tags.map(String) : [];
     entries.push({
-      slug,
-      title: parsed.data.title || slug,
-      description: parsed.data.description || body.replace(/[#>*_`~|-]/g, " ").replace(/\s+/g, " ").trim().slice(0, 150),
-      date: String(parsed.data.date || "1970-01-01").slice(0, 10),
-      updated: String(parsed.data.updated || parsed.data.date || "1970-01-01").slice(0, 10),
-      category: parsed.data.category || "未分类",
-      tags: Array.isArray(parsed.data.tags) ? parsed.data.tags : [],
+      slug: entry.name,
+      title: String(parsed.data.title || entry.name),
+      description: String(parsed.data.description || plainText(body).slice(0, 180)),
+      date,
+      updated,
+      category: String(parsed.data.category || "未分类"),
+      tags,
       html: markdown(body),
-      text: body.replace(/\s+/g, " "),
-      url: kind === "posts" ? `/post/${slug}/` : `/${slug}/`
+      text: plainText(body),
+      url: kind === "posts" ? `/post/${entry.name}/` : `/${entry.name}/`
     });
   }
   return entries.sort((a, b) => b.date.localeCompare(a.date) || a.title.localeCompare(b.title));
 }
 
 async function readTemplate(name) {
-  const file = path.join(themeDir, theme.templates || "templates", `${name}.html`);
-  return fs.readFile(file, "utf8");
+  return fs.readFile(path.join(themeDir, theme.templates || "templates", `${name}.html`), "utf8");
 }
 
 function renderTemplate(source, data) {
@@ -342,14 +170,8 @@ function renderTemplate(source, data) {
     .replace(/\{\{\s*([\w.-]+)\s*\}\}/g, (_, key) => esc(data[key] ?? ""));
 }
 
-function nav(current = "") {
-  return `<header class="site-header">
-    <a class="brand" href="/"><span class="brand-mark" aria-hidden="true">记</span><span>${esc(config.siteName)}</span></a>
-    <nav class="site-nav" aria-label="主导航">
-      ${config.nav.map((item) => `<a href="${item.href}"${current === item.href ? ' aria-current="page"' : ""}>${esc(item.label)}</a>`).join("")}
-      <a href="/search/"${current === "/search/" ? ' aria-current="page"' : ""}>搜索</a>
-    </nav>
-  </header>`;
+function asset(file) {
+  return `/assets/theme/${themeName}/${String(file).replace(/^\/+/, "")}`;
 }
 
 function themeFiles(map, key) {
@@ -357,64 +179,36 @@ function themeFiles(map, key) {
   return Array.isArray(value) ? value : [value];
 }
 
+function nav(current = "") {
+  const links = config.nav?.links || [];
+  const siteName = config.siteName?.["zh-CN"] || "技术网";
+  return `<header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="/" aria-label="${esc(siteName)}首页">
+        <span class="brand-mark" aria-hidden="true">记</span>
+        <span class="brand-copy"><strong>${esc(siteName)}</strong><small>Inkstone / Technical Notes</small></span>
+      </a>
+      <nav class="site-nav" aria-label="主导航">
+        ${links.map((item) => `<a href="${esc(item.href || "/")}"${current === item.href ? ' aria-current="page"' : ""}>${esc(item.label || item.key || "")}</a>`).join("")}
+        <a href="/search/"${current === "/search/" ? ' aria-current="page"' : ""}>搜索</a>
+      </nav>
+    </div>
+  </header>`;
+}
+
 function footerRecords() {
   const records = [];
-  if (config.icp.enable && config.icp.number) {
-    records.push(`<a href="${esc(config.icp.link)}" target="_blank" rel="noopener noreferrer">${esc(config.icp.number)}</a>`);
+  if (config.icp?.enable && config.icp.number) {
+    records.push(`<a href="${esc(config.icp.link || "https://beian.miit.gov.cn/")}" target="_blank" rel="noopener noreferrer">${esc(config.icp.number)}</a>`);
   }
-  if (config.psb.enable && config.psb.number) {
+  if (config.psb?.enable && config.psb.number) {
     const href = config.psb.code
       ? `https://www.beian.gov.cn/portal/registerSystemInfo?recordcode=${encodeURIComponent(config.psb.code)}`
       : "https://www.beian.gov.cn/";
     const icon = config.psb.icon ? `<img src="${esc(config.psb.icon)}" alt="" loading="lazy" decoding="async">` : "";
     records.push(`<a class="psb-record" href="${href}" target="_blank" rel="noopener noreferrer">${icon}<span>${esc(config.psb.number)}</span></a>`);
   }
-  return records.length ? `<span class="footer-records">${records.join(" · ")}</span>` : "";
-}
-
-function layout({ title, description, current = "", body, type = "website", pageType = "", extraStyles = [], extraScripts = [] }) {
-  const fullTitle = title === config.siteName ? title : `${title} | ${config.siteName}`;
-  const styleFiles = [
-    theme.style,
-    ...themeFiles(theme.featureStyles, "consent"),
-    ...themeFiles(theme.pageStyles, pageType),
-    ...extraStyles
-  ].filter(Boolean);
-  const scriptFiles = [
-    theme.script,
-    ...themeFiles(theme.pageScripts, pageType),
-    ...extraScripts
-  ].filter(Boolean);
-  return `<!doctype html>
-<html lang="${config.language}">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>${esc(fullTitle)}</title>
-  <meta name="description" content="${esc(description || config.description)}">
-  <meta property="og:type" content="${type}">
-  <meta property="og:title" content="${esc(fullTitle)}">
-  <meta property="og:description" content="${esc(description || config.description)}">
-  <link rel="canonical" href="${new URL(current || "/", config.siteUrl).href}">
-  ${styleFiles.map((file) => `<link rel="stylesheet" href="${asset(file)}">`).join("\n  ")}
-  <link rel="icon" href="/favicon.ico">
-  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <link rel="alternate" type="application/rss+xml" href="/feed.xml" title="${esc(config.siteName)}">
-</head>
-<body data-page-type="${esc(pageType)}">
-  <a class="skip-link" href="#main">跳到正文</a>
-  ${nav(current)}
-  ${body}
-  <footer class="site-footer">
-    <span class="footer-identity">© ${new Date().getFullYear()} ${esc(config.siteName)}${footerRecords()}</span>
-    <span class="footer-links"><a href="/feed.xml">订阅</a> · <a href="/sitemap.xml">站点地图</a> · <a href="/privacy-policy/">隐私政策</a> · <button class="footer-consent-button" type="button" data-consent-open>隐私偏好</button></span>
-  </footer>
-  <script id="theme-consent-config" type="application/json">${jsonScript(buildConsentConfig())}</script>
-  ${scriptFiles.map((file) => `<script src="${asset(file)}" defer></script>`).join("\n  ")}
-</body>
-</html>`;
+  return records.join('<span class="footer-sep">·</span>');
 }
 
 function buildConsentConfig() {
@@ -426,37 +220,88 @@ function buildConsentConfig() {
       category: cloudflare.consent || "analytics",
       src: cloudflare.src,
       defer: cloudflare.defer !== false,
-      attrs: {
-        "data-cf-beacon": JSON.stringify(cloudflare.beacon || {})
-      }
+      attrs: { "data-cf-beacon": JSON.stringify(cloudflare.beacon || {}) }
     });
   }
   return {
-    storageKey: theme.consent?.storageKey || "site-consent",
+    storageKey: theme.consent?.storageKey || "inkstone-consent",
     revision: theme.consent?.revision || 1,
     categories: theme.consent?.categories || {},
     scripts
   };
 }
 
-async function writePage(url, html) {
-  const file = path.join(distDir, url, "index.html");
-  await fs.mkdir(path.dirname(file), { recursive: true });
-  await fs.writeFile(file, html, "utf8");
+function layout({ title, description, current = "", body, pageType = "page", type = "website" }) {
+  const siteName = config.siteName?.["zh-CN"] || "技术网";
+  const siteDescription = config.description?.["zh-CN"] || "";
+  const fullTitle = title === siteName ? title : `${title} | ${siteName}`;
+  const styles = [theme.style, ...themeFiles(theme.pageStyles, pageType)].filter(Boolean);
+  const scripts = [
+    ...(Array.isArray(theme.scripts) ? theme.scripts : theme.script ? [theme.script] : []),
+    ...themeFiles(theme.pageScripts, pageType)
+  ].filter(Boolean);
+  const canonical = new URL(current || "/", config.siteUrl || "https://www.jsw.ac.cn").href;
+  return `<!doctype html>
+<html lang="${esc(config.defaultLocale || "zh-CN")}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#f1eee5">
+  <title>${esc(fullTitle)}</title>
+  <meta name="description" content="${esc(description || siteDescription)}">
+  <meta property="og:type" content="${esc(type)}">
+  <meta property="og:title" content="${esc(fullTitle)}">
+  <meta property="og:description" content="${esc(description || siteDescription)}">
+  <link rel="canonical" href="${esc(canonical)}">
+  ${styles.map((file) => `<link rel="stylesheet" href="${asset(file)}">`).join("\n  ")}
+  <link rel="icon" href="/favicon.ico">
+  <link rel="alternate" type="application/rss+xml" href="/feed.xml" title="${esc(siteName)}">
+</head>
+<body data-page-type="${esc(pageType)}">
+  <a class="skip-link" href="#main">跳到正文</a>
+  ${nav(current)}
+  ${body}
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand"><strong>${esc(siteName)}</strong><span>记录问题，也记录问题是怎样被解决的。</span></div>
+      <div class="footer-meta">
+        <span>© ${new Date().getFullYear()} ${esc(siteName)}</span>
+        ${footerRecords()}
+        <span class="footer-sep">·</span><a href="/feed.xml">RSS</a>
+        <span class="footer-sep">·</span><a href="/sitemap.xml">Sitemap</a>
+        <span class="footer-sep">·</span><button class="footer-consent" type="button" data-consent-open>隐私偏好</button>
+      </div>
+    </div>
+  </footer>
+  <script id="theme-consent-config" type="application/json">${JSON.stringify(buildConsentConfig()).replaceAll("</", "<\\/")}</script>
+  ${scripts.map((file) => `<script src="${asset(file)}" defer></script>`).join("\n  ")}
+</body>
+</html>`;
 }
 
-function postCard(post) {
-  const tags = post.tags.map((tag) => `<a href="/tags/${slugify(tag)}/">${esc(tag)}</a>`).join("");
-  return `<article class="post-card">
-    <h3><a href="${post.url}">${esc(post.title)}</a></h3>
-    <p class="post-meta">${esc(post.date)} · <a href="/categories/${slugify(post.category)}/">${esc(post.category)}</a></p>
-    <p>${esc(post.description)}</p>
-    <div class="tag-row">${tags}</div>
+async function writePage(url, html) {
+  const relative = String(url || "/").replace(/^\/+|\/+$/g, "");
+  const dir = relative ? path.join(outputDir, relative) : outputDir;
+  await fs.mkdir(dir, { recursive: true });
+  await fs.writeFile(path.join(dir, "index.html"), html, "utf8");
+}
+
+function postCard(post, index = 0) {
+  return `<article class="entry-card">
+    <span class="entry-index">${String(index + 1).padStart(2, "0")}</span>
+    <div class="entry-main">
+      <p class="entry-meta"><time datetime="${esc(post.date)}">${esc(post.date)}</time><span>·</span><a href="/categories/${slugify(post.category)}/">${esc(post.category)}</a></p>
+      <h3><a href="${esc(post.url)}">${esc(post.title)}</a></h3>
+      <p class="entry-excerpt">${esc(post.description)}</p>
+      <div class="tag-row">${post.tags.map((tag) => `<a href="/tags/${slugify(tag)}/">#${esc(tag)}</a>`).join("")}</div>
+    </div>
+    <a class="entry-arrow" href="${esc(post.url)}" aria-label="阅读 ${esc(post.title)}">↗</a>
   </article>`;
 }
 
 function postList(posts) {
-  return `<div class="post-list">${posts.map(postCard).join("\n") || '<p class="post-meta">暂无文章。</p>'}</div>`;
+  return `<div class="entry-list">${posts.length ? posts.map(postCard).join("\n") : '<p class="empty-state">这里暂时还没有内容。</p>'}</div>`;
 }
 
 function groupTerms(posts, field) {
@@ -468,14 +313,27 @@ function groupTerms(posts, field) {
       map.get(value).push(post);
     }
   }
-  return [...map.entries()].sort((a, b) => b[1].length - a[1].length || a[0].localeCompare(b[0]));
+  return [...map.entries()].sort((a, b) => b[1].length - a[1].length || String(a[0]).localeCompare(String(b[0])));
+}
+
+function robotsTxt() {
+  const lines = [];
+  if (config.robots?.contentSignal) lines.push(`Content-Signal: ${config.robots.contentSignal}`, "");
+  for (const rule of config.robots?.rules || [{ userAgent: "*", allow: ["/"] }]) {
+    lines.push(`User-agent: ${rule.userAgent || "*"}`);
+    for (const value of rule.allow || []) lines.push(`Allow: ${value}`);
+    for (const value of rule.disallow || []) lines.push(`Disallow: ${value}`);
+    lines.push("");
+  }
+  lines.push(`Sitemap: ${new URL("/sitemap.xml", config.siteUrl || "https://www.jsw.ac.cn").href}`, "");
+  return lines.join("\n");
 }
 
 async function build() {
-  await fs.rm(distDir, { recursive: true, force: true });
-  await fs.mkdir(distDir, { recursive: true });
-  await copyDir(staticDir, distDir);
-  await copyDir(themeDir, path.join(distDir, "assets", "theme", config.theme.name));
+  await fs.rm(outputDir, { recursive: true, force: true });
+  await fs.mkdir(outputDir, { recursive: true });
+  await copyDir(staticDir, outputDir);
+  await copyDir(themeDir, path.join(outputDir, "assets", "theme", themeName));
 
   const templates = {
     home: await readTemplate("home"),
@@ -487,46 +345,49 @@ async function build() {
     search: await readTemplate("search"),
     notFound: await readTemplate("404")
   };
+
   const posts = await readEntries("posts");
   const pages = await readEntries("pages");
+  const urls = new Set(["/", "/archives/", "/categories/", "/tags/", "/search/"]);
+  const siteName = config.siteName?.["zh-CN"] || "技术网";
+  const siteDescription = config.description?.["zh-CN"] || "";
 
   await writePage("/", layout({
-    title: config.siteName,
-    description: config.description,
+    title: siteName,
+    description: siteDescription,
     current: "/",
     pageType: "home",
     body: renderTemplate(templates.home, {
-      siteName: config.siteName,
-      description: config.description,
-      latestPosts: "最新笔记",
-      archiveUrl: "/archives/",
-      mascotPng: asset(theme.assets?.mascot?.png || "source-assets/jie-paopao-mascot.png"),
-      mascotWebp: asset(theme.assets?.mascot?.webp || "source-assets/jie-paopao-mascot.webp"),
-      postList: postList(posts.slice(0, config.postsPerPage || 10))
+      siteName,
+      description: siteDescription,
+      postCount: posts.length,
+      latestPosts: postList(posts.slice(0, Number(config.postsPerPage || 10)))
     })
   }));
 
   for (const post of posts) {
+    urls.add(post.url);
     await writePage(post.url, layout({
       title: post.title,
       description: post.description,
       current: post.url,
       type: "article",
       pageType: "post",
-      extraStyles: themeFiles(theme.featureStyles, "lightbox"),
       body: renderTemplate(templates.post, {
         title: post.title,
         description: post.description,
         date: post.date,
+        updated: post.updated,
         category: post.category,
         categoryUrl: `/categories/${slugify(post.category)}/`,
-        tags: post.tags.map((tag) => `<a href="/tags/${slugify(tag)}/">${esc(tag)}</a>`).join(""),
+        tags: post.tags.map((tag) => `<a href="/tags/${slugify(tag)}/">#${esc(tag)}</a>`).join(""),
         content: post.html
       })
     }));
   }
 
   for (const page of pages) {
+    urls.add(page.url);
     await writePage(page.url, layout({
       title: page.title,
       description: page.description,
@@ -534,7 +395,6 @@ async function build() {
       pageType: "page",
       body: renderTemplate(templates.page, {
         title: page.title,
-        description: page.description,
         content: page.html
       })
     }));
@@ -546,7 +406,8 @@ async function build() {
     pageType: "archive",
     body: renderTemplate(templates.archive, {
       title: "归档",
-      archiveList: posts.map((post) => `<li><time datetime="${post.date}">${post.date}</time><a href="${post.url}">${esc(post.title)}</a></li>`).join("")
+      count: posts.length,
+      archiveList: posts.map((post) => `<li><time datetime="${esc(post.date)}">${esc(post.date)}</time><a href="${esc(post.url)}">${esc(post.title)}</a><span>${esc(post.category)}</span></li>`).join("")
     })
   }));
 
@@ -558,16 +419,23 @@ async function build() {
       pageType: "terms",
       body: renderTemplate(templates.termsIndex, {
         title,
-        terms: terms.map(([name, list]) => `<li><a href="${base}${slugify(name)}/"><span>${esc(name)}</span><strong>${list.length}</strong></a></li>`).join("")
+        count: terms.length,
+        terms: terms.map(([name, list]) => {
+          const url = `${base}${slugify(name)}/`;
+          urls.add(url);
+          return `<li><a href="${url}"><span>${esc(name)}</span><strong>${list.length}</strong></a></li>`;
+        }).join("")
       })
     }));
     for (const [name, list] of terms) {
-      await writePage(`${base}${slugify(name)}/`, layout({
+      const url = `${base}${slugify(name)}/`;
+      await writePage(url, layout({
         title: `${title}: ${name}`,
         current: base,
         pageType: "terms",
         body: renderTemplate(templates.termsPage, {
           title: name,
+          count: list.length,
           postList: postList(list)
         })
       }));
@@ -580,33 +448,28 @@ async function build() {
     pageType: "search",
     body: renderTemplate(templates.search, { title: "搜索" })
   }));
-  await fs.writeFile(path.join(distDir, "search.json"), JSON.stringify(posts.map(({ title, description, url, date, category, tags, text }) => ({ title, description, url, date, category, tags, text })), null, 2));
 
-  const urls = ["/", "/archives/", "/categories/", "/tags/", "/search/", ...pages.map((p) => p.url), ...posts.map((p) => p.url)];
-  await fs.writeFile(path.join(distDir, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urls.map((url) => `<url><loc>${new URL(url, config.siteUrl).href}</loc></url>`).join("")}</urlset>`);
-  await fs.writeFile(path.join(distDir, "feed.xml"), `<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>${esc(config.feed.title || config.siteName)}</title><link>${config.siteUrl}</link><description>${esc(config.description)}</description>${posts.slice(0, 20).map((post) => `<item><title>${esc(post.title)}</title><link>${new URL(post.url, config.siteUrl).href}</link><description>${esc(post.description)}</description><pubDate>${new Date(post.date).toUTCString()}</pubDate></item>`).join("")}</channel></rss>`);
-  await fs.writeFile(path.join(distDir, "404.html"), layout({
+  await fs.writeFile(
+    path.join(outputDir, "search.json"),
+    JSON.stringify(posts.map(({ title, description, url, date, category, tags, text }) => ({ title, description, url, date, category, tags, text })), null, 2)
+  );
+
+  const sitemap = `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${[...urls].map((url) => `<url><loc>${xml(new URL(url, config.siteUrl || "https://www.jsw.ac.cn").href)}</loc></url>`).join("")}</urlset>`;
+  await fs.writeFile(path.join(outputDir, "sitemap.xml"), sitemap, "utf8");
+
+  const feedTitle = config.feed?.title || siteName;
+  const feed = `<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>${xml(feedTitle)}</title><link>${xml(config.siteUrl || "")}</link><description>${xml(siteDescription)}</description>${posts.slice(0, 20).map((post) => `<item><title>${xml(post.title)}</title><link>${xml(new URL(post.url, config.siteUrl || "https://www.jsw.ac.cn").href)}</link><description>${xml(post.description)}</description><pubDate>${new Date(post.date).toUTCString()}</pubDate></item>`).join("")}</channel></rss>`;
+  await fs.writeFile(path.join(outputDir, "feed.xml"), feed, "utf8");
+  await fs.writeFile(path.join(outputDir, "robots.txt"), robotsTxt(), "utf8");
+
+  const notFound = layout({
     title: "404",
     pageType: "page",
     body: renderTemplate(templates.notFound, {})
-  }));
-  await fs.writeFile(path.join(distDir, "robots.txt"), buildRobotsTxt());
-  console.log(`Built ${posts.length} posts and ${pages.length} pages into dist/`);
-}
+  });
+  await fs.writeFile(path.join(outputDir, "404.html"), notFound, "utf8");
 
-function buildRobotsTxt() {
-  const lines = [];
-  if (config.robots.contentSignal) {
-    lines.push(`Content-Signal: ${config.robots.contentSignal}`, "");
-  }
-  for (const rule of config.robots.rules) {
-    lines.push(`User-agent: ${rule.userAgent || "*"}`);
-    for (const value of rule.allow || []) lines.push(`Allow: ${value}`);
-    for (const value of rule.disallow || []) lines.push(`Disallow: ${value}`);
-    lines.push("");
-  }
-  lines.push(`Sitemap: ${new URL("/sitemap.xml", config.siteUrl).href}`, "");
-  return lines.join("\n");
+  console.log(`Inkstone built ${posts.length} posts and ${pages.length} pages directly into public/.`);
 }
 
 build().catch((error) => {
