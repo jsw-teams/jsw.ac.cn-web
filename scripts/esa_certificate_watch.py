@@ -20,12 +20,24 @@ SITE_ID_ENV = os.getenv("ESA_SITE_ID", "").strip()
 DOMAINS = [v.strip().lower().rstrip(".") for v in os.getenv("ESA_DOMAINS", "www.jsw.ac.cn").split(",") if v.strip()]
 RENEW_BEFORE_DAYS = int(os.getenv("ESA_RENEW_BEFORE_DAYS", "14"))
 CERT_TYPE = os.getenv("ESA_CERT_TYPE", "lets_encrypt").strip() or "lets_encrypt"
+ISSUANCE_WAIT_SECONDS = int(os.getenv("ESA_ISSUANCE_WAIT_SECONDS", "300"))
 
 CF_API_BASE = "https://api.cloudflare.com/client/v4"
 CF_TOKEN = os.getenv("CLOUDFLARE_API_TOKEN", "").strip()
 CF_ZONE_ID_ENV = os.getenv("CLOUDFLARE_ZONE_ID", "").strip()
 CF_ZONE_NAME = os.getenv("CLOUDFLARE_ZONE_NAME", SITE_NAME).strip().lower().rstrip(".") or SITE_NAME.lower().rstrip(".")
 CF_DCV_TTL = int(os.getenv("CLOUDFLARE_DCV_TTL", "120"))
+
+
+def env_flag(name: str, default: bool = True) -> bool:
+    raw = os.getenv(name)
+    if raw is None:
+        return default
+    return raw.strip().lower() not in {"0", "false", "no", "off"}
+
+
+CF_PURGE_CONFLICTING_ACME = env_flag("CLOUDFLARE_PURGE_CONFLICTING_ACME", True)
+CF_CLEAN_AFTER_ISSUE = env_flag("CLOUDFLARE_CLEAN_AFTER_ISSUE", True)
 
 
 def body_map(response: Any) -> dict[str, Any]:
@@ -177,48 +189,48 @@ def days_left(cert: dict[str, Any]) -> float | None:
 def validate_dcv_name(record_name: str) -> str:
     name = record_name.lower().rstrip(".")
     if name != CF_ZONE_NAME and not name.endswith("." + CF_ZONE_NAME):
-        raise RuntimeError(f"Refusing to modify Cloudflare TXT outside zone {CF_ZONE_NAME}: {record_name}")
+        raise RuntimeError(f"Refusing to modify Cloudflare DNS outside zone {CF_ZONE_NAME}: {record_name}")
+    if not name.startswith("_acme-challenge."):
+        raise RuntimeError(f"Refusing to modify non-ACME TXT record: {record_name}")
     return name
+
+
+def challenge_name_for_domain(domain: str) -> str:
+    clean = domain.lower().rstrip(".")
+    if clean.startswith("*."):
+        clean = clean[2:]
+    return validate_dcv_name(f"_acme-challenge.{clean}")
 
 
 def list_cloudflare_txt(zone_id: str, record_name: str) -> list[dict[str, Any]]:
     result = cf_request(
         "GET",
         f"/zones/{zone_id}/dns_records",
-        query={"type": "TXT", "name": record_name, "per_page": 100},
+        query={"type": "TXT", "name.exact": record_name, "per_page": 100},
     )
     return result or []
 
 
-def ensure_cloudflare_txt(zone_id: str, record_name: str, value: str) -> None:
+def delete_cloudflare_record(zone_id: str, record: dict[str, Any], reason: str) -> None:
+    record_id = str(record.get("id") or "")
+    if not record_id:
+        raise RuntimeError(f"Cloudflare record missing id: {record}")
+    cf_request("DELETE", f"/zones/{zone_id}/dns_records/{record_id}")
+    print(f"Deleted Cloudflare TXT {record.get('name')} ({reason})")
+
+
+def purge_challenge_name(zone_id: str, record_name: str, keep_values: set[str] | None = None) -> None:
     record_name = validate_dcv_name(record_name)
-    records = list_cloudflare_txt(zone_id, record_name)
-
-    for record in records:
-        if str(record.get("content") or "") == value:
-            print(f"Cloudflare DCV TXT already present: {record_name}")
-            return
-
-    managed = next((r for r in records if str(r.get("comment") or "") == MANAGED_COMMENT), None)
-    payload = {
-        "type": "TXT",
-        "name": record_name,
-        "content": value,
-        "ttl": CF_DCV_TTL,
-        "comment": MANAGED_COMMENT,
-    }
-
-    if managed:
-        cf_request("PATCH", f"/zones/{zone_id}/dns_records/{managed['id']}", payload=payload)
-        print(f"Updated Cloudflare DCV TXT: {record_name}")
-        return
-
-    cf_request("POST", f"/zones/{zone_id}/dns_records", payload=payload)
-    print(f"Created Cloudflare DCV TXT: {record_name}")
+    keep_values = keep_values or set()
+    for record in list_cloudflare_txt(zone_id, record_name):
+        content = str(record.get("content") or "")
+        if content in keep_values:
+            continue
+        delete_cloudflare_record(zone_id, record, "stale/conflicting Let's Encrypt ACME value")
 
 
-def reconcile_dcv(certificates: list[dict[str, Any]], cloudflare_zone_id: str) -> int:
-    changes = 0
+def active_esa_dns_challenges(certificates: list[dict[str, Any]]) -> dict[str, set[str]]:
+    active: dict[str, set[str]] = {}
     for cert in certificates:
         if str(cert.get("Status") or "") != "Applying":
             continue
@@ -231,9 +243,66 @@ def reconcile_dcv(certificates: list[dict[str, Any]], cloudflare_zone_id: str) -
             value = str(dcv.get("Value") or "").strip()
             if not key or not value:
                 continue
+            key = validate_dcv_name(key)
+            active.setdefault(key, set()).add(value)
+    return active
+
+
+def ensure_cloudflare_txt(zone_id: str, record_name: str, value: str) -> None:
+    record_name = validate_dcv_name(record_name)
+    records = list_cloudflare_txt(zone_id, record_name)
+    if any(str(record.get("content") or "") == value for record in records):
+        print(f"Cloudflare DCV TXT already present: {record_name}")
+        return
+
+    payload = {
+        "type": "TXT",
+        "name": record_name,
+        "content": value,
+        "ttl": CF_DCV_TTL,
+        "comment": MANAGED_COMMENT,
+    }
+    cf_request("POST", f"/zones/{zone_id}/dns_records", payload=payload)
+    print(f"Created Cloudflare DCV TXT: {record_name}")
+
+
+def reconcile_dcv(certificates: list[dict[str, Any]], cloudflare_zone_id: str) -> dict[str, set[str]]:
+    active = active_esa_dns_challenges(certificates)
+    for key, values in active.items():
+        if CERT_TYPE == "lets_encrypt" and CF_PURGE_CONFLICTING_ACME:
+            purge_challenge_name(cloudflare_zone_id, key, keep_values=values)
+        for value in values:
             ensure_cloudflare_txt(cloudflare_zone_id, key, value)
-            changes += 1
-    return changes
+    return active
+
+
+def list_managed_cloudflare_txt(zone_id: str) -> list[dict[str, Any]]:
+    result = cf_request(
+        "GET",
+        f"/zones/{zone_id}/dns_records",
+        query={"type": "TXT", "comment.exact": MANAGED_COMMENT, "per_page": 500},
+    )
+    return result or []
+
+
+def cleanup_orphaned_managed_txt(zone_id: str, active: dict[str, set[str]]) -> None:
+    if not CF_CLEAN_AFTER_ISSUE:
+        return
+    for record in list_managed_cloudflare_txt(zone_id):
+        name = str(record.get("name") or "").lower().rstrip(".")
+        if not name.startswith("_acme-challenge."):
+            continue
+        content = str(record.get("content") or "")
+        if content in active.get(name, set()):
+            continue
+        delete_cloudflare_record(zone_id, record, "ACME challenge no longer active")
+
+
+def preclean_due_domains(zone_id: str, domains: list[str]) -> None:
+    if CERT_TYPE != "lets_encrypt" or not CF_PURGE_CONFLICTING_ACME:
+        return
+    for domain in domains:
+        purge_challenge_name(zone_id, challenge_name_for_domain(domain))
 
 
 def renewal_domains(certificates: list[dict[str, Any]]) -> list[str]:
@@ -287,11 +356,52 @@ def apply_certificate(client: EsaClient, site_id: int, domains: list[str]) -> No
         print(f"  {item.get('Domain')}: id={item.get('Id')} status={item.get('Status')}")
 
 
+def renewal_complete(certificates: list[dict[str, Any]], domains: list[str]) -> bool:
+    for domain in domains:
+        good = False
+        for cert in certificates:
+            if not cert_covers(cert, domain):
+                continue
+            if str(cert.get("Status") or "") not in {"OK", "Issued"}:
+                continue
+            remaining = days_left(cert)
+            if remaining is None or remaining > RENEW_BEFORE_DAYS:
+                good = True
+                break
+        if not good:
+            return False
+    return True
+
+
+def wait_for_issuance(client: EsaClient, site_id: int, zone_id: str, domains: list[str]) -> None:
+    deadline = time.monotonic() + max(0, ISSUANCE_WAIT_SECONDS)
+    while True:
+        certificates = list_certificates(client, site_id)
+        active = reconcile_dcv(certificates, zone_id)
+        cleanup_orphaned_managed_txt(zone_id, active)
+
+        if renewal_complete(certificates, domains):
+            print("ESA certificate issuance completed; ACME TXT cleanup confirmed.")
+            cleanup_orphaned_managed_txt(zone_id, {})
+            return
+
+        if time.monotonic() >= deadline:
+            if active:
+                print("Certificate is still applying; current ACME TXT records are retained for validation.")
+            else:
+                print("Issuance wait window ended; no active DNS challenge is currently exposed by ESA.")
+            return
+
+        time.sleep(10)
+
+
 def main() -> int:
     if not DOMAINS:
         raise RuntimeError("ESA_DOMAINS is empty")
     if not CF_TOKEN:
         raise RuntimeError("Missing CLOUDFLARE_API_TOKEN")
+    if CERT_TYPE != "lets_encrypt":
+        print(f"Warning: ESA_CERT_TYPE={CERT_TYPE}; aggressive stale ACME cleanup is only enabled for lets_encrypt.")
 
     esa_client = build_esa_client()
     site_id = resolve_site_id(esa_client)
@@ -302,20 +412,16 @@ def main() -> int:
     print(f"Cloudflare DNS zone: {CF_ZONE_NAME} ({cloudflare_zone_id})")
 
     certificates = list_certificates(esa_client, site_id)
-    reconcile_dcv(certificates, cloudflare_zone_id)
+    active = reconcile_dcv(certificates, cloudflare_zone_id)
+    cleanup_orphaned_managed_txt(cloudflare_zone_id, active)
 
     due = renewal_domains(certificates)
     if due:
+        # This workflow is the source of truth for Let's Encrypt DNS-01 on the configured names.
+        # Remove pre-existing TXT values at those exact _acme-challenge names before requesting a fresh certificate.
+        preclean_due_domains(cloudflare_zone_id, due)
         apply_certificate(esa_client, site_id, due)
-        # ESA may need a few seconds before exposing the new DCV challenge.
-        for attempt in range(4):
-            time.sleep(6)
-            refreshed = list_certificates(esa_client, site_id)
-            changed = reconcile_dcv(refreshed, cloudflare_zone_id)
-            if changed:
-                break
-            if attempt < 3:
-                print("Waiting for ESA to expose DNS DCV information...")
+        wait_for_issuance(esa_client, site_id, cloudflare_zone_id, due)
     else:
         print("No certificate renewal is required.")
 
