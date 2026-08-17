@@ -6,6 +6,7 @@ import taskLists from "markdown-it-task-lists";
 
 const root = process.cwd();
 const distDir = path.join(root, "dist");
+const publicDir = path.join(root, "public");
 const contentDir = path.join(root, "content");
 
 function splitFrontmatter(raw) {
@@ -130,7 +131,13 @@ async function enhanceKind(kind) {
   }
 }
 
+async function publishPublic() {
+  await fs.rm(publicDir, { recursive: true, force: true });
+  await fs.cp(distDir, publicDir, { recursive: true });
+}
+
 await runBaseBuild();
 await enhanceKind("posts");
 await enhanceKind("pages");
-console.log("Enhanced Markdown rendering for posts and pages.");
+await publishPublic();
+console.log("Enhanced Markdown rendering complete. Static output copied to public/ for ESA deployment.");
