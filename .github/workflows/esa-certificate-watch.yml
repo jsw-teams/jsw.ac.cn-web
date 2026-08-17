@@ -1,0 +1,44 @@
+name: ESA certificate watch
+
+on:
+  schedule:
+    - cron: "17 2 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: esa-certificate-watch
+  cancel-in-progress: false
+
+jobs:
+  monitor-and-renew:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      ALIBABA_CLOUD_ACCESS_KEY_ID: ${{ secrets.ALIBABA_CLOUD_ACCESS_KEY_ID }}
+      ALIBABA_CLOUD_ACCESS_KEY_SECRET: ${{ secrets.ALIBABA_CLOUD_ACCESS_KEY_SECRET }}
+      ESA_REGION_ID: ${{ vars.ESA_REGION_ID || 'ap-southeast-1' }}
+      ESA_SITE_ID: ${{ vars.ESA_SITE_ID }}
+      ESA_SITE_NAME: ${{ vars.ESA_SITE_NAME || 'jsw.ac.cn' }}
+      ESA_DOMAINS: ${{ vars.ESA_DOMAINS || 'www.jsw.ac.cn' }}
+      ESA_RENEW_BEFORE_DAYS: ${{ vars.ESA_RENEW_BEFORE_DAYS || '14' }}
+      ESA_CERT_TYPE: ${{ vars.ESA_CERT_TYPE || 'lets_encrypt' }}
+      ESA_DCV_TTL: ${{ vars.ESA_DCV_TTL || '60' }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install Alibaba Cloud ESA SDK
+        run: python -m pip install --disable-pip-version-check alibabacloud_esa20240910
+
+      - name: Monitor certificate and reconcile DNS DCV
+        run: python scripts/esa_certificate_watch.py
