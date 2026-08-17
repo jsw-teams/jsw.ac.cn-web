@@ -28,10 +28,13 @@ jobs:
       ESA_DOMAINS: ${{ vars.ESA_DOMAINS || 'www.jsw.ac.cn' }}
       ESA_RENEW_BEFORE_DAYS: ${{ vars.ESA_RENEW_BEFORE_DAYS || '14' }}
       ESA_CERT_TYPE: ${{ vars.ESA_CERT_TYPE || 'lets_encrypt' }}
+      ESA_ISSUANCE_WAIT_SECONDS: ${{ vars.ESA_ISSUANCE_WAIT_SECONDS || '300' }}
 
       CLOUDFLARE_ZONE_ID: ${{ vars.CLOUDFLARE_ZONE_ID }}
       CLOUDFLARE_ZONE_NAME: ${{ vars.CLOUDFLARE_ZONE_NAME || 'jsw.ac.cn' }}
       CLOUDFLARE_DCV_TTL: ${{ vars.CLOUDFLARE_DCV_TTL || '120' }}
+      CLOUDFLARE_PURGE_CONFLICTING_ACME: ${{ vars.CLOUDFLARE_PURGE_CONFLICTING_ACME || 'true' }}
+      CLOUDFLARE_CLEAN_AFTER_ISSUE: ${{ vars.CLOUDFLARE_CLEAN_AFTER_ISSUE || 'true' }}
 
     steps:
       - name: Checkout
