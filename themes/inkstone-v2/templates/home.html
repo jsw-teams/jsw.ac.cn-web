@@ -1,0 +1,29 @@
+<main id="main" class="site-main home-main">
+  <section class="home-hero">
+    <div class="hero-copy">
+      <p class="eyebrow">INKSTONE / TECHNICAL NOTES</p>
+      <h1>{{siteName}}</h1>
+      <p class="hero-dek">{{description}}</p>
+      <div class="hero-actions">
+        <a class="button-primary" href="/archives/">浏览归档</a>
+        <a class="button-quiet" href="/about/">关于本站</a>
+      </div>
+    </div>
+    <aside class="hero-board" aria-label="站点概览">
+      <span class="hero-board-kicker">PUBLIC NOTEBOOK</span>
+      <strong>{{postCount}}</strong>
+      <span>篇公开笔记</span>
+      <p>从现象、定位到落地，把技术问题的处理过程留下来。</p>
+    </aside>
+  </section>
+  <section class="home-feed" aria-labelledby="latest-title">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">RECENT</p>
+        <h2 id="latest-title">最近更新</h2>
+      </div>
+      <a href="/archives/">全部文章 ↗</a>
+    </div>
+    {{{latestPosts}}}
+  </section>
+</main>
