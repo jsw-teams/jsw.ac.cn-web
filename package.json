@@ -1,12 +1,17 @@
 {
   "name": "inkstone-notes",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
   "type": "module",
   "scripts": {
     "migrate:hexo": "node scripts/migrate-hexo.mjs",
-    "build": "node scripts/build.mjs",
+    "build": "node scripts/build-enhanced.mjs",
+    "build:base": "node scripts/build.mjs",
     "serve": "node scripts/serve.mjs"
+  },
+  "dependencies": {
+    "markdown-it": "^15.0.0",
+    "markdown-it-task-lists": "^2.1.1"
   },
   "engines": {
     "node": ">=20"

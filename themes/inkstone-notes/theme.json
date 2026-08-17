@@ -1,6 +1,6 @@
 {
   "name": "inkstone-notes",
-  "description": "A calm technical note theme for jsw.ac.cn.",
+  "description": "A Pagekiln-inspired technical publishing theme for jsw.ac.cn.",
   "style": "style.css",
   "script": "scripts/consent.js",
   "templates": "templates",
@@ -19,7 +19,8 @@
     "search": ["styles/search.css"]
   },
   "pageScripts": {
-    "post": ["scripts/lightbox.js"],
+    "post": ["scripts/lightbox.js", "scripts/code-copy.js"],
+    "page": ["scripts/code-copy.js"],
     "search": ["scripts/search.js"]
   },
   "featureStyles": {
@@ -30,26 +31,10 @@
     "storageKey": "jsw-consent-v2",
     "revision": 2,
     "categories": {
-      "necessary": {
-        "required": true,
-        "label": "必要",
-        "description": "保持网站、安全、隐私偏好和基础页面功能可用。"
-      },
-      "preferences": {
-        "required": false,
-        "label": "偏好",
-        "description": "保存站内体验偏好，例如图片预览和本地交互增强。"
-      },
-      "analytics": {
-        "required": false,
-        "label": "统计",
-        "description": "帮助了解页面访问情况，用于改进内容和性能。"
-      },
-      "marketing": {
-        "required": false,
-        "label": "营销/共享",
-        "description": "可能用于广告、跨站跟踪、出售或共享个人信息；本站默认关闭。"
-      }
+      "necessary": { "required": true, "label": "必要", "description": "保持网站、安全、隐私偏好和基础页面功能可用。" },
+      "preferences": { "required": false, "label": "偏好", "description": "保存站内体验偏好，例如图片预览和本地交互增强。" },
+      "analytics": { "required": false, "label": "统计", "description": "帮助了解页面访问情况，用于改进内容和性能。" },
+      "marketing": { "required": false, "label": "营销/共享", "description": "可能用于广告、跨站跟踪、出售或共享个人信息；本站默认关闭。" }
     }
   },
   "plugins": {
@@ -59,9 +44,7 @@
         "consent": "analytics",
         "src": "https://static.cloudflareinsights.com/beacon.min.js",
         "defer": true,
-        "beacon": {
-          "token": "2569d2337653410ab4f21d2e8bfd1ed0"
-        }
+        "beacon": { "token": "2569d2337653410ab4f21d2e8bfd1ed0" }
       }
     }
   }

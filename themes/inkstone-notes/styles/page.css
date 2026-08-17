@@ -1,10 +1,1 @@
-.page-shell { max-width: var(--content); }
-.page-shell .prose {
-  background: var(--paper);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  margin-top: 1.5rem;
-  padding: clamp(1rem, 3vw, 1.6rem);
-}
-.page-shell .prose > *:first-child { margin-top: 0; }
-.page-shell .prose h2, .page-shell .prose h3 { line-height: 1.35; margin-top: 2rem; }
+.page-content-main{max-width:1120px}.page-shell{margin:0 auto;max-width:900px}.page-shell>.page-title{border-left:.34rem solid var(--clay);padding-left:1.15rem}.page-shell>.lead{margin-left:1.5rem}.page-shell .prose{background:var(--surface);border:1px solid var(--line);box-shadow:8px 8px 0 rgb(7 60 74 / 8%);margin-top:2rem;padding:clamp(1.2rem,4vw,2.4rem)}
