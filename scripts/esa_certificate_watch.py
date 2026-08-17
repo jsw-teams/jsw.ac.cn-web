@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+import json
 import os
-import sys
 import time
 from datetime import datetime, timezone
 from typing import Any
+from urllib import error, parse, request
 
 from alibabacloud_tea_openapi import models as open_api_models
 from alibabacloud_esa20240910.client import Client as EsaClient
@@ -19,7 +20,12 @@ SITE_ID_ENV = os.getenv("ESA_SITE_ID", "").strip()
 DOMAINS = [v.strip().lower().rstrip(".") for v in os.getenv("ESA_DOMAINS", "www.jsw.ac.cn").split(",") if v.strip()]
 RENEW_BEFORE_DAYS = int(os.getenv("ESA_RENEW_BEFORE_DAYS", "14"))
 CERT_TYPE = os.getenv("ESA_CERT_TYPE", "lets_encrypt").strip() or "lets_encrypt"
-TXT_TTL = int(os.getenv("ESA_DCV_TTL", "60"))
+
+CF_API_BASE = "https://api.cloudflare.com/client/v4"
+CF_TOKEN = os.getenv("CLOUDFLARE_API_TOKEN", "").strip()
+CF_ZONE_ID_ENV = os.getenv("CLOUDFLARE_ZONE_ID", "").strip()
+CF_ZONE_NAME = os.getenv("CLOUDFLARE_ZONE_NAME", SITE_NAME).strip().lower().rstrip(".") or SITE_NAME.lower().rstrip(".")
+CF_DCV_TTL = int(os.getenv("CLOUDFLARE_DCV_TTL", "120"))
 
 
 def body_map(response: Any) -> dict[str, Any]:
@@ -29,7 +35,7 @@ def body_map(response: Any) -> dict[str, Any]:
     return body.to_map() if hasattr(body, "to_map") else dict(body)
 
 
-def build_client() -> EsaClient:
+def build_esa_client() -> EsaClient:
     access_key_id = os.getenv("ALIBABA_CLOUD_ACCESS_KEY_ID", "").strip()
     access_key_secret = os.getenv("ALIBABA_CLOUD_ACCESS_KEY_SECRET", "").strip()
     if not access_key_id or not access_key_secret:
@@ -41,6 +47,55 @@ def build_client() -> EsaClient:
         endpoint=ENDPOINT,
     )
     return EsaClient(config)
+
+
+def cf_request(method: str, path: str, *, query: dict[str, Any] | None = None, payload: dict[str, Any] | None = None) -> Any:
+    if not CF_TOKEN:
+        raise RuntimeError("Missing CLOUDFLARE_API_TOKEN")
+    url = CF_API_BASE + path
+    if query:
+        url += "?" + parse.urlencode(query)
+    data = json.dumps(payload).encode("utf-8") if payload is not None else None
+    req = request.Request(
+        url,
+        data=data,
+        method=method,
+        headers={
+            "Authorization": f"Bearer {CF_TOKEN}",
+            "Content-Type": "application/json",
+            "User-Agent": "siteforge-inkstone-theme/esa-certificate-watch",
+        },
+    )
+    try:
+        with request.urlopen(req, timeout=30) as response:
+            result = json.loads(response.read().decode("utf-8"))
+    except error.HTTPError as exc:
+        raw = exc.read().decode("utf-8", errors="replace")
+        try:
+            detail = json.loads(raw)
+        except json.JSONDecodeError:
+            detail = raw
+        raise RuntimeError(f"Cloudflare API {method} {path} failed with HTTP {exc.code}: {detail}") from exc
+    except error.URLError as exc:
+        raise RuntimeError(f"Cloudflare API {method} {path} failed: {exc}") from exc
+
+    if not result.get("success", False):
+        raise RuntimeError(f"Cloudflare API {method} {path} failed: {result.get('errors') or result}")
+    return result.get("result")
+
+
+def resolve_cloudflare_zone_id() -> str:
+    if CF_ZONE_ID_ENV:
+        return CF_ZONE_ID_ENV
+    zones = cf_request(
+        "GET",
+        "/zones",
+        query={"name": CF_ZONE_NAME, "status": "active", "per_page": 50},
+    ) or []
+    exact = [z for z in zones if str(z.get("name") or "").lower().rstrip(".") == CF_ZONE_NAME]
+    if len(exact) != 1:
+        raise RuntimeError(f"Expected exactly one active Cloudflare zone named {CF_ZONE_NAME}, found {len(exact)}")
+    return str(exact[0]["id"])
 
 
 def resolve_site_id(client: EsaClient) -> int:
@@ -119,56 +174,50 @@ def days_left(cert: dict[str, Any]) -> float | None:
     return (expiry - datetime.now(timezone.utc)).total_seconds() / 86400
 
 
-def list_txt_records(client: EsaClient, site_id: int, record_name: str) -> list[dict[str, Any]]:
-    response = client.list_records(
-        esa_models.ListRecordsRequest(
-            site_id=site_id,
-            record_name=record_name,
-            record_match_type="exact",
-            type="TXT",
-            page_number=1,
-            page_size=500,
-        )
+def validate_dcv_name(record_name: str) -> str:
+    name = record_name.lower().rstrip(".")
+    if name != CF_ZONE_NAME and not name.endswith("." + CF_ZONE_NAME):
+        raise RuntimeError(f"Refusing to modify Cloudflare TXT outside zone {CF_ZONE_NAME}: {record_name}")
+    return name
+
+
+def list_cloudflare_txt(zone_id: str, record_name: str) -> list[dict[str, Any]]:
+    result = cf_request(
+        "GET",
+        f"/zones/{zone_id}/dns_records",
+        query={"type": "TXT", "name": record_name, "per_page": 100},
     )
-    return body_map(response).get("Records") or []
+    return result or []
 
 
-def ensure_txt_record(client: EsaClient, site_id: int, record_name: str, value: str) -> None:
-    records = list_txt_records(client, site_id, record_name)
+def ensure_cloudflare_txt(zone_id: str, record_name: str, value: str) -> None:
+    record_name = validate_dcv_name(record_name)
+    records = list_cloudflare_txt(zone_id, record_name)
+
     for record in records:
-        current = str((record.get("Data") or {}).get("Value") or "")
-        if current == value:
-            print(f"DCV TXT already present: {record_name}")
+        if str(record.get("content") or "") == value:
+            print(f"Cloudflare DCV TXT already present: {record_name}")
             return
 
-    managed = next((r for r in records if str(r.get("Comment") or "") == MANAGED_COMMENT), None)
+    managed = next((r for r in records if str(r.get("comment") or "") == MANAGED_COMMENT), None)
+    payload = {
+        "type": "TXT",
+        "name": record_name,
+        "content": value,
+        "ttl": CF_DCV_TTL,
+        "comment": MANAGED_COMMENT,
+    }
+
     if managed:
-        request = esa_models.UpdateRecordRequest(
-            record_id=int(managed["RecordId"]),
-            type="TXT",
-            ttl=TXT_TTL,
-            proxied=False,
-            comment=MANAGED_COMMENT,
-            data=esa_models.UpdateRecordRequestData(value=value),
-        )
-        client.update_record(request)
-        print(f"Updated managed DCV TXT: {record_name}")
+        cf_request("PATCH", f"/zones/{zone_id}/dns_records/{managed['id']}", payload=payload)
+        print(f"Updated Cloudflare DCV TXT: {record_name}")
         return
 
-    request = esa_models.CreateRecordRequest(
-        site_id=site_id,
-        record_name=record_name,
-        type="TXT",
-        ttl=TXT_TTL,
-        proxied=False,
-        comment=MANAGED_COMMENT,
-        data=esa_models.CreateRecordRequestData(value=value),
-    )
-    client.create_record(request)
-    print(f"Created DCV TXT: {record_name}")
+    cf_request("POST", f"/zones/{zone_id}/dns_records", payload=payload)
+    print(f"Created Cloudflare DCV TXT: {record_name}")
 
 
-def reconcile_dcv(client: EsaClient, site_id: int, certificates: list[dict[str, Any]]) -> int:
+def reconcile_dcv(certificates: list[dict[str, Any]], cloudflare_zone_id: str) -> int:
     changes = 0
     for cert in certificates:
         if str(cert.get("Status") or "") != "Applying":
@@ -182,7 +231,7 @@ def reconcile_dcv(client: EsaClient, site_id: int, certificates: list[dict[str, 
             value = str(dcv.get("Value") or "").strip()
             if not key or not value:
                 continue
-            ensure_txt_record(client, site_id, key, value)
+            ensure_cloudflare_txt(cloudflare_zone_id, key, value)
             changes += 1
     return changes
 
@@ -241,19 +290,32 @@ def apply_certificate(client: EsaClient, site_id: int, domains: list[str]) -> No
 def main() -> int:
     if not DOMAINS:
         raise RuntimeError("ESA_DOMAINS is empty")
-    client = build_client()
-    site_id = resolve_site_id(client)
-    print(f"Alibaba Cloud International ESA endpoint: {ENDPOINT}")
-    print(f"Site: {SITE_NAME} ({site_id}); domains: {', '.join(DOMAINS)}")
+    if not CF_TOKEN:
+        raise RuntimeError("Missing CLOUDFLARE_API_TOKEN")
 
-    certificates = list_certificates(client, site_id)
-    reconcile_dcv(client, site_id, certificates)
+    esa_client = build_esa_client()
+    site_id = resolve_site_id(esa_client)
+    cloudflare_zone_id = resolve_cloudflare_zone_id()
+
+    print(f"Alibaba Cloud International ESA endpoint: {ENDPOINT}")
+    print(f"ESA site: {SITE_NAME} ({site_id}); domains: {', '.join(DOMAINS)}")
+    print(f"Cloudflare DNS zone: {CF_ZONE_NAME} ({cloudflare_zone_id})")
+
+    certificates = list_certificates(esa_client, site_id)
+    reconcile_dcv(certificates, cloudflare_zone_id)
 
     due = renewal_domains(certificates)
     if due:
-        apply_certificate(client, site_id, due)
-        time.sleep(8)
-        reconcile_dcv(client, site_id, list_certificates(client, site_id))
+        apply_certificate(esa_client, site_id, due)
+        # ESA may need a few seconds before exposing the new DCV challenge.
+        for attempt in range(4):
+            time.sleep(6)
+            refreshed = list_certificates(esa_client, site_id)
+            changed = reconcile_dcv(refreshed, cloudflare_zone_id)
+            if changed:
+                break
+            if attempt < 3:
+                print("Waiting for ESA to expose DNS DCV information...")
     else:
         print("No certificate renewal is required.")
 
@@ -261,8 +323,4 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    try:
-        sys.exit(main())
-    except Exception as exc:
-        print(f"ERROR: {exc}", file=sys.stderr)
-        raise
+    raise SystemExit(main())
