@@ -89,8 +89,37 @@ md.renderer.rules.image = (tokens, index, options, env, self) => {
 md.renderer.rules.table_open = () => '<div class="table-wrap"><table>\n';
 md.renderer.rules.table_close = () => '</table></div>\n';
 
+const STRONG_STAR_CJK_BOUNDARY = /(\*\*[^*\n]+[\p{P}\p{S}]\*\*)(?=[\p{Letter}\p{Number}])/gu;
+const STRONG_UNDERSCORE_CJK_BOUNDARY = /(__[^_\n]+[\p{P}\p{S}]__)(?=[\p{Letter}\p{Number}])/gu;
+
+function normalizeCjkEmphasisBoundaries(source) {
+  const lines = String(source || "").replace(/\r\n/g, "\n").split("\n");
+  let fenceChar = "";
+
+  return lines.map((line) => {
+    const fence = line.match(/^\s*(`{3,}|~{3,})/);
+    if (fence) {
+      const current = fence[1][0];
+      if (!fenceChar) fenceChar = current;
+      else if (fenceChar === current) fenceChar = "";
+      return line;
+    }
+
+    if (fenceChar || line.includes("`")) return line;
+
+    return line
+      .replace(STRONG_STAR_CJK_BOUNDARY, "$1<!--md-cjk-boundary-->")
+      .replace(STRONG_UNDERSCORE_CJK_BOUNDARY, "$1<!--md-cjk-boundary-->");
+  }).join("\n");
+}
+
 function markdown(source) {
-  return md.render(String(source || ""), { headingIds: new Map() });
+  return md.render(normalizeCjkEmphasisBoundaries(source), { headingIds: new Map() });
+}
+
+const cjkEmphasisProbe = markdown("> **说明：**本文");
+if (!cjkEmphasisProbe.includes("<strong>说明：</strong>")) {
+  throw new Error("Markdown CJK strong-emphasis compatibility regression: **说明：**本文 did not render as <strong>.");
 }
 
 function plainText(source = "") {
