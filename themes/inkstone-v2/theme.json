@@ -4,6 +4,14 @@
   "style": "style.css",
   "templates": "templates",
   "scripts": ["scripts/consent.js"],
+  "pageStyles": {
+    "home": ["layout.css"],
+    "post": ["layout.css"],
+    "page": ["layout.css"],
+    "archive": ["layout.css"],
+    "terms": ["layout.css"],
+    "search": ["layout.css"]
+  },
   "pageScripts": {
     "post": ["scripts/code-copy.js"],
     "page": ["scripts/code-copy.js"],
