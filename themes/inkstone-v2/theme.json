@@ -1,0 +1,51 @@
+{
+  "name": "inkstone-v2",
+  "description": "A from-scratch editorial technical-notes theme inspired by Pagekiln.",
+  "style": "style.css",
+  "templates": "templates",
+  "scripts": ["scripts/consent.js"],
+  "pageScripts": {
+    "post": ["scripts/code-copy.js"],
+    "page": ["scripts/code-copy.js"],
+    "search": ["scripts/search.js"]
+  },
+  "consent": {
+    "storageKey": "jsw-consent-v3",
+    "revision": 3,
+    "categories": {
+      "necessary": {
+        "required": true,
+        "label": "必要",
+        "description": "保持站点基础功能与隐私偏好可用。"
+      },
+      "preferences": {
+        "required": false,
+        "label": "偏好",
+        "description": "保存站内体验偏好。"
+      },
+      "analytics": {
+        "required": false,
+        "label": "统计",
+        "description": "用于了解匿名访问情况并改进内容。"
+      },
+      "marketing": {
+        "required": false,
+        "label": "营销/共享",
+        "description": "本站默认关闭此类用途。"
+      }
+    }
+  },
+  "plugins": {
+    "analytics": {
+      "cloudflareWebAnalytics": {
+        "enabled": true,
+        "consent": "analytics",
+        "src": "https://static.cloudflareinsights.com/beacon.min.js",
+        "defer": true,
+        "beacon": {
+          "token": "2569d2337653410ab4f21d2e8bfd1ed0"
+        }
+      }
+    }
+  }
+}
