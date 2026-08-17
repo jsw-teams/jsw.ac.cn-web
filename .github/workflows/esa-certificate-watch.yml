@@ -20,6 +20,7 @@ jobs:
       ALIBABA_CLOUD_ACCESS_KEY_ID: ${{ secrets.ALIBABA_CLOUD_ACCESS_KEY_ID }}
       ALIBABA_CLOUD_ACCESS_KEY_SECRET: ${{ secrets.ALIBABA_CLOUD_ACCESS_KEY_SECRET }}
       ESA_REGION_ID: ${{ vars.ESA_REGION_ID || 'ap-southeast-1' }}
+      ESA_ENDPOINT: ${{ vars.ESA_ENDPOINT }}
       ESA_SITE_ID: ${{ vars.ESA_SITE_ID }}
       ESA_SITE_NAME: ${{ vars.ESA_SITE_NAME || 'jsw.ac.cn' }}
       ESA_DOMAINS: ${{ vars.ESA_DOMAINS || 'www.jsw.ac.cn' }}
