@@ -17,6 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
+      PYTHONUNBUFFERED: "1"
       ALIBABA_CLOUD_ACCESS_KEY_ID: ${{ secrets.ALIBABA_CLOUD_ACCESS_KEY_ID }}
       ALIBABA_CLOUD_ACCESS_KEY_SECRET: ${{ secrets.ALIBABA_CLOUD_ACCESS_KEY_SECRET }}
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -25,7 +26,7 @@ jobs:
       ESA_ENDPOINT: ${{ vars.ESA_ENDPOINT }}
       ESA_SITE_ID: ${{ vars.ESA_SITE_ID }}
       ESA_SITE_NAME: ${{ vars.ESA_SITE_NAME || 'jsw.ac.cn' }}
-      ESA_DOMAINS: ${{ vars.ESA_DOMAINS || 'www.jsw.ac.cn' }}
+      ESA_DOMAINS: ${{ vars.ESA_DOMAINS || 'jsw.ac.cn,*.jsw.ac.cn' }}
       ESA_RENEW_BEFORE_DAYS: ${{ vars.ESA_RENEW_BEFORE_DAYS || '14' }}
       ESA_CERT_TYPE: ${{ vars.ESA_CERT_TYPE || 'lets_encrypt' }}
       ESA_ISSUANCE_WAIT_SECONDS: ${{ vars.ESA_ISSUANCE_WAIT_SECONDS || '300' }}
@@ -49,4 +50,4 @@ jobs:
         run: python -m pip install --disable-pip-version-check alibabacloud_esa20240910
 
       - name: Monitor ESA certificate and reconcile Cloudflare DNS DCV
-        run: python scripts/esa_certificate_watch.py
+        run: python -u scripts/esa_certificate_watch.py
