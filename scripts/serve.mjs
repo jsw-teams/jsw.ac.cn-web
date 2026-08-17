@@ -3,7 +3,7 @@ import fs from "node:fs/promises";
 import fss from "node:fs";
 import path from "node:path";
 
-const root = path.join(process.cwd(), "dist");
+const root = path.join(process.cwd(), "public");
 const port = Number(process.env.PORT || 4173);
 const types = {
   ".html": "text/html; charset=utf-8",
@@ -13,6 +13,7 @@ const types = {
   ".xml": "application/xml; charset=utf-8",
   ".txt": "text/plain; charset=utf-8",
   ".png": "image/png",
+  ".webp": "image/webp",
   ".jpg": "image/jpeg",
   ".jpeg": "image/jpeg",
   ".ico": "image/x-icon",
@@ -35,5 +36,5 @@ http.createServer(async (req, res) => {
     res.end("Not found");
   }
 }).listen(port, "127.0.0.1", () => {
-  console.log(`Serving dist at http://127.0.0.1:${port}/`);
+  console.log(`Serving public at http://127.0.0.1:${port}/`);
 });
