@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "migrate:hexo": "node scripts/migrate-hexo.mjs",
-    "build": "npm install --no-audit --no-fund --ignore-scripts --package-lock=false && node scripts/build-v2.mjs",
+    "build": "npm install --no-audit --no-fund --ignore-scripts --package-lock=false && node scripts/build.mjs",
     "serve": "node scripts/serve.mjs"
   },
   "dependencies": {
